@@ -34,8 +34,11 @@ def home():
     status = None
 
     def valid(username, password):
-        hashed = User.get(User.username == username).password
-        return checkpass(hashed, password)
+        try:
+            hashed = User.get(User.username == username).password
+            return checkpass(hashed, password)
+        except User.DoesNotExist:
+            return False
 
     if 'logged_in' not in session:
         if request.method == "POST":
