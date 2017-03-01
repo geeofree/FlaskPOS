@@ -3,10 +3,37 @@
 {% block TITLE %} Home {% endblock %}
 
 {% block STYLE %}
-  <link rel="stylesheet" href= {{ url_for('static', filename='css/home.css') }}>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
 {% endblock %}
 
 {% block BODY %}
-  <h1>Hello World!</h1>
-  <a href="{{ url_for('logout') }}"><button>Logout</button></a>
+  <div class="form-container">
+    <div class="form-head">
+      <h1>Login Form</h1>
+    </div>
+
+    <div class="form-body">
+      <form action="{{ url_for('home') }}" method="POST">
+
+        <div class="input-class">
+          <input type="text" name="username" class="text-input" placeholder="username">
+          <div class="underline"></div>
+        </div>
+
+        <div class="input-class">
+          <input type="password" name="password" class="text-input" placeholder="password">
+          <div class="underline"></div>
+        </div>
+
+        {% if status == "fail" %}
+          <p class="error">invalid username or password</p>
+        {% endif %}
+
+        <input type="submit" value="Submit" class="submit-button">
+      </form>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/homepage.js') }}"></script>
 {% endblock %}

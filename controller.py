@@ -7,7 +7,7 @@ from model import *
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-""" Rename bcrypt methods """
+""" Store bcrypt methods on a different name """
 gen_hash   = bcrypt.generate_password_hash
 checkpass  = bcrypt.check_password_hash
 
@@ -29,16 +29,8 @@ def teardown(exception):
 
 
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def home():
-    if 'logged_in' not in session:
-        return redirect(url_for('authentication'))
-    return render_template("home.html")
-
-
-
-@app.route("/login/", methods=["GET", "POST"])
-def authentication():
     status = None
 
     def valid(username, password):
@@ -52,11 +44,16 @@ def authentication():
 
             if valid(username, password):
                 session['logged_in'] = True
-                return redirect(url_for('home'))
+                return redirect(url_for('dashboard'))
             else:
                 status = "fail"
-        return render_template("login.html", status=status)
-    abort(400)
+    return render_template("home.html", status=status)
+
+
+
+@app.route("/dashboard")
+def dashboard():
+    return render_template("dashboard.html")
 
 
 
@@ -64,7 +61,7 @@ def authentication():
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in')
-        return redirect(url_for("authentication"))
+        return redirect(url_for("home"))
     abort(400)
 
 

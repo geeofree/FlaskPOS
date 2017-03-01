@@ -1,0 +1,12 @@
+{% extends "base-layout.html" %}
+{% block TITLE %} Dashboard {% endblock %}
+
+{% block STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+{% endblock %}
+
+{% block BODY %}
+  <a href="{{ url_for('logout') }}">
+    <button>LOGOUT</button>
+  </a>
+{% endblock %}
