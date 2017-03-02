@@ -1,0 +1,46 @@
+{% extends "base-layout.html" %}
+{% block TITLE %} Cash Register {% endblock %}
+
+{% block STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
+{% endblock %}
+
+{% block BODY %}
+  <div class="top-nav">
+    <div class="left">
+
+      <a href="{{ url_for('home') }}">
+        <div class="brand">
+          <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
+          <h3 class="brand-name">PYPOS</h3>
+        </div>
+      </a>
+
+      <div class="directories">
+        <span>
+          <a href="{{ url_for('dashboard') }}">Dashboard</a>
+        </span>
+        <span>
+          <a href="{{ url_for('products') }}">Products</a>
+        </span>
+      </div>
+
+    </div>
+
+    <div class="right">
+      <div class="profile">
+        <p id="name">{{ user.fullname }}</p>
+
+        {% if user.role == 1 %}
+          <p id="position">Admin</p>
+        {% elif user.role == 2 %}
+          <p id="position">Staff Member</p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="side-nav">
+  </div>
+{% endblock %}

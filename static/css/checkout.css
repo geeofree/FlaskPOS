@@ -1,0 +1,80 @@
+@font-face {
+  font-family: Roboto-light;
+  src: url(../fonts/Roboto/Roboto-Light.ttf);
+}
+
+body{
+  margin: 0;
+  padding: 0;
+  background: #f7f7f7;
+  font-family: Roboto-light;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.top-nav, .brand, .directories, .left {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.brand, .directories, .left {
+  height: 100%;
+}
+
+.top-nav {
+  top: 0;
+  color: #fff;
+  justify-content: space-between;
+  width: 100vw;
+  height: 50px;
+  background: #348953;
+  overflow: hidden;
+}
+
+.brand {
+  margin: 0 14px 0 12px;
+}
+
+#cart-icon{
+  font-size: 22px;
+  margin-right: 5px;
+}
+
+.brand-name {
+  margin: 0;
+}
+
+.directories span {
+  line-height: 50px;
+  padding: 5px;
+  height: 100%;
+}
+
+.directories span:hover {
+  cursor: pointer;
+  background: #104b34;
+}
+
+.right {
+  position: relative;
+  width: 200px;
+  height: 100%;
+}
+
+.right p {
+  text-align: right;
+  margin: 5px;
+}
+
+.right #name {
+  color: #09DCE4;
+}
+
+.right #position {
+  font-size: 12px;
+}
