@@ -29,31 +29,56 @@ def teardown(exception):
 
 
 
+@app.after_request
+def after(response):
+    response.headers.add('Cache-control', 'no-store, no cache, must-revalidate, post-check=0, pre-check=0')
+    return response
+
+
 @app.route("/", methods=["GET", "POST"])
 def home():
-    status = None
-
     def valid(username, password):
-        hashed = User.get(User.username == username).password
-        return checkpass(hashed, password)
+        try:
+            hashed = User.get(User.username == username).password
+            return checkpass(hashed, password)
+        except User.DoesNotExist:
+            return False
 
-    if 'logged_in' not in session:
-        if request.method == "POST":
+    if request.method == "POST":
+        if not session.get('logged_in', False):
             username = request.form['username']
             password = request.form['password']
 
             if valid(username, password):
                 session['logged_in'] = True
-                return redirect(url_for('dashboard'))
+                session['client_name'] = username
+                return redirect(url_for('checkout'))
             else:
-                status = "fail"
-    return render_template("home.html", status=status)
+                return render_template("home.html", status="fail")
+
+    if request.method == "GET":
+        return render_template("home.html", status=None)
+
+
+
+@app.route("/checkout")
+def checkout():
+    if 'logged_in' in session:
+        user = User.get(User.username == session['client_name'])
+        return render_template("checkout.html", user=user)
+    return redirect(url_for('home'))
+
+
+
+@app.route("/products")
+def products():
+    return "Hello World!"
 
 
 
 @app.route("/dashboard")
 def dashboard():
-    return render_template("dashboard.html")
+    return "Dashboard"
 
 
 
@@ -61,8 +86,9 @@ def dashboard():
 def logout():
     if 'logged_in' in session:
         session.pop('logged_in')
-        return redirect(url_for("home"))
-    abort(400)
+        session.pop('client_name')
+        return redirect(url_for("checkout"))
+    return redirect(url_for('home'))
 
 
 

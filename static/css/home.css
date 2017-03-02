@@ -3,13 +3,13 @@
 }
 
 @font-face {
-  font-family: roboto;
+  font-family: Roboto-thin;
   src: url(../fonts/Roboto/Roboto-Thin.ttf);
 }
 
 body {
   background: #f7f7f7;
-  font-family: roboto;
+  font-family: Roboto-thin;
 }
 
 .form-container {
@@ -80,7 +80,7 @@ form {
 }
 
 .text-input {
-  font-family: roboto;
+  font-family: Roboto-thin;
   font-weight: bold;
   padding: 10px 10px 10px 2px;
   border: transparent;
