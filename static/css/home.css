@@ -79,6 +79,10 @@ form {
   width: 100%;
 }
 
+input:focus, input {
+  outline: none;
+}
+
 .text-input {
   font-family: Roboto-thin;
   font-weight: bold;

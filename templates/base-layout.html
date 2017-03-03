@@ -8,5 +8,7 @@
 </head>
 <body>
   {% block BODY %} {% endblock %}
+  <script src="{{ url_for('static', filename='bower_components/jquery/dist/jquery.js') }}"></script>
+  {% block SCRIPT %}{% endblock %}
 </body>
 </html>

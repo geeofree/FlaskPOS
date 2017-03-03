@@ -7,40 +7,88 @@
 {% endblock %}
 
 {% block BODY %}
-  <div class="top-nav">
-    <div class="left">
+  <div class="container">
+    <div class="top-nav">
+      <div class="left">
 
-      <a href="{{ url_for('home') }}">
-        <div class="brand">
-          <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
-          <h3 class="brand-name">PYPOS</h3>
+        <a href="{{ url_for('home') }}">
+          <div class="brand">
+            <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
+            <h3 class="brand-name">PYPOS</h3>
+          </div>
+        </a>
+
+        <div class="directories">
+          <span>
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+          </span>
+          <span>
+            <a href="{{ url_for('products') }}">Products</a>
+          </span>
         </div>
-      </a>
 
-      <div class="directories">
-        <span>
-          <a href="{{ url_for('dashboard') }}">Dashboard</a>
-        </span>
-        <span>
-          <a href="{{ url_for('products') }}">Products</a>
-        </span>
       </div>
 
+      <div class="right">
+        <div class="profile">
+          <p id="name">{{ user.fullname }}</p>
+
+          {% if user.role == 1 %}
+            <p id="position">Admin</p>
+          {% elif user.role == 2 %}
+            <p id="position">Staff Member</p>
+          {% endif %}
+        </div>
+      </div>
     </div>
 
-    <div class="right">
-      <div class="profile">
-        <p id="name">{{ user.fullname }}</p>
+    <div class="checkout-body">
+      <div class="sales-summary body-container">
 
-        {% if user.role == 1 %}
-          <p id="position">Admin</p>
-        {% elif user.role == 2 %}
-          <p id="position">Staff Member</p>
-        {% endif %}
+        <div class="purchases">
+          <div class="descriptors">
+            <span class="long">Description</span>
+            <span class="short">Price</span>
+            <span class="short">Qty.</span>
+            <span class="short">Total</span>
+          </div>
+
+          <div class="items">
+            <div class="item">
+              <span class="long" id="prod-name">Bike Parts</span>
+              <span class="short">&#8369;2000.00</span>
+              <span class="short">1</span>
+              <span class="short">&#8369;20.00</span>
+            </div>
+            <div class="item">
+              <span class="long" id="prod-name">Bike Parts</span>
+              <span class="short">&#8369;2000.00</span>
+              <span class="short">1</span>
+              <span class="short">&#8369;200000.00</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="purchase-summary">
+          <div class="total">
+            <span class="short" style="font-weight:bold;">Total:</span>
+            <span class="short">20</span>
+            <span class="short">&#8369;1000000.00</span>
+          </div>
+
+          <div class="option">
+            <div class="button clear">clear</div>
+            <div class="button tender">tender</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="products body-container">
       </div>
     </div>
   </div>
+{% endblock %}
 
-  <div class="side-nav">
-  </div>
+{% block SCRIPT %}
+  <script src="{{ url_for('static', filename='js/checkout.js') }}"></script>
 {% endblock %}
