@@ -46,7 +46,7 @@ a {
   justify-content: space-between;
   width: 100vw;
   height: 7.5%;
-  background: #348953;
+  background: #444;
   overflow: hidden;
 }
 
@@ -56,11 +56,12 @@ a {
 
 #cart-icon{
   font-size: 22px;
-  margin-right: 5px;
+  margin-right: 3px;
 }
 
 .brand-name {
   margin: 0;
+  color: tomato;
 }
 
 .directories span {
@@ -71,7 +72,7 @@ a {
 
 .directories span:hover {
   cursor: pointer;
-  background: #104b34;
+  background: #353535;
 }
 
 .right {
@@ -142,7 +143,7 @@ a {
   height: 7%;
   color: #fff;
   border-radius: 5px;
-  background: #348953;
+  background: #444;
   font-family: Oxygen;
 }
 
@@ -168,7 +169,6 @@ a {
   border: 1px solid #BDBAA9;
   border-radius: 5px;
   margin: 5px 0;
-  box-shadow: 0 1px 1px #444;
 }
 
 .item span {
@@ -187,7 +187,7 @@ a {
 .purchase-summary {
   height: 20%;
   background: #fff;
-  border: 1px solid #444;
+  border: 1px dashed #444;
   border-radius: 5px;
 }
 
@@ -262,7 +262,7 @@ a {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  background: #348953;
+  background: #444;
   height: 9%;
   color: #fff;
 }
@@ -287,34 +287,67 @@ a {
   flex-wrap: wrap;
   align-items: center;
   letter-spacing: 1.5px;
-  margin-left: 35px;
   font-size: 14px;
+  margin-left: 20px;
 }
 
 .option {
+  position: relative;
+  margin-right: 10px;
   display: flex;
   flex-wrap: wrap;
-  text-align: center;
-  margin-left: 5px;
-  width: 100px;
-}
-
-.choice {
-  padding: 3px 10px;
-  display: none;
-  background: #444;
-  border-radius: 10px;
+  justify-content: flex-end;
 }
 
 .chosen {
+  padding: 3px 10px;
   display: inline-block;
+  background: #444;
+  border-radius: 10px;
+  text-align: center;
 }
 
 .down-icon {
+  cursor: pointer;
   margin-left: 5px;
+}
+
+.choices {
+  position: absolute;
+  left: 0;
+  top: 110%;
+  width: 150px;
+  background: #fff;
+  color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px #aaa;
+}
+
+.choices ul {
+  padding-left: 20%;
+}
+
+.choice {
+  cursor: pointer;
+  display: inline-block;
+  padding: 4px;
+  margin: 3px;
+  border-radius: 10px;
+  background: #444;
+}
+
+.choices .description {
+  color: #444;
+  margin: 5px;
+  text-align: left;
+}
+
+
+.hide {
+  display: none;
 }
 
 .products {
   height: 91%;
-  background: #444;
+  background: #fff;
 }
