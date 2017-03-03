@@ -70,7 +70,7 @@ form {
   transform: translateX(-50%);
   bottom: 0;
   width: 0px;
-  height: 3px;
+  height: 2px;
   background: #81deb0;
   transition-duration: 0.4s;
 }

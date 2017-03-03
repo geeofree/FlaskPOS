@@ -10,7 +10,6 @@
   <div class="container">
     <div class="top-nav">
       <div class="left">
-
         <a href="{{ url_for('home') }}">
           <div class="brand">
             <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
@@ -26,7 +25,6 @@
             <a href="{{ url_for('products') }}">Products</a>
           </span>
         </div>
-
       </div>
 
       <div class="right">
@@ -47,7 +45,7 @@
 
         <div class="purchases">
           <div class="descriptors">
-            <span class="long">Description</span>
+            <span class="long">Product Name</span>
             <span class="short">Price</span>
             <span class="short">Qty.</span>
             <span class="short">Total</span>
@@ -76,14 +74,37 @@
             <span class="short">&#8369;1000000.00</span>
           </div>
 
-          <div class="option">
+          <div class="action-buttons">
             <div class="button clear">clear</div>
             <div class="button tender">tender</div>
           </div>
         </div>
       </div>
 
-      <div class="products body-container">
+      <div class="products-summary body-container">
+        <div class="search-nav">
+          <div class="search">
+            <input type="text" class="search-input" placeholder="search products">
+            <i class="fa fa-search search-icon" aria-hidden="true"></i>
+          </div>
+
+          <div class="filter">
+            <span>filter by:</span>
+            <div class="option">
+              <div class="choice chosen">All</div>
+              <i class="fa fa-sort-desc down-icon" aria-hidden="true"></i>
+
+
+              <div class="choices">
+                <div class="choice">Categories</div>
+                <div class="choice">Item Code</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="products">
+        </div>
       </div>
     </div>
   </div>
