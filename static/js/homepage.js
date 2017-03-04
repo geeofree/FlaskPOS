@@ -1,16 +1,16 @@
-(function() {
-  const input = $('.text-input')
+import $ from 'jquery'
 
-  input.focus(function() {
-    const current = $(this)
-    current.next().addClass("stretch")
+export default function homepage() {
+  const underline  = $('.underline')
+  const text_input = $('.text-input')
+
+  text_input.focus(() => {
+    const self = $(this)
+    self.next().addClass('stretch')
   })
 
-  input.blur(function() {
-    const current = $(this)
-
-    if(current[0].value.length < 5) {
-      current.next().removeClass("stretch")
-    }
+  text_input.blur(() => {
+    const self = $(this)
+    self.next().removeClass('stretch')
   })
-})()
+}
