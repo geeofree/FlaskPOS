@@ -8,7 +8,10 @@
 
 {% block BODY %}
   <div class="container">
+
+    <!-- TOP NAVIGATION -->
     <div class="top-nav">
+      <!-- LEFT NAVIGATION -->
       <div class="left">
         <a href="{{ url_for('home') }}">
           <div class="brand">
@@ -27,6 +30,7 @@
         </div>
       </div>
 
+      <!-- RIGHT NAVIGATION -->
       <div class="right">
         <div class="profile">
           <p id="name">{{ user.fullname }}</p>
@@ -41,8 +45,8 @@
     </div>
 
     <div class="checkout-body">
+      <!-- SALES SUMMARY -->
       <div class="sales-summary body-container">
-
         <div class="purchases">
           <div class="descriptors">
             <span class="long">Product Name</span>
@@ -51,29 +55,19 @@
             <span class="short">Total</span>
           </div>
 
-          <div class="items">
-            <div class="item">
-              <span class="long" id="prod-name">Bike Parts</span>
-              <span class="short">&#8369;2000.00</span>
-              <span class="short">1</span>
-              <span class="short">&#8369;20.00</span>
-            </div>
-            <div class="item">
-              <span class="long" id="prod-name">Bike Parts</span>
-              <span class="short">&#8369;2000.00</span>
-              <span class="short">1</span>
-              <span class="short">&#8369;200000.00</span>
-            </div>
-          </div>
+          <!-- ITEMS -->
+          <div class="items"></div>
         </div>
 
+        <!-- PURCHASED SUMMARY -->
         <div class="purchase-summary">
           <div class="total">
             <span class="short" style="font-weight:bold;">Total:</span>
             <span class="short">20</span>
-            <span class="short">&#8369;1000000.00</span>
+            <span class="short">&#8369;1000000</span>
           </div>
 
+          <!-- ACTION BUTTONS -->
           <div class="action-buttons">
             <div class="button clear">clear</div>
             <div class="button tender">tender</div>
@@ -81,30 +75,70 @@
         </div>
       </div>
 
+      <!-- PRODUCTS SUMMARY -->
       <div class="products-summary body-container">
+
+        <!-- SEARCH NAVIGATION -->
         <div class="search-nav">
           <div class="search">
             <input type="text" class="search-input" placeholder="search products">
             <i class="fa fa-search search-icon" aria-hidden="true"></i>
           </div>
 
+          <!-- FILTER -->
           <div class="filter">
-            <div class="option">
-              <div class="chosen">ALL</div>
-              <i class="fa fa-sort-desc down-icon" aria-hidden="true"></i>
-
-
-              <div class="choices hide">
-                <p class="description">Filter By:</p>
-                  <li class="choice all">ALL</li>
-                  <li class="choice type">Categories</li>
-                  <li class="choice code">Item Code</li>
-              </div>
-            </div>
+            <span>FILTER:</span>
+            <li class="choice all current-filter">all</li>
+            <li class="choice category">categories</li>
+            <li class="choice sku">item code</li>
+            <li class="choice stock">stock</li>
           </div>
         </div>
 
+        <!-- PRODUCTS -->
         <div class="products">
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
+          <div class="product">
+            <span class="item code">120015009</span>
+            <span class="item name">Bike Parts</span>
+            <span class="item category">Parts</span>
+            <span class="item stock">5</span>
+            <span class="item price">&#8369;50</span>
+          </div>
         </div>
       </div>
     </div>
