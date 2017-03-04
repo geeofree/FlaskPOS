@@ -1,46 +1,7 @@
-function createCartItems(selected_items, qty) {
-  selected_items.each(function(_,el) {
-    const $el = $(el)
-    const item_name = $el.children('.name').text()
-    const price = $el.children('.price').text()
-    const price_num =  Number(price.match(/\d+/)[0])
-    const total = "₱" + (price_num * qty)
+import $ from 'jquery'
+import createCartItems from './create_cart'
 
-    createItem(item_name, price, qty, total)
-    $el.removeClass('selected-product')
-  })
-
-
-  function createItem(item_name, price, qty, total) {
-    const items = $('.items')
-    const item_data = [[item_name, "long prod_name"], [price,"short"], [qty,"short"], [total,"short"]]
-
-    const item = document.createElement('div')
-    item.setAttribute("class", "purchased-item")
-
-    item_data
-    .map(data => {
-      const value = data[0]
-      const span_class = data[1]
-
-      const span = document.createElement('span')
-      const span_val = document.createTextNode(value)
-
-      span.setAttribute("class", span_class)
-      $(span).append(span_val)
-
-      return span
-    })
-    .forEach(span => {
-      $(item).append(span)
-    })
-
-    items.append(item)
-  }
-}
-
-
-(function() {
+export default function checkout() {
   // FILTER SELECT
   (function() {
     const $choice = $('.choice')
@@ -101,4 +62,4 @@ function createCartItems(selected_items, qty) {
     $products.mouseenter(addKeyEvent)
     $products.mouseleave(removeKeyEvent)
   })()
-})()
+}
