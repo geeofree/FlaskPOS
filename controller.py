@@ -65,14 +65,19 @@ def home():
 def checkout():
     if 'logged_in' in session:
         user = User.get(User.username == session['client_name'])
-        return render_template("checkout.html", user=user)
+        products = Inventory.select()
+        return render_template("checkout.html", user=user, products=products)
     return redirect(url_for('home'))
 
 
 
 @app.route("/products")
 def products():
-    return "Hello World!"
+    if 'logged_in' in session:
+        user = User.get(User.username == session['client_name'])
+        products = Inventory.select()
+        return render_template("products.html", user=user, products=products)
+    abort(400)
 
 
 
@@ -87,8 +92,8 @@ def logout():
     if 'logged_in' in session:
         session.pop('logged_in')
         session.pop('client_name')
-        return redirect(url_for("checkout"))
-    return redirect(url_for('home'))
+        return redirect(url_for("home"))
+    abort(400)
 
 
 
