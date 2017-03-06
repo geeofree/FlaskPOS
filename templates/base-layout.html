@@ -22,12 +22,12 @@
         </a>
 
         <div class="directories">
-          <span>
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-          </span>
-          <span>
-            <a href="{{ url_for('products') }}">Products</a>
-          </span>
+          <a href="{{ url_for('dashboard') }}" class="dir {% if current_dir == 'dashboard' %}current_dir{% endif %}">
+            <span>Dashboard</span>
+          </a>
+          <a href="{{ url_for('checkout') }}" class="dir {% if current_dir == 'checkout'%}current_dir{% endif %}">
+            <span>Checkout</span>
+          </a>
         </div>
       </div>
 

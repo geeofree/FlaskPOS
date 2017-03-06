@@ -66,24 +66,20 @@ def checkout():
     if 'logged_in' in session:
         user = User.get(User.username == session['client_name'])
         products = Inventory.select()
-        return render_template("checkout.html", user=user, products=products)
+        dir = 'checkout'
+        return render_template("checkout.html", user=user, products=products, current_dir=dir)
     return redirect(url_for('home'))
-
-
-
-@app.route("/products")
-def products():
-    if 'logged_in' in session:
-        user = User.get(User.username == session['client_name'])
-        products = Inventory.select()
-        return render_template("products.html", user=user, products=products)
-    abort(400)
 
 
 
 @app.route("/dashboard")
 def dashboard():
-    return "Dashboard"
+    if 'logged_in' in session:
+        user = User.get(User.username == session['client_name'])
+        products = Inventory.select()
+        dir = 'dashboard'
+        return render_template("dashboard.html", user=user, products=products, current_dir=dir)
+    abort(400)
 
 
 
