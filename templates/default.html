@@ -1,0 +1,35 @@
+{% extends "dashboard.html" %}
+
+{% block TITLE %} Dashboard {% endblock %}
+
+{% block DASH_STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/default.css') }}">
+{% endblock %}
+
+{% block DASH %}
+  <div class="greetings">
+    <h1 style="color:#41abbd;font-size:100px;margin-top:0;">Welcome to the Dashboard!</h1>
+    <h3 style="color:#7baba3;max-width:750px;font-weight:500;">
+      From here you can see your reports summary, products, activity logs,
+      and users who are currently using the system!
+    </h3>
+  </div>
+  <div class="index">
+    <div class="info">
+      <i class="fa fa-area-chart logo" aria-hidden="true"></i>
+      <p>Reports Summary</p>
+    </div>
+    <div class="info">
+      <i class="fa fa-tag logo" aria-hidden="true"></i>
+      <p>Products</p>
+    </div>
+    <div class="info">
+      <i class="fa fa-table logo" aria-hidden="true"></i>
+      <p>Activity Logs</p>
+    </div>
+    <div class="info">
+      <i class="fa fa-users logo" aria-hidden="true"></i>
+      <p>User Accounts</p>
+    </div>
+  </div>
+{% endblock %}

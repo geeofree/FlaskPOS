@@ -64,21 +64,40 @@ def home():
 @app.route("/checkout")
 def checkout():
     if 'logged_in' in session:
-        user = User.get(User.username == session['client_name'])
-        return render_template("checkout.html", user=user)
+        context = dict (
+            user = User.get(User.username == session['client_name']),
+            products = Inventory.select(),
+            current_dir = 'checkout'
+        )
+        return render_template("checkout.html", **context)
     return redirect(url_for('home'))
 
 
 
-@app.route("/products")
-def products():
-    return "Hello World!"
+@app.route("/dashboard/<subdir>")
+@app.route("/dashboard/", defaults={'subdir': ''})
+def dashboard(subdir):
+    if 'logged_in' in session:
+        if subdir and subdir not in ['reports', 'products', 'logs', 'users']:
+            abort(404)
 
+        context = dict (
+            user = User.get(User.username == session['client_name']),
+            products = Inventory.select(),
+            current_dir = 'dashboard'
+        )
 
-
-@app.route("/dashboard")
-def dashboard():
-    return "Dashboard"
+        if subdir == 'reports':
+            return render_template("reports.html", **context)
+        elif subdir == 'products':
+            return render_template("products.html", **context)
+        elif subdir == 'logs':
+            return render_template("logs.html", **context)
+        elif subdir == 'users':
+            return render_template("users.html", **context)
+        else:
+            return render_template("default.html", **context)
+    abort(400)
 
 
 
@@ -87,8 +106,8 @@ def logout():
     if 'logged_in' in session:
         session.pop('logged_in')
         session.pop('client_name')
-        return redirect(url_for("checkout"))
-    return redirect(url_for('home'))
+        return redirect(url_for("home"))
+    abort(400)
 
 
 

@@ -1,0 +1,27 @@
+{% extends "base-layout.html" %}
+
+{% block STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+  {% block DASH_STYLE %}{% endblock %}
+{% endblock %}
+
+{% block BODY %}
+  <div class="side-nav">
+    <a href="{{ url_for('dashboard', subdir='reports') }}">
+      <i class="fa fa-area-chart icon" id="chart" aria-hidden="true"></i>
+    </a>
+    <a href="{{ url_for('dashboard', subdir='products') }}">
+      <i class="fa fa-tag icon" id="tag" aria-hidden="true"></i>
+    </a>
+    <a href="{{ url_for('dashboard', subdir='logs') }}">
+      <i class="fa fa-table icon" id="tbl" aria-hidden="true"></i>
+    </a>
+    <a href="{{ url_for('dashboard', subdir='users') }}">
+      <i class="fa fa-users icon" id="users" aria-hidden="true"></i>
+    </a>
+  </div>
+
+  <div class="dash-content">
+    {% block DASH %} {% endblock %}
+  </div>
+{% endblock %}

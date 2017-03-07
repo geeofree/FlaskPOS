@@ -3,143 +3,67 @@
 
 {% block STYLE %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
-  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
 {% endblock %}
 
 {% block BODY %}
-  <div class="container">
-
-    <!-- TOP NAVIGATION -->
-    <div class="top-nav">
-      <!-- LEFT NAVIGATION -->
-      <div class="left">
-        <a href="{{ url_for('home') }}">
-          <div class="brand">
-            <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
-            <h3 class="brand-name">PYPOS</h3>
-          </div>
-        </a>
-
-        <div class="directories">
-          <span>
-            <a href="{{ url_for('dashboard') }}">Dashboard</a>
-          </span>
-          <span>
-            <a href="{{ url_for('products') }}">Products</a>
-          </span>
-        </div>
+  <!-- SALES SUMMARY -->
+  <div class="sales-summary body-container">
+    <div class="purchases">
+      <div class="descriptors">
+        <span class="long">Product Name</span>
+        <span class="short">Price</span>
+        <span class="short">Qty.</span>
+        <span class="short">Total</span>
       </div>
 
-      <!-- RIGHT NAVIGATION -->
-      <div class="right">
-        <div class="profile">
-          <p id="name">{{ user.fullname }}</p>
+      <!-- ITEMS -->
+      <div class="items"></div>
+    </div>
 
-          {% if user.role == 1 %}
-            <p id="position">Admin</p>
-          {% elif user.role == 2 %}
-            <p id="position">Staff Member</p>
-          {% endif %}
-        </div>
+    <!-- PURCHASED SUMMARY -->
+    <div class="purchase-summary">
+      <div class="total">
+        <span class="short" style="font-weight:bold;">Total:</span>
+        <span class="short">20</span>
+        <span class="short">&#8369;1000000</span>
+      </div>
+
+      <!-- ACTION BUTTONS -->
+      <div class="action-buttons">
+        <div class="button clear">clear</div>
+        <div class="button tender">tender</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PRODUCTS SUMMARY -->
+  <div class="products-summary body-container">
+
+    <!-- SEARCH NAVIGATION -->
+    <div class="search-nav">
+      <div class="search">
+        <input type="text" class="search-input" placeholder="search products">
+        <i class="fa fa-search search-icon" aria-hidden="true"></i>
+      </div>
+
+      <!-- FILTER -->
+      <div class="filter">
+        <span>FILTER:</span>
+        <li class="choice all current-filter">all</li>
+        <li class="choice category">categories</li>
+        <li class="choice sku">item code</li>
+        <li class="choice stock">stock</li>
       </div>
     </div>
 
-    <div class="checkout-body">
-      <!-- SALES SUMMARY -->
-      <div class="sales-summary body-container">
-        <div class="purchases">
-          <div class="descriptors">
-            <span class="long">Product Name</span>
-            <span class="short">Price</span>
-            <span class="short">Qty.</span>
-            <span class="short">Total</span>
-          </div>
-
-          <!-- ITEMS -->
-          <div class="items"></div>
-        </div>
-
-        <!-- PURCHASED SUMMARY -->
-        <div class="purchase-summary">
-          <div class="total">
-            <span class="short" style="font-weight:bold;">Total:</span>
-            <span class="short">20</span>
-            <span class="short">&#8369;1000000</span>
-          </div>
-
-          <!-- ACTION BUTTONS -->
-          <div class="action-buttons">
-            <div class="button clear">clear</div>
-            <div class="button tender">tender</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- PRODUCTS SUMMARY -->
-      <div class="products-summary body-container">
-
-        <!-- SEARCH NAVIGATION -->
-        <div class="search-nav">
-          <div class="search">
-            <input type="text" class="search-input" placeholder="search products">
-            <i class="fa fa-search search-icon" aria-hidden="true"></i>
-          </div>
-
-          <!-- FILTER -->
-          <div class="filter">
-            <span>FILTER:</span>
-            <li class="choice all current-filter">all</li>
-            <li class="choice category">categories</li>
-            <li class="choice sku">item code</li>
-            <li class="choice stock">stock</li>
-          </div>
-        </div>
-
-        <!-- PRODUCTS -->
-        <div class="products">
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-          <div class="product">
-            <span class="item code">120015009</span>
-            <span class="item name">Bike Parts</span>
-            <span class="item category">Parts</span>
-            <span class="item stock">5</span>
-            <span class="item price">&#8369;50</span>
-          </div>
-        </div>
+    <!-- PRODUCTS -->
+    <div class="products">
+      <div class="product">
+        <span class="item code">120015009</span>
+        <span class="item name">Bike Parts</span>
+        <span class="item category">Parts</span>
+        <span class="item stock">5</span>
+        <span class="item price">&#8369;50</span>
       </div>
     </div>
   </div>

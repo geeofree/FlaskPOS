@@ -1,12 +1,13 @@
-{% extends "base-layout.html" %}
-
-{% block TITLE %} Home {% endblock %}
-
-{% block STYLE %}
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Home</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-{% endblock %}
+</head>
 
-{% block BODY %}
+<body>
   <div class="form-container">
     <div class="form-head">
       <h1>Login Form</h1>
@@ -33,4 +34,7 @@
       </form>
     </div>
   </div>
-{% endblock %}
+
+  <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+</body>
+</html>

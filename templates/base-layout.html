@@ -1,13 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <title>{% block TITLE %}{% endblock %}</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{% block TITLE %}{% endblock %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/font-awesome/css/font-awesome.min.css') }}">
   {% block STYLE %} {% endblock %}
 </head>
 <body>
-  {% block BODY %} {% endblock %}
+  <div class="container">
+    <!-- TOP NAVIGATION -->
+    <div class="top-nav">
+      <!-- LEFT NAVIGATION -->
+      <div class="left">
+        <a href="{{ url_for('home') }}">
+          <div class="brand">
+            <i class="fa fa-shopping-cart" aria-hidden="true" id="cart-icon"></i>
+            <h3 class="brand-name">PYPOS</h3>
+          </div>
+        </a>
+
+        <!-- MAIN DIRECTORIES -->
+        <div class="directories">
+          <a href="{{ url_for('dashboard') }}" class="dir {% if current_dir == 'dashboard' %}current_dir{% endif %}">
+            <span>Dashboard</span>
+          </a>
+          <a href="{{ url_for('checkout') }}" class="dir {% if current_dir == 'checkout'%}current_dir{% endif %}">
+            <span>Checkout</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- RIGHT NAVIGATION -->
+      <div class="right">
+        <div class="profile">
+          <p id="name">{{ user.fullname }}</p>
+
+          {% if user.role == 1 %}
+            <p id="position">Admin</p>
+          {% elif user.role == 2 %}
+            <p id="position">Staff Member</p>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Template Content -->
+    <div class="content">
+      {% block BODY %} {% endblock %}
+    </div>
+  </div>
+
   <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
 </body>
 </html>

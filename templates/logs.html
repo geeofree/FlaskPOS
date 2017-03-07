@@ -1,0 +1,11 @@
+{% extends "dashboard.html" %}
+
+{% block TITLE %} Activity Logs {% endblock %}
+
+{% block DASH_STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/logs.css') }}">
+{% endblock %}
+
+{% block DASH %}
+  <h1>LOGS</h1>
+{% endblock %}
