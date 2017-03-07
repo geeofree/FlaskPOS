@@ -1,0 +1,11 @@
+{% extends "dashboard.html" %}
+
+{% block TITLE %} Users {% endblock %}
+
+{% block DASH_STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+{% endblock %}
+
+{% block DASH %}
+  <h1>USERS</h1>
+{% endblock %}

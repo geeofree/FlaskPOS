@@ -21,9 +21,16 @@ body{
 }
 
 a {
+  display: flex;
+  align-items: center;
   color: #fff;
   text-decoration: none;
   outline: none;
+}
+
+.dir {
+  height: 100%;
+  padding: 5px;
 }
 
 .container {
@@ -34,7 +41,7 @@ a {
   flex-direction: column;
 }
 
-.top-nav, .brand, .directories, .left, .checkout-body {
+.top-nav, .brand, .directories, .left, .content{
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -70,12 +77,6 @@ a {
   color: tomato;
 }
 
-.directories span {
-  line-height: 50px;
-  padding: 5px;
-  height: 100%;
-}
-
 .dir:hover {
   cursor: pointer;
   background: #353535;
@@ -102,4 +103,9 @@ a {
 
 .current_dir {
   background: #353535;
+}
+
+.content {
+  width: 100%;
+  height: 92.5%;
 }

@@ -1,0 +1,32 @@
+.dash-content {
+  justify-content: space-around;
+  align-items: center;
+}
+
+.greetings {
+  width: 800px;
+}
+
+.index {
+  color: #36a894;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  width: 300px;
+  height: 400px;
+}
+
+.info {
+  margin: 10px;
+  text-align: center;
+}
+
+.info p {
+  color: #a59c9c;
+}
+
+.logo {
+  color: #465c71;
+  font-size: 90px;
+}

@@ -1,9 +1,6 @@
 /* BODY */
-.checkout-body {
+.content {
   justify-content: space-around;
-  width: 100%;
-  height: 92.5%;
-  background: #f7f7f7;
 }
 
 .body-container {
@@ -46,7 +43,6 @@
   justify-content: space-around;
   height: 7%;
   color: #fff;
-  border-radius: 5px;
   background: #444;
   font-family: Oxygen;
 }
@@ -171,7 +167,6 @@
   background: #444;
   height: 9%;
   color: #fff;
-  box-shadow: 3px 5px 5px #aaa;
 }
 
 .search-input {
@@ -262,7 +257,7 @@
 }
 
 .selected-product {
-  background: #3BAB78;
+  background: #41abbd;
   border-bottom: 2px dashed #fff;
   color: #fff;
 }

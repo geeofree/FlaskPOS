@@ -21,6 +21,7 @@
           </div>
         </a>
 
+        <!-- MAIN DIRECTORIES -->
         <div class="directories">
           <a href="{{ url_for('dashboard') }}" class="dir {% if current_dir == 'dashboard' %}current_dir{% endif %}">
             <span>Dashboard</span>
@@ -45,8 +46,10 @@
       </div>
     </div>
 
-    <!-- Custom Template Body -->
-    {% block BODY %} {% endblock %}
+    <!-- Template Content -->
+    <div class="content">
+      {% block BODY %} {% endblock %}
+    </div>
   </div>
 
   <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
