@@ -1,3 +1,152 @@
 .dash-content {
-  justify-content: center;
+  position: relative;
+  padding: 20px;
+}
+
+table {
+  width: 90%;
+  border-collapse: collapse;
+}
+
+table th {
+  background: #444;
+}
+
+.empty-table {
+  width: 100%;
+  height: 90%;
+}
+
+.empty-table h1 {
+  color: #41abbd;
+  font-size: 80px;
+}
+
+.button {
+  color: #fff;
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  display: inline-block;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.clicked {
+  border-bottom: none;
+  border-right: none;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+}
+
+.add {
+  display: inline-block;
+  background: #1ead52;
+}
+
+.new {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  border-radius: 5px;
+  font-size: 30px;
+}
+
+.modal {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: none;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.9);
+}
+
+.product-add, .product-edit, .product-delete {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+}
+
+.product-add {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: #fff;
+}
+
+.close {
+  position: absolute;
+  font-size: 50px;
+  right: 20px;
+  padding: 2px;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.close:hover {
+  cursor: pointer;
+}
+
+.active {
+  display: block;
+}
+
+.input-container {
+  margin: 5px;
+}
+
+.text {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.numbers, .action-btns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.action-btns {
+  justify-content: flex-end;
+}
+
+button {
+  margin-right: 5px;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.clear {
+  background: tomato;
+}
+
+.submit {
+  background: #1ead52;
+}
+
+.header-text {
+  font-family: Oxygen;
+  height: 50px;
+  width: 100%;
+  background: #1ead52;
+  color: #fff;
+}
+
+.header-text h3 {
+  line-height: 50px;
+  margin: 0 10px;
 }

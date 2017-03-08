@@ -7,14 +7,91 @@
 {% endblock %}
 
 {% block DASH %}
-  <table>
-    <tr>
-      <th>ID</th>
-      <th>Description</th>
-      <th>Category</th>
-      <th>Stock</th>
-      <th>SKU</th>
-    </tr>
-    
-  </table>
+  {% if products %}
+    <table>
+      <tr>
+        <th>ID</th>
+        <th>SKU</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>Stock</th>
+        <th>Price</th>
+      </tr>
+      {% for product in products %}
+      <tr>
+        <td>{{ product.invID }}</td>
+        <td>{{ product.prod_code }}</td>
+        <td>{{ product.prod_name }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.prod_price }}</td>
+      </tr>
+      {% endfor %}
+    </table>
+  {% else %}
+    <div class="empty-table">
+      <h1>It seems you haven't added any products yet.</h1>
+      <div class="button new add">Add a Product</div>
+    </div>
+  {% endif %}
+{% endblock %}
+
+{% block MODAL %}
+  <div class="modal">
+    <!-- PRODUCT ADD MODAL -->
+    <div class="product-add">
+      <div class="header-text">
+        <h3>Add Product</h3>
+      </div>
+
+      <form action="{{ url_for('add_product') }}" method="POST">
+        <div class="input-container">
+          <input type="text" name="item_code" class="input item-code" placeholder="11-digit combination" required>
+          <p>Item Code</p>
+        </div>
+
+        <div class="input-container">
+          <input type="text" name="item_name" class="input text item-name" placeholder="Name of this product" required>
+          <p>Product Name</p>
+        </div>
+
+        <div class="input-container">
+          <input list="categories" name="category" class="input text item-type" placeholder="Category of this product" required>
+          {% if products %}
+          <datalist>
+            {% for product in products %}
+              <option value="{{  product.prod_code  }}">
+            {% endfor %}
+          </datalist>
+          {% endif %}
+          <p>Category</p>
+        </div>
+
+        <div class="numbers">
+          <div class="input-container">
+            <input type="number" name="stock" min=0 max=999999 class="input item-stock" value=0 required>
+            <p>Stock</p>
+          </div>
+          <div class="input-container">
+            <input type="number" name="price" min=0 class="input item-price" value=0 required>
+            <p>Product Price</p>
+          </div>
+        </div>
+
+        <div class="action-btns">
+          <button type="button" class="clear">clear</button>
+          <button type="button" class="submit">submit</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PRODUCT EDIT MODAL -->
+    <div class="product-edit">
+    </div>
+
+    <!-- PRODUCT DELETE MODAL -->
+    <div class="product-delete">
+    </div>
+
+    <div class="close">&times;</div>
+  </div>
 {% endblock %}

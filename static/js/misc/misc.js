@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-export default function navhover() {
+export default function highlight_magnet() {
   const dir = $('.dir')
   const current = $('.current_dir')
 
