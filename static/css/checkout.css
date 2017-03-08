@@ -149,76 +149,19 @@
   width: 800px;
 }
 
-.search-nav, .products, .products-summary {
+.products, .products-summary {
   box-sizing: border-box;
 }
 
-.search-nav, .products {
+.products {
   display: flex;
   flex-wrap: wrap;
   width: 100%;
 }
 
 .search-nav {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  background: #444;
   height: 9%;
-  color: #fff;
-}
-
-.search-input {
-  font-family: sans-serif;
-  margin-left: 15px;
-  border: none;
-  border-radius: 10px;
-  font-size: 13px;
-  height: 20px;
-  width: 160px;
-  padding-left: 10px;
-}
-
-.search-icon {
-  margin-left: 5px;
-}
-
-.filter {
-  margin-right: 10px;
-}
-
-.filter li {
-  display: inline-block;
-  margin: 0 5px;
-}
-
-.choice {
-  cursor: pointer;
-  padding: 2px 4px;
-  border-radius: 15px;
-}
-
-.filter .all {
-  width: 40px;
-  text-align: center;
-  background: #4678b0;
-}
-
-.filter .category {
-  background: #b08340;
-}
-
-.filter .sku {
-  background: #7bc581;
-}
-
-.filter .stock {
-  background: #dd654f;
-}
-
-.current-filter {
-  border: 1px solid #fff;
+  width: 100%;
 }
 
 .products {
