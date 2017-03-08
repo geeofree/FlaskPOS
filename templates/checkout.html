@@ -3,6 +3,7 @@
 
 {% block STYLE %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/checkout.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component/searchnav.css') }}"
 {% endblock %}
 
 {% block BODY %}
@@ -45,15 +46,7 @@
         <input type="text" class="search-input" placeholder="search products">
         <i class="fa fa-search search-icon" aria-hidden="true"></i>
       </div>
-
-      <!-- FILTER -->
-      <div class="filter">
-        <span>FILTER:</span>
-        <li class="choice all current-filter">all</li>
-        <li class="choice category">categories</li>
-        <li class="choice sku">item code</li>
-        <li class="choice stock">stock</li>
-      </div>
+      
     </div>
 
     <!-- PRODUCTS -->

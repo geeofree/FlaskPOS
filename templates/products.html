@@ -3,36 +3,71 @@
 {% block TITLE %} Products {% endblock %}
 
 {% block DASH_STYLE %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component/modal.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component/table.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component/buttons.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/component/searchnav.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/products.css') }}">
 {% endblock %}
 
 {% block DASH %}
   {% if products %}
-    <table>
-      <tr>
-        <th>ID</th>
-        <th>SKU</th>
-        <th>Description</th>
-        <th>Category</th>
-        <th>Stock</th>
-        <th>Price</th>
-      </tr>
-      {% for product in products %}
-      <tr>
-        <td>{{ product.invID }}</td>
-        <td>{{ product.prod_code }}</td>
-        <td>{{ product.prod_name }}</td>
-        <td>{{ product.stock }}</td>
-        <td>{{ product.prod_price }}</td>
-      </tr>
-      {% endfor %}
-    </table>
+    <div class="info-container">
+
+      <div class="search-nav">
+        <div class="search">
+          <input type="text" class="search-input" placeholder="search products">
+          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+        </div>
+
+        <div class="buttons">
+          <div class="button delete">Delete</div>
+          <div class="button add">Add</div>
+        </div>
+      </div>
+
+      <table class="tbl">
+        <tr>
+          <td>
+            <table class="tbl">
+              <tr class="tbl-head">
+                <th class="short">SKU</th>
+                <th class="long">Item Description</th>
+                <th class="medium">Category</th>
+                <th class="short">Stock</th>
+                <th class="short">Price</th>
+              </tr>
+            </table>
+          </td>
+        </tr>
+
+        <tr>
+          <td>
+            <div class="table-scroll">
+              <table class="tbl">
+                {% for product in products %}
+                  <tr class="tbl-data">
+                    <td class="short">{{ product.prod_code }}</td>
+                    <td class="long">{{ product.prod_name }}</td>
+                    <td class="medium">{{ product.prod_type }}</td>
+                    <td class="short">{{ product.stock }}</td>
+                    <td class="short">&#8369;{{ product.prod_price }}</td>
+                  </tr>
+                {% endfor %}
+              </table>
+            </div>
+          </td>
+        </tr>
+      </table>
+
+    </div>
   {% else %}
     <div class="empty-table">
       <h1>It seems you haven't added any products yet.</h1>
       <div class="button new add">Add a Product</div>
     </div>
   {% endif %}
+
 {% endblock %}
 
 {% block MODAL %}
@@ -45,24 +80,28 @@
 
       <form action="{{ url_for('add_product') }}" method="POST">
         <div class="input-container">
-          <input type="text" name="item_code" class="input item-code" placeholder="11-digit combination" required>
+          <input type="text" name="item_code" class="input item-code" autocomplete="off" placeholder="11-digit combination" required>
           <p>Item Code</p>
         </div>
 
         <div class="input-container">
-          <input type="text" name="item_name" class="input text item-name" placeholder="Name of this product" required>
+          <input type="text" name="item_name" class="input item-name" autocomplete="off" placeholder="Name of this product" required>
           <p>Product Name</p>
         </div>
 
         <div class="input-container">
-          <input list="categories" name="category" class="input text item-type" placeholder="Category of this product" required>
-          {% if products %}
-          <datalist>
-            {% for product in products %}
-              <option value="{{  product.prod_code  }}">
-            {% endfor %}
-          </datalist>
-          {% endif %}
+          <div class="category">
+            <input type="text" name="category" class="input item-type" autocomplete="off" placeholder="Category of this product" required>
+            {% if products %}
+              <select>
+                {% for product in products %}
+                  <option value="{{ product.prod_type }}">{{ product.prod_type }}</option>
+                {% endfor %}
+              </select>
+            {% endif %}
+          </div>
+
+
           <p>Category</p>
         </div>
 

@@ -1,0 +1,27 @@
+.button {
+  padding: 5px;
+  color: #fff;
+  border-right: 1px solid #aaa;
+  border-bottom: 1px solid #aaa;
+  display: inline-block;
+  border-radius: 5px;
+}
+
+.button:hover {
+  cursor: pointer;
+}
+
+.clicked {
+  border-bottom: none;
+  border-right: none;
+  border-top: 1px solid transparent;
+  border-left: 1px solid transparent;
+}
+
+.add {
+  background: #1ead52;
+}
+
+.delete {
+  background: tomato;
+}

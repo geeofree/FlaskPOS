@@ -1,0 +1,24 @@
+.search-nav {
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: #444;
+  color: #fff;
+}
+
+.search-input {
+  font-family: sans-serif;
+  margin-left: 15px;
+  border: none;
+  border-radius: 10px;
+  font-size: 13px;
+  height: 20px;
+  width: 160px;
+  padding-left: 10px;
+}
+
+.search-icon {
+  margin-left: 5px;
+}

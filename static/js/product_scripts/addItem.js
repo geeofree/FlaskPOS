@@ -2,23 +2,24 @@ import $ from "jquery"
 
 function validInputs(name, code, type, stock, price) {
   const maxDigit  = /\d{11}/
+  const digitOnly = /^\d+$/
 
-  const validName = Boolean(name) && name.length <= 200
+  const validName = Boolean(name) && name.length <= 140
   const validCode = Boolean(code) && maxDigit.test(code)
-  const validType = Boolean(type) && type.length <= 200
-  const validStock = Boolean(stock) && stock >= 0 && stock <= 999999
-  const validPrice = Boolean(price) && price >= 0
+  const validType = Boolean(type) && type.length <= 25
+  const validStock = Boolean(stock) && stock >= 0 && stock <= 999999 && digitOnly.test(stock)
+  const validPrice = Boolean(price) && price >= 0 && stock <= 999999 && digitOnly.test(price)
 
   if(!validCode) {
     alert('Invalid ITEM CODE input')
     return false
   }
   else if(!validName) {
-    alert('Product NAME must be more than 1 and less than 200 characters')
+    alert('Product NAME must be more than 1 and less than 140 characters')
     return false
   }
   else if(!validType) {
-    alert('Product CATEGORY must be more than 1 and less than 200 characters')
+    alert('Product CATEGORY must be more than 1 and less than 25 characters')
     return false
   }
   else if(!validStock) {
@@ -26,7 +27,7 @@ function validInputs(name, code, type, stock, price) {
     return false
   }
   else if(!validPrice) {
-    alert('Invalid input on PRICE, must be 0 or more')
+    alert('Invalid input on PRICE, must be 0 or more and less than 1,000,000')
     return false
   }
 
@@ -41,12 +42,14 @@ export default function addItem() {
   const $itemStock = $('.item-stock')
   const $itemPrice = $('.item-price')
 
+
   // BUTTONS
   const $submit    = $('.submit')
   const $clear     = $('.clear')
 
-  // FORM
+  // MISC.
   const $form = $('form')
+  const $sel  = $('select')
 
   $submit.click(function() {
     // INPUT VALUES
@@ -59,6 +62,13 @@ export default function addItem() {
     if(validInputs($nameVal, $codeVal, $typeVal, $stockVal, $priceVal)) {
       $form.submit()
     }
+  })
+
+  $sel.click(function() {
+    const $self = $(this)
+    const $selVal = $self.val()
+    console.log($selVal)
+    $itemType.val($selVal)
   })
 
   $clear.click(function() {
