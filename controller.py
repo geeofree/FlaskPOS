@@ -101,6 +101,22 @@ def dashboard(subdir):
 
 
 
+@app.route("/add_product", methods=["POST"])
+def add_product():
+    if 'logged_in' in session:
+        fields = dict(
+            prod_name     = request.form['item_name'],
+            prod_code     = request.form['item_code'],
+            prod_type = request.form['category'],
+            stock    = request.form['stock'],
+            prod_price    = request.form['price']
+        )
+
+        Inventory.create(**fields)
+        return redirect(url_for('dashboard', subdir='products'))
+
+
+
 @app.route("/logout")
 def logout():
     if 'logged_in' in session:

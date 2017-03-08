@@ -13,6 +13,11 @@
   user-select: none;
 }
 
+input {
+  -moz-user-select: text;
+  user-select: text;
+}
+
 body{
   margin: 0;
   padding: 0;

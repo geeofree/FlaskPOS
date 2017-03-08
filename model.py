@@ -17,12 +17,12 @@ class User(BaseModel):
 
 
 class Inventory(BaseModel):
-    invID     = PrimaryKeyField()
-    prod_name = TextField()
-    prod_type = CharField()
-    stock     = IntegerField()
-    prod_code = CharField()
-
+    invID      = PrimaryKeyField()
+    prod_name  = TextField()
+    prod_type  = CharField()
+    stock      = IntegerField()
+    prod_code  = CharField()
+    prod_price = IntegerField()
 
 class User_Log(BaseModel):
     ulogID   = PrimaryKeyField()

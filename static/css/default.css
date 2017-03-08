@@ -7,6 +7,18 @@
   width: 800px;
 }
 
+.greetings h1 {
+  color:#41abbd;
+  font-size:100px;
+  margin-top:0;
+}
+
+.greetings h3 {
+  color:#7baba3;
+  max-width:750px;
+  font-weight:500;
+}
+
 .index {
   color: #36a894;
   display: flex;
