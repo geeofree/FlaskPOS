@@ -1,0 +1,46 @@
+.tender-modal {
+  width: 340px !important
+}
+
+.tender-modal .header-text {
+  background: #3db34b;
+  color: #fff;
+}
+
+.checkout-contents {
+  display: flex;
+  padding: 15px;
+  flex-direction: column;
+}
+
+.sub, .button-container {
+  display: flex;
+  justify-content: flex-end;;
+  align-items: center;
+}
+
+.change-div {
+  justify-content: space-between;
+  border-top: 3px double #444;
+}
+
+.payment-div {
+  margin-bottom: 10px;
+}
+
+.sub h1 {
+  font-size: 40px;
+}
+
+.sub h1, .sub-text {
+  margin: 3px 0;
+}
+
+.payment-value {
+  margin: 0 10px;
+  width: 90px;
+}
+
+.purchase {
+  background: #3db34b;
+}

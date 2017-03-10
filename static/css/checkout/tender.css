@@ -108,20 +108,21 @@
 
 .button {
   border: 1px solid #444;
+  border-radius: 2px;
 }
 
 .tender {
-  background: #52DA52;
+  background: #2a5e62;
 }
 
 .clear {
-  background: tomato;
+  background: #c33838;
 }
 
 .tender:hover {
-  background: #3DCB3D;
+  background: #214548;
 }
 
 .clear:hover {
-  background: #ea5338;
+  background: #932b2b;
 }

@@ -11,6 +11,7 @@ export default function createItem(itemID, itemName, itemPrice, qty, total) {
     updateItem(itemID, qty)
   }
 
+  updateProductStock(itemID, qty)
   calcTotalPurchases($items)
 }
 
@@ -44,6 +45,21 @@ function updateItem(id, newQty) {
   const qty = Number(itemQty.text())
 
   itemTotal.text("₱" + qty * price)
+}
+
+
+function updateProductStock(id, qty) {
+  const $product      = $("#no" + id)
+  let   $productStock = $product.find(".stock")
+
+  const stock   = Number($productStock.text())
+  const diff    = stock - qty
+
+  if(diff == 0) {
+    $product.removeClass('in-stock')
+  }
+
+  $productStock.text(diff)
 }
 
 
