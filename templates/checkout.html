@@ -51,13 +51,37 @@
     <!-- PRODUCTS -->
     <div class="products">
       {% for product in products %}
-        <div class="product">
+        {% if product.stock %}
+        <div class="product in-stock" id="no{{product.invID}}">
+        {% else %}
+        <div class="product" id="no{{product.invID}}">
+        {% endif %}
           <span class="item id">{{ product.invID }}</span>
-          <span class="item code">{{ product.prod_code }}</span>
-          <span class="item name">{{ product.prod_name }}</span>
-          <span class="item category">{{ product.prod_type }}</span>
-          <span class="item stock">{{ product.stock }}</span>
-          <span class="item price">&#8369;{{ product.prod_price }}</span>
+
+          <div class="item-description">
+            <span class="code">{{ product.prod_code }}</span>
+            <p>SKU</p>
+          </div>
+
+          <div class="item-description" id="item-name">
+            <span class="name">{{ product.prod_name }}</span>
+            <p>Product Name</p>
+          </div>
+
+          <div class="item-description">
+            <span class="category">{{ product.prod_type }}</span>
+            <p>Category</p>
+          </div>
+
+          <div class="item-description">
+            <span class="stock">{{ product.stock }}</span>
+            <p>Stock</p>
+          </div>
+
+          <div class="item-description">
+            <span class="price">&#8369;{{ product.prod_price }}</span>
+            <p>Price</p>
+          </div>
         </div>
       {% endfor %}
     </div>
@@ -81,6 +105,49 @@
 
         <div class="qty-button">
           <div class="button confirm-qty">Ok</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tender-modal modal-content">
+      <div class="header-text">
+        <h3>Payout</h3>
+      </div>
+
+      <div class="checkout-contents">
+
+        <p class="sub-text">Subtotal</p>
+        <div class="subtotal-div sub">
+          <h1 class="subtotal-value"></h1>
+        </div>
+
+        <p class="sub-text">Payment</p>
+        <div class="payment-div sub">
+          <span>&#8369;</span><input type="number" value=0 class="payment-value">
+        </div>
+
+        <div class="change-div sub">
+          <p class="sub-text">Change</p>
+          <h3 class="change-value"></h3>
+        </div>
+
+        <div class="button-container">
+          <div class="button purchase">Finalize Purchase</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="clear-modal modal-content">
+      <div class="header-text">
+        <h3>Clear Cart</h3>
+      </div>
+
+      <div class="warning-content">
+        <h1>Are you sure you want to clear your cart item(s)?</h1>
+
+        <div class="choice-buttons">
+          <div class="button cancel">Cancel</div>
+          <div class="button confirm">Yes</div>
         </div>
       </div>
     </div>

@@ -41,15 +41,20 @@ export default function productSelect() {
   function clickEvent() {
     const $self = $(this)
 
-    if($self.hasClass('selected-product')) {
-      $self.removeClass('selected-product')
-    }
-    else {
-      $self.addClass('selected-product')
-    }
 
-    if($('.selected-product').length > 0) {
-      bodyKeyEvent($body)
+    if($self.hasClass('in-stock')) {
+
+      if($self.hasClass('selected-product')) {
+        $self.removeClass('selected-product')
+      }
+      else {
+        $self.addClass('selected-product')
+      }
+
+      if($('.selected-product').length > 0) {
+        bodyKeyEvent($body)
+      }
+      
     }
   }
 

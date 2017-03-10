@@ -2,7 +2,9 @@
 @import url('../component/buttons.css');
 @import url('tender.css');
 @import url('inventory.css');
+@import url('tender_modal.css');
 @import url('qty_modal.css');
+@import url('clear_modal.css');
 @import url('../component/modal.css');
 
 .content {

@@ -1,0 +1,40 @@
+.clear-modal .header-text {
+  background: tomato;
+  color: #fff;
+}
+
+.warning-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.warning-content h1{
+  text-align: center;
+  color: #444;
+}
+
+.choice-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.cancel, .confirm {
+  border: 1px solid #b7b7b7;
+}
+
+.cancel {
+  background: #1a9591;
+}
+
+.confirm {
+  background: tomato;
+  text-align: center;
+  width: 60px;
+}
+
+.button {
+  margin: 0 3px;
+}

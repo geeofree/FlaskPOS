@@ -75,6 +75,16 @@ def checkout():
 
 
 
+@app.route("/payment", methods=["POST"])
+def payment():
+    json = request.get_json()
+    product = Inventory.get(Inventory.invID == json['id'])
+    product.stock = product.stock - json['qty']
+    product.save()
+    return url_for('checkout')
+
+
+
 @app.route("/dashboard/<subdir>")
 @app.route("/dashboard/", defaults={'subdir': ''})
 def dashboard(subdir):
@@ -140,6 +150,7 @@ def edit_product():
         item.prod_price = request.form["price"]
         item.save()
     return redirect(url_for("dashboard", subdir="products"))
+
 
 
 @app.route("/del_product", methods=["POST"])
