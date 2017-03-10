@@ -1,0 +1,47 @@
+.update-modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: #fff;
+}
+
+.update-modal .header-text {
+  background: #62699c;
+  color: #fff;;
+}
+
+.update-inputs {
+  padding: 10px;
+}
+
+.input-description {
+  display: flex;
+  align-items: center;
+}
+
+.desc-icon {
+  margin: 0 5px;
+}
+
+.input-description .desc-icon:hover {
+  cursor: pointer;
+}
+
+.lock-toggle {
+  background: #656569;
+}
+
+.ub-icon {
+  margin-right: 5px;
+}
+
+button {
+  cursor: pointer;
+}
+
+.submit-update {
+  background: #62699c;
+}

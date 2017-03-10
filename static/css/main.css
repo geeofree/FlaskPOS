@@ -11,6 +11,7 @@
 * {
   -moz-user-select: none;
   user-select: none;
+  box-sizing: border-box;
 }
 
 input {
@@ -46,7 +47,7 @@ a {
   flex-direction: column;
 }
 
-.top-nav, .brand, .directories, .left, .content{
+.top-nav, .brand, .directories, .left, .right, .content{
   position: relative;
   display: flex;
   flex-wrap: wrap;
@@ -88,8 +89,6 @@ a {
 }
 
 .right {
-  position: relative;
-  width: 200px;
   height: 100%;
 }
 
@@ -104,6 +103,17 @@ a {
 
 .right #position {
   font-size: 12px;
+}
+
+.logout {
+  margin-right: 5px;
+}
+
+.logout span {
+  padding: 10px;
+  color: orange;
+  background: #303030;
+  border-radius: 10px;
 }
 
 .current_dir {

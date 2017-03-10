@@ -1,0 +1,14 @@
+@import url('../component/searchnav.css');
+@import url('tender.css');
+@import url('inventory.css');
+
+.content {
+  justify-content: space-around;
+}
+
+.body-container {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  height: 550px;
+}

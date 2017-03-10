@@ -1,5 +1,6 @@
 from flask import Flask, url_for, request, render_template, redirect, session, abort
 from flask_bcrypt import Bcrypt
+from peewee import SelectQuery
 from model import *
 
 
@@ -14,6 +15,13 @@ checkpass  = bcrypt.check_password_hash
 """ Key Config """
 app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 
+""" HELPER Function """
+def valid(username, password):
+    try:
+        hashed = User.get(User.username == username).password
+        return checkpass(hashed, password)
+    except User.DoesNotExist:
+        return False
 
 
 """ Views """
@@ -37,13 +45,6 @@ def after(response):
 
 @app.route("/", methods=["GET", "POST"])
 def home():
-    def valid(username, password):
-        try:
-            hashed = User.get(User.username == username).password
-            return checkpass(hashed, password)
-        except User.DoesNotExist:
-            return False
-
     if request.method == "POST":
         if not session.get('logged_in', False):
             username = request.form['username']
@@ -89,12 +90,17 @@ def dashboard(subdir):
 
         if subdir == 'reports':
             return render_template("reports.html", **context)
+
         elif subdir == 'products':
-            return render_template("products.html", **context)
+            categories = set(item.prod_type for item in SelectQuery(Inventory, Inventory.prod_type))
+            return render_template("products.html", **context, categories=categories)
+
         elif subdir == 'logs':
             return render_template("logs.html", **context)
+
         elif subdir == 'users':
             return render_template("users.html", **context)
+
         else:
             return render_template("default.html", **context)
     abort(400)
@@ -105,15 +111,48 @@ def dashboard(subdir):
 def add_product():
     if 'logged_in' in session:
         fields = dict(
-            prod_name     = request.form['item_name'],
-            prod_code     = request.form['item_code'],
-            prod_type = request.form['category'],
-            stock    = request.form['stock'],
-            prod_price    = request.form['price']
+            prod_name  = request.form['item_name'],
+            prod_code  = request.form['item_code'],
+            prod_type  = request.form['category'],
+            stock      = request.form['stock'],
+            prod_price = request.form['price']
         )
 
         Inventory.create(**fields)
-        return redirect(url_for('dashboard', subdir='products'))
+    return redirect(url_for('dashboard', subdir='products'))
+
+
+
+@app.route("/edit_product", methods=["POST"])
+def edit_product():
+    if 'logged_in' in session and id:
+        itemID = request.form["itemID"]
+        item = Inventory.get(Inventory.invID == itemID)
+
+        item.prod_name  = request.form["item_name"]
+        item.save()
+        item.prod_type  = request.form["category"]
+        item.save()
+        item.stock      = request.form["stock"]
+        item.save()
+        item.prod_code  = request.form["item_code"]
+        item.save()
+        item.prod_price = request.form["price"]
+        item.save()
+    return redirect(url_for("dashboard", subdir="products"))
+
+
+@app.route("/del_product", methods=["POST"])
+def del_product():
+    if 'logged_in' in session:
+        username = session['client_name']
+        password = request.form['pw']
+
+        if valid(username, password):
+            itemID = request.args.get("id")
+            Inventory.delete().where(Inventory.invID == itemID).execute()
+
+    return redirect(url_for("dashboard", subdir="products"))
 
 
 

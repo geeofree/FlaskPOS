@@ -9,14 +9,17 @@
   background: rgba(0,0,0,0.9);
 }
 
-
-
-/* MODAL CONTENTS */
-
-.product-add, .product-edit, .product-delete {
+.header-text {
   display: flex;
   flex-wrap: wrap;
-  flex-direction: column;
+  align-items: center;
+  font-family: Oxygen;
+  height: 50px;
+  width: 100%;
+}
+
+.header-text h3 {
+  margin: 0 10px;
 }
 
 .close {
@@ -30,82 +33,4 @@
 
 .close:hover {
   cursor: pointer;
-}
-
-/* PRODUCT ADD */
-.product-add {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background: #fff;
-}
-
-.input-container {
-  margin: 5px;
-}
-
-.item-name {
-  width: 100%;
-}
-
-select {
-  margin-left: 3px;
-}
-
-form {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  padding: 10px;
-}
-
-.numbers, .action-btns {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.action-btns {
-  justify-content: flex-end;
-}
-
-button {
-  margin-right: 5px;
-  color: #fff;
-  border: none;
-  padding: 5px;
-  border-radius: 5px;
-}
-
-.clear {
-  background: tomato;
-}
-
-.submit {
-  background: #1ead52;
-}
-
-.header-text {
-  font-family: Oxygen;
-  height: 50px;
-  width: 100%;
-  background: #1ead52;
-  color: #fff;
-}
-
-.header-text h3 {
-  line-height: 50px;
-  margin: 0 10px;
-}
-
-.category {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-
-.active {
-  display: block;
 }

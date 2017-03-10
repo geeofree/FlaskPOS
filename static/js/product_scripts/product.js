@@ -1,7 +1,14 @@
-import modal from "./modal"
-import addItem from "./addItem"
+import selectItem from "../misc/selectItem"
+import { addItem } from "./addItem"
+import delItem from "./delItem"
+import updateItem from "./updateItem"
+import $ from "jquery"
+
+const $tableData = $('.tbl-data')
 
 export default function product() {
-  modal()
+  selectItem($tableData, "selected")
   addItem()
+  delItem()
+  updateItem()
 }
