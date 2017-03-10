@@ -3,11 +3,12 @@ import homepage from "./homepage"
 import checkout from "./checkout_scripts/checkout"
 import product from "./product_scripts/product"
 
+(function() {
+  // MISC
+  highlight_magnet()
 
-// MISC
-highlight_magnet()
-
-// MAIN
-homepage()
-checkout()
-product()
+  // MAIN
+  homepage()
+  checkout()
+  product()
+})()

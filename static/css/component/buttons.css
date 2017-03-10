@@ -22,6 +22,10 @@
   background: #1ead52;
 }
 
+.edit {
+  background: #4c4c81;
+}
+
 .delete {
-  background: tomato;
+  background: #d53c3c;
 }

@@ -1,5 +1,86 @@
 import $ from "jquery"
+import openModal from "../misc/modal"
+export { addItem, formEv }
 
+const closeBtn = $('.close')
+
+function addItem() {
+  // MODAL
+  const $addBtn      = $('.add')
+  const $addModal    = $('.add-modal')
+
+  openModal($addBtn, $addModal, modalEvent)
+}
+
+// MODAL EVENT
+function modalEvent(modal, content) {
+  // SHOW MODAL
+  modal.addClass('active')
+  content.addClass('active')
+
+  // INPUTS
+  const $itemName  = $('.item-name')
+  const $itemCode  = $('.item-code')
+  const $itemType  = $('.item-type')
+  const $itemStock = $('.item-stock')
+  const $itemPrice = $('.item-price')
+
+  // BUTTONS
+  const $submit = $('.submit')
+  const $clear  = $('.clear')
+
+  // MISC.
+  const $form          = $('.add-inputs')
+  const $contentInputs = content.find('input')
+
+
+  $clear.click(function() {
+    $itemName.val('')
+    $itemCode.val('')
+    $itemType.val('')
+    $itemStock.val(0)
+    $itemPrice.val(0)
+  })
+
+  closeBtn.click(function() {
+    $('.active').removeClass('active')
+    $contentInputs.val('')
+    $itemStock.val(0)
+    $itemPrice.val(0)
+  })
+
+  formEv($form, $submit, $itemName, $itemCode, $itemType, $itemStock, $itemPrice)
+}
+
+
+// FORM EVENT
+function formEv($form, $btn, $name, $code, $type, $stock, $price) {
+  const $sel  = $('select')
+
+  $btn.on("click", function() {
+    const $self = $(this)
+
+    // INPUT VALUES
+    const $nameVal  = $name.val()
+    const $codeVal  = $code.val()
+    const $typeVal  = $type.val()
+    const $stockVal = $stock.val()
+    const $priceVal = $price.val()
+
+    if(validInputs($nameVal, $codeVal, $typeVal, $stockVal, $priceVal)) {
+      $form.submit()
+      $self.off("click")
+    }
+  })
+
+  $sel.click(function() {
+    const $self = $(this)
+    const $selVal = $self.val()
+    $type.val($selVal)
+  })
+}
+
+// VALID INPUT FUNCTION
 function validInputs(name, code, type, stock, price) {
   const maxDigit  = /\d{11}/
   const digitOnly = /^\d+$/
@@ -32,50 +113,4 @@ function validInputs(name, code, type, stock, price) {
   }
 
   return true
-}
-
-export default function addItem() {
-  // INPUTS
-  const $itemName  = $('.item-name')
-  const $itemCode  = $('.item-code')
-  const $itemType  = $('.item-type')
-  const $itemStock = $('.item-stock')
-  const $itemPrice = $('.item-price')
-
-
-  // BUTTONS
-  const $submit    = $('.submit')
-  const $clear     = $('.clear')
-
-  // MISC.
-  const $form = $('form')
-  const $sel  = $('select')
-
-  $submit.click(function() {
-    // INPUT VALUES
-    const $nameVal = $itemName.val()
-    const $codeVal = $itemCode.val()
-    const $typeVal = $itemType.val()
-    const $stockVal = $itemStock.val()
-    const $priceVal = $itemPrice.val()
-
-    if(validInputs($nameVal, $codeVal, $typeVal, $stockVal, $priceVal)) {
-      $form.submit()
-    }
-  })
-
-  $sel.click(function() {
-    const $self = $(this)
-    const $selVal = $self.val()
-    console.log($selVal)
-    $itemType.val($selVal)
-  })
-
-  $clear.click(function() {
-    $itemName.val('')
-    $itemCode.val('')
-    $itemType.val('')
-    $itemStock.val(0)
-    $itemPrice.val(0)
-  })
 }

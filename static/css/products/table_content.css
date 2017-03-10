@@ -1,0 +1,28 @@
+.info-container {
+  width: 100%;
+}
+
+.tbl {
+  width: 100%;
+}
+
+.long, .medium {
+  text-align: left;
+}
+
+.long {
+  width: 35%;
+}
+
+.medium {
+  width: 25%;
+}
+
+.short {
+  text-align: center;
+  width: 10%;
+}
+
+.buttons {
+  margin-right: 8px;
+}

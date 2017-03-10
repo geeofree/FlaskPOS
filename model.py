@@ -25,7 +25,7 @@ class Inventory(BaseModel):
     prod_price = IntegerField()
 
 class User_Log(BaseModel):
-    ulogID   = PrimaryKeyField()
+    ulogID  = PrimaryKeyField()
     date    = DateField(formats="%m-%d-%Y")
     timein  = TimeField(formats="%H:%M:%S")
     timeout = TimeField(formats="%H:%M:%S")
@@ -34,8 +34,8 @@ class User_Log(BaseModel):
 
 class Sales_Log(BaseModel):
     slogID    = PrimaryKeyField()
-    cashier   = ForeignKeyField(User, related_name="cashier")
-    product   = ForeignKeyField(Inventory, related_name="product")
+    cashier   = CharField()
+    product   = TextField()
     date_sold = DateField(formats="%m-%d-%Y")
 
 

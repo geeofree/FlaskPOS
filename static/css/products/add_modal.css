@@ -1,0 +1,63 @@
+.add-modal {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: #fff;
+}
+
+.add-modal .header-text {
+  background: #1ead52;
+  color: #fff;;
+}
+
+.input-container {
+  margin: 5px;
+}
+
+.item-name {
+  width: 100%;
+}
+
+select {
+  margin-left: 3px;
+}
+
+.add-inputs {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.numbers, .action-btns {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.action-btns {
+  justify-content: flex-end;
+}
+
+button {
+  margin-right: 5px;
+  color: #fff;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.clear {
+  background: tomato;
+}
+
+.submit {
+  background: #1ead52;
+}
+
+.category {
+  display: flex;
+  flex-wrap: wrap;
+}
