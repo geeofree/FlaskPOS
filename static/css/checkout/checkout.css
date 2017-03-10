@@ -1,6 +1,9 @@
 @import url('../component/searchnav.css');
+@import url('../component/buttons.css');
 @import url('tender.css');
 @import url('inventory.css');
+@import url('qty_modal.css');
+@import url('../component/modal.css');
 
 .content {
   justify-content: space-around;
@@ -11,4 +14,8 @@
   flex-wrap: wrap;
   flex-direction: column;
   height: 550px;
+}
+
+.id {
+  display: none;
 }

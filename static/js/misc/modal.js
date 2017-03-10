@@ -1,17 +1,43 @@
 import $ from "jquery"
+import buttonEv from "./button"
+export { btnOpenModal, openModal, closeModal }
 
-export default function openModal(btn_targ, content, modalEvent) {
-  const modal    = $('.modal')
 
-  function mdown() {
-    btn_targ.addClass('clicked')
+function btnOpenModal(btnTarget, content, modalEvent) {
+  const modal = $('.modal')
+
+  function showModal() {
+    modal.addClass("active")
+    content.addClass("active")
   }
 
-  function mup(){
-    btn_targ.removeClass('clicked')
-    modalEvent(modal, content)
+  buttonEv(btnTarget, function() {
+    modalEvent(content, showModal)
+  })
+}
+
+function openModal(content, modalEvent) {
+  const modal = $('.modal')
+
+  function showModal() {
+    modal.addClass("active")
+    content.addClass("active")
   }
 
-  btn_targ.mousedown(mdown)
-  btn_targ.mouseup(mup)
+  modalEvent(content, showModal)
+}
+
+function closeModal(callback) {
+  const closeHandler = $('.close')
+
+  closeHandler.click(function() {
+    const $self = $(this)
+
+    if (callback) {
+      callback()
+    }
+
+    $('.active').removeClass('active')
+    $self.off("click")
+  })
 }

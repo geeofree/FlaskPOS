@@ -1,13 +1,3 @@
-.update-modal {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background: #fff;
-}
-
 .update-modal .header-text {
   background: #62699c;
   color: #fff;;

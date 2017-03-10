@@ -1,22 +1,20 @@
 import $ from "jquery"
-import openModal from "../misc/modal"
+import { btnOpenModal, closeModal } from "../misc/modal"
 export { addItem, formEv }
 
-const closeBtn = $('.close')
 
 function addItem() {
   // MODAL
   const $addBtn      = $('.add')
   const $addModal    = $('.add-modal')
 
-  openModal($addBtn, $addModal, modalEvent)
+  btnOpenModal($addBtn, $addModal, modalEvent)
 }
 
 // MODAL EVENT
-function modalEvent(modal, content) {
+function modalEvent(content, showModal) {
   // SHOW MODAL
-  modal.addClass('active')
-  content.addClass('active')
+  showModal()
 
   // INPUTS
   const $itemName  = $('.item-name')
@@ -33,7 +31,7 @@ function modalEvent(modal, content) {
   const $form          = $('.add-inputs')
   const $contentInputs = content.find('input')
 
-
+  // Clear Event Handler
   $clear.click(function() {
     $itemName.val('')
     $itemCode.val('')
@@ -42,21 +40,24 @@ function modalEvent(modal, content) {
     $itemPrice.val(0)
   })
 
-  closeBtn.click(function() {
-    $('.active').removeClass('active')
+  // Close Modal Event Handler
+  closeModal(function() {
     $contentInputs.val('')
     $itemStock.val(0)
     $itemPrice.val(0)
   })
 
-  formEv($form, $submit, $itemName, $itemCode, $itemType, $itemStock, $itemPrice)
+  formEv($form, $submit, $itemName, $itemCode, $itemType, $itemStock, $itemPrice, function($form) {
+    $form.submit()
+  })
 }
 
 
 // FORM EVENT
-function formEv($form, $btn, $name, $code, $type, $stock, $price) {
+function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
   const $sel  = $('select')
 
+  // Button Click Event Handler
   $btn.on("click", function() {
     const $self = $(this)
 
@@ -67,12 +68,14 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price) {
     const $stockVal = $stock.val()
     const $priceVal = $price.val()
 
+
     if(validInputs($nameVal, $codeVal, $typeVal, $stockVal, $priceVal)) {
-      $form.submit()
+      callback($form)
       $self.off("click")
     }
   })
 
+  // Select Element Click Event Handler
   $sel.click(function() {
     const $self = $(this)
     const $selVal = $self.val()
@@ -82,9 +85,10 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price) {
 
 // VALID INPUT FUNCTION
 function validInputs(name, code, type, stock, price) {
-  const maxDigit  = /\d{11}/
+  const maxDigit  = /^\d{11}$/
   const digitOnly = /^\d+$/
 
+  // Valid Variables
   const validName = Boolean(name) && name.length <= 140
   const validCode = Boolean(code) && maxDigit.test(code)
   const validType = Boolean(type) && type.length <= 25

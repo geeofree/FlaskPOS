@@ -3,8 +3,6 @@
 }
 
 .products {
-  display: flex;
-  flex-wrap: wrap;
   width: 100%;
 }
 
@@ -15,8 +13,6 @@
 
 .products {
   height: 91%;
-  display: flex;
-  flex-wrap: wrap;
   overflow-y: auto;
 }
 

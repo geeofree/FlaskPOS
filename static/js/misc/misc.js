@@ -1,6 +1,6 @@
 import $ from 'jquery'
 
-export default function highlight_magnet() {
+export default function highlightMagnet() {
   const dir = $('.dir')
   const current = $('.current_dir')
 
