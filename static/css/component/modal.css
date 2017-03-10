@@ -9,6 +9,16 @@
   background: rgba(0,0,0,0.9);
 }
 
+.modal-content {
+  display: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+  background: #fff;
+}
+
 .header-text {
   display: flex;
   flex-wrap: wrap;
@@ -20,6 +30,12 @@
 
 .header-text h3 {
   margin: 0 10px;
+}
+
+.active {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
 }
 
 .close {

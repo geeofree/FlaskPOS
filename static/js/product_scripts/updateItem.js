@@ -1,19 +1,18 @@
 import $ from "jquery"
-import openModal from "../misc/modal"
+import { btnOpenModal, closeModal } from "../misc/modal"
 import { formEv } from "./addItem"
 
-const closeBtn = $('.close')
 
 export default function updateItem() {
   const $editBtn     = $('.edit')
   const $editModal   = $('.update-modal')
 
-  openModal($editBtn, $editModal, modalEvent)
+  btnOpenModal($editBtn, $editModal, modalEvent)
 }
 
 
 // MODAL EVENT
-function modalEvent(modal, content) {
+function modalEvent(content, showModal) {
   const $selected      = $('.selected')
   const $selData       = $($selected[0])
   const $contentInputs = content.find('input')
@@ -47,73 +46,83 @@ function modalEvent(modal, content) {
   dataSift($dataArr, $inputArr)
 
   // SHOW MODAL
-  modal.addClass('active')
-  content.addClass('active')
+  showModal()
 
   // Lock/Unlock Icon elements
   const $descIcon   = $('.desc-icon')
-  const $lockToggle = $('.lock-toggle')
+  const $toggleEL = $('.lock-toggle')
 
   // Form & Submit elements
   const $form   = $('.update-inputs')
   const $update = $('.submit-update')
 
+  // Local/Unlock Element Event Handler
   $descIcon.click(function() {
     const $self = $(this)
+
 
     if($self.hasClass('fa-lock')) {
       $self.removeClass('fa-lock').addClass('fa-unlock-alt')
     }
-    else if($self.hasClass('fa-unlock-alt')) {
+    else {
       $self.removeClass('fa-unlock-alt').addClass('fa-lock')
     }
 
-    toggleLock($self)
+    lockToggle($self)
   })
 
-  $lockToggle.click(function() {
+  // Lock Toggle Element Event Handler
+  $toggleEL.click(function() {
     const $self     = $(this)
     const $selfIcon = $self.find('.ub-icon')
     const $selfText = $self.find('span')
 
     if($self.hasClass('unlock')) {
-      $descIcon.removeClass('fa-lock').addClass('fa-unlock-alt')
-      $selfIcon.removeClass('fa-unlock-alt').addClass('fa-lock')
-      $self.removeClass('unlock').addClass('lock')
-      $selfText.text('Lock All')
+      $descIcon.removeClass('fa-lock').addClass('fa-unlock-alt') // Remove lock icon class & add unlock icon class
+      $selfIcon.removeClass('fa-unlock-alt').addClass('fa-lock') // Remove unlock icon class & add lock icon class
+      $self.removeClass('unlock').addClass('lock')               // Remove "unlock" class && add "lock" class
+      $selfText.text('Lock All')                                 // Change text to "Lock All"
     }
     else if($self.hasClass('lock')){
-      $descIcon.removeClass('fa-unlock-alt').addClass('fa-lock')
-      $selfIcon.removeClass('fa-lock').addClass('fa-unlock-alt')
-      $self.removeClass('lock').addClass('unlock')
-      $selfText.text('Unlock All')
+      $descIcon.removeClass('fa-unlock-alt').addClass('fa-lock') // Remove unlock icon class
+      $selfIcon.removeClass('fa-lock').addClass('fa-unlock-alt') // Remove lock icon class & add unlock icon class
+      $self.removeClass('lock').addClass('unlock')               // Remove "lock" class & add "unlock" class
+      $selfText.text('Unlock All')                               // Change text to "Unlock All"
     }
 
-    toggleLock($descIcon)
+    lockToggle($descIcon)
   })
 
-  closeBtn.click(function() {
-    $('.active').removeClass('active')
-    $lockToggle.off("click")
+  closeModal(function() {
+    const $lockIcon = $toggleEL.find('.ub-icon')
+    const $lockText = $toggleEL.find('span')
+
     $descIcon.removeClass('fa-unlock-alt').addClass('fa-lock')
-    $lockToggle.removeClass('lock').addClass('unlock')
-    $lockToggle.find('.ub-icon').removeClass('fa-lock').addClass('fa-unlock-alt')
-    $lockToggle.find('span').text('Unlock All')
+    $lockIcon.removeClass('fa-lock').addClass('fa-unlock-alt')
+    $toggleEL.removeClass('lock').addClass('unlock')
+
+    $lockText.text('Unlock All')
     $contentInputs.val('')
     lockInput($descIcon)
+
+    $toggleEL.off("click")
+    $descIcon.off("click")
   })
 
-  formEv($form, $update, $itemName, $itemCode, $itemType, $itemStock, $itemPrice)
+  formEv($form, $update, $itemName, $itemCode, $itemType, $itemStock, $itemPrice, function($form) {
+    unlockInput($descIcon)
+    $form.submit()
+  })
 }
 
 
 // HELPER FUNCTIONS
-function toggleLock(childEL) {
+function lockToggle(childEL) {
   const $parent   = childEL.parents('.input-container')
   const $inputs   = $parent.find('.input')
   const $disabled = $inputs.attr('disabled')
 
-  if(typeof $disabled !== typeof undefined && $disabled !== false) {
+  if($disabled) {
     $inputs.removeAttr('disabled')
   }
   else {
@@ -122,19 +131,32 @@ function toggleLock(childEL) {
 }
 
 function lockInput(childEL) {
-  const $parent = childEL.parents('.input-container')
-  const $inputs = $parent.find('.input')
+  const $parent   = childEL.parents('.input-container')
+  const $inputs   = $parent.find('.input')
   const $disabled = $inputs.attr('disabled')
 
-  if(typeof $disabled == typeof undefined || !$disabled) {
+  if($disabled == undefined) {
     $inputs.prop('disabled', true)
   }
+}
+
+function unlockInput(childEL) {
+  const $parent   = childEL.parents('.input-container')
+  const $inputs   = $parent.find('.input')
+
+  $inputs.each(function(_, el) {
+    const $el = $(el)
+    const $disabled = $el.attr('disabled')
+
+    if($disabled) {
+      $inputs.removeAttr('disabled')
+    }
+  })
 }
 
 function dataSift(dataArr, inputArr) {
   dataArr.forEach(function(data, index) {
     const input = inputArr[index]
     input.val(data)
-    console.log(input.val())
   })
 }

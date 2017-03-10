@@ -24,8 +24,8 @@
     <div class="purchase-summary">
       <div class="total">
         <span class="short" style="font-weight:bold;">Total:</span>
-        <span class="short">20</span>
-        <span class="short">&#8369;1000000</span>
+        <span class="short" id="sub-qty">0</span>
+        <span class="short" id="sub-total">&#8369;0</span>
       </div>
 
       <!-- ACTION BUTTONS -->
@@ -50,13 +50,41 @@
 
     <!-- PRODUCTS -->
     <div class="products">
-      <div class="product">
-        <span class="item code">120015009</span>
-        <span class="item name">Bike Parts</span>
-        <span class="item category">Parts</span>
-        <span class="item stock">5</span>
-        <span class="item price">&#8369;50</span>
+      {% for product in products %}
+        <div class="product">
+          <span class="item id">{{ product.invID }}</span>
+          <span class="item code">{{ product.prod_code }}</span>
+          <span class="item name">{{ product.prod_name }}</span>
+          <span class="item category">{{ product.prod_type }}</span>
+          <span class="item stock">{{ product.stock }}</span>
+          <span class="item price">&#8369;{{ product.prod_price }}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+
+{% block MODAL %}
+  <div class="modal">
+
+    <div class="quantity-modal modal-content">
+      <div class="header-text">
+        <h3>Quantity</h3>
+      </div>
+
+      <div class="qty-content">
+        <div class="qty-input-container">
+            <h2>Enter Quantity:</h2>
+            <input type="number" class="qty-input" value=1>
+        </div>
+
+        <div class="qty-button">
+          <div class="button confirm-qty">Ok</div>
+        </div>
       </div>
     </div>
+
+    <div class="close">&times;</div>
   </div>
 {% endblock %}

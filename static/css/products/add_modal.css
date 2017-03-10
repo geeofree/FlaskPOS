@@ -1,16 +1,6 @@
-.add-modal {
-  display: none;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 500px;
-  background: #fff;
-}
-
 .add-modal .header-text {
   background: #1ead52;
-  color: #fff;;
+  color: #fff;
 }
 
 .input-container {

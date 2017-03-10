@@ -1,0 +1,40 @@
+.quantity-modal {
+  width: 300px !important;
+}
+
+.quantity-modal .header-text {
+  background: #6799a4;
+  color: #fff;
+}
+
+.qty-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.qty-input-container {
+  text-align: center;
+}
+
+.qty-input-container h2 {
+  color: #353535;
+}
+
+.qty-input {
+  width: 80px;
+}
+
+.qty-button {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px;
+  text-align: center;
+}
+
+.confirm-qty {
+  border: 1px solid #c9af7f;
+  background: #6799a4;
+  width: 50px;
+}

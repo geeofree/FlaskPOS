@@ -107,11 +107,7 @@
 }
 
 .button {
-  cursor: pointer;
-  padding: 2px;
-  border-radius: 5px;
   border: 1px solid #444;
-  color: #fff;
 }
 
 .tender {

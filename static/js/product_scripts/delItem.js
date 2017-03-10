@@ -1,17 +1,16 @@
 import $ from "jquery"
-import openModal from "../misc/modal"
+import { btnOpenModal, closeModal } from "../misc/modal"
 
-const closeBtn = $('.close')
 
 export default function delItem () {
   const $delBtn        = $('.delete')
   const $delModal      = $('.remove-modal')
 
-  openModal($delBtn, $delModal, modalEvent)
+  btnOpenModal($delBtn, $delModal, modalEvent)
 }
 
 
-function modalEvent(modal, content) {
+function modalEvent(content, showModal) {
   const $selected      = $('.selected')
   const $confirm       = $('.confirm')
   const $contentInputs = content.find('input')
@@ -23,8 +22,7 @@ function modalEvent(modal, content) {
   }
 
   // SHOW modal
-  modal.addClass('active')
-  content.addClass('active')
+  showModal()
 
   $confirm.click(function() {
     $selected.each(function(_, el) {
@@ -40,8 +38,7 @@ function modalEvent(modal, content) {
     })
   })
 
-  closeBtn.click(function() {
-    $('.active').removeClass('active')
+  closeModal(function() {
     $contentInputs.val('')
   })
 }
