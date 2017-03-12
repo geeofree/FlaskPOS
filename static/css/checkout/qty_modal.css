@@ -3,7 +3,7 @@
 }
 
 .quantity-modal .header-text {
-  background: #6799a4;
+  background: #2a5e62;
   color: #fff;
 }
 
@@ -23,7 +23,8 @@
 }
 
 .qty-input {
-  width: 80px;
+  width: 150px;
+  text-align: center;
 }
 
 .qty-button {
@@ -34,7 +35,6 @@
 }
 
 .confirm-qty {
-  border: 1px solid #c9af7f;
-  background: #6799a4;
+  background: #2a5e62;
   width: 50px;
 }

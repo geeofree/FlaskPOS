@@ -20,6 +20,9 @@ function modalEvent(content, showModal) {
     // SHOW MODAL
     showModal()
   }
+  else {
+    alert('No item(s) in cart!')
+  }
 
   $tendersub = $tendersub.text($totalVal)
   $tendersub = $tendersub.text()
@@ -28,20 +31,27 @@ function modalEvent(content, showModal) {
   const payAmount   = Number($payment.val())
 
   calculateChange(totalAmount, payAmount)
+  //
+  // $payment.change(function() {
+  //   const $self = $(this)
+  //   let    $val = Number($self.val())
+  //
+  //   if(isNaN($val)) {
+  //     $val = 0
+  //     $self.val(0)
+  //   }
+  //
+  //   calculateChange(totalAmount, $val)
+  // })
 
-  $payment.change(function() {
+  $payment.keyup(function(event) {
     const $self = $(this)
-    const $val = Number($self.val())
+    const button = event.which || event.button
 
-    if($val < 0) {
-      $self.val(999999)
+    if(button >= 48 || button <= 57 || button == 8) {
+      let $val = Number($self.val())
+      calculateChange(totalAmount, $val)
     }
-
-    if($val > 999999) {
-      $self.val(0)
-    }
-
-    calculateChange(totalAmount, $val)
   })
 
   $purchaseBtn.click(function() {
@@ -58,7 +68,7 @@ function modalEvent(content, showModal) {
 
 function calculateChange(totalAmount, payAmount) {
   const changeEL = $('.change-value')
-  const change = totalAmount - payAmount
+  const change = payAmount - totalAmount
 
   changeEL.text("₱" + change)
 }

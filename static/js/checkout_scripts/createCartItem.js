@@ -82,7 +82,7 @@ function calcTotalPurchases($items) {
   })
 
   subQtyEL.text(subQTY)
-  subTtlEL.text("₱" + subTOTAL)
+  subTtlEL.text(subTOTAL)
 }
 
 

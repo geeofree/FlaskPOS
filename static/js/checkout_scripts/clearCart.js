@@ -26,7 +26,7 @@ function modalEvent(content, showModal) {
 
   $confirm.click(function() {
     const $self = $(this)
-    emptyCart($items)
+    removeItem($('.purchased-item'))
     $self.off("click")
     $('.active').removeClass('active')
   })
@@ -36,23 +36,35 @@ function modalEvent(content, showModal) {
 }
 
 
-function emptyCart($cart) {
-  const $purchased = $('.purchased-item')
+function removeItem($item) {
+  const $subtotal    = $('#sub-total')
+  const $subqty      = $('#sub-qty')
+  const $subtotalNum = $subtotal.text().match(/\d+/)[0]
 
-  $purchased.each((_, data) => {
-    const $id  = $(data).find('.id').text()
-    const $qty = Number($(data).find('.item-qty').text())
+  let oldTotal    = Number($subtotalNum)
+  let oldQty      = Number($subqty.text())
+
+  $item.each((_, data) => {
+    const $data  = $(data)
+    const $id    = $data.find('.id').text()
+    const $qty   = Number($data.find('.item-qty').text())
+    const $total = Number($data.find('.item-total').text().match(/\d+/)[0])
 
     const $product      = $('#no' + $id)
     const $productStock = $product.find('.stock')
     const $stock        = Number($productStock.text())
 
-    $productStock.text($stock + $qty)
-
     if(!$product.hasClass('in-stock')) {
       $product.addClass('in-stock')
     }
-  })
 
-  $cart.empty()
+    oldTotal -= $total
+    oldQty -= $qty
+
+    $subtotal.text(oldTotal)
+    $subqty.text(oldQty)
+
+    $productStock.text($stock + $qty)
+    $data.remove()
+  })
 }

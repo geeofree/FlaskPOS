@@ -38,7 +38,9 @@
 
 .payment-value {
   margin: 0 10px;
-  width: 90px;
+  font-size: 30px;
+  text-align: right;
+  width: 140px;
 }
 
 .purchase {

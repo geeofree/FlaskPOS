@@ -1,5 +1,5 @@
 .clear-modal .header-text {
-  background: tomato;
+  background: #c33838;
   color: #fff;
 }
 
@@ -30,7 +30,7 @@
 }
 
 .confirm {
-  background: tomato;
+  background: #c33838;
   text-align: center;
   width: 60px;
 }

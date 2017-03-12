@@ -11,11 +11,14 @@ export default function createCartItems(selectedItems, qty) {
     const itemID    = $el.find('.id').text()
     const itemName  = $el.find('.name').text()
     const itemPrice = $el.find('.price').text()
+    const itemStock = Number($el.find('.stock').text())
+
     const price     = Number(itemPrice.match(/\d+/)[0])
     const itemTotal = "₱" + (price * qty)
+    let quantity = qty > itemStock ? itemStock : qty
 
     if($stock > 0) {
-      createItem(itemID, itemName, itemPrice, qty, itemTotal)
+      createItem(itemID, itemName, itemPrice, quantity, itemTotal)
     }
 
     $el.removeClass('selected-product')
