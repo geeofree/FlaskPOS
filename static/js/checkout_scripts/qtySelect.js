@@ -4,7 +4,7 @@ import createItem from "./createCart"
 
 
 export default function qtyModal($selected) {
-  const smallest = smallestStockSelected($selected)
+  const largest = largestStockSelected($selected)
   const content = $('.quantity-modal')
   openModal(content, modalEvent)
 
@@ -29,12 +29,12 @@ export default function qtyModal($selected) {
       const $self = $(this)
       const $val = Number($qty.val())
 
-      if($val > smallest) {
+      if($val > largest) {
         $self.val(1)
       }
 
       if($val < 1) {
-        $self.val(smallest)
+        $self.val(largest)
       }
     })
 
@@ -55,18 +55,18 @@ export default function qtyModal($selected) {
 
 
 // HELPER FUNCTION
-function smallestStockSelected($selected) {
-  var smallest = 999999999
+function largestStockSelected($selected) {
+  var largest = 0
 
   $selected.each(function(_, data) {
     const $data     = $(data)
     const $stock    = $data.find('.stock')
     const $stockVal = Number($stock.text())
 
-    if($stockVal < smallest) {
-      smallest = $stockVal
+    if($stockVal > largest) {
+      largest = $stockVal
     }
   })
 
-  return smallest
+  return largest
 }
