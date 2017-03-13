@@ -24,14 +24,14 @@
       </div>
 
       <table class="tbl">
-        <tr>
+        <tr class="outer-border">
           <td>
             <table class="tbl">
               <tr class="tbl-head">
-                <th class="short">ID</th>
+                <th class="short" style="display:none;">ID</th>
                 <th class="short">SKU</th>
                 <th class="long">Item Description</th>
-                <th class="medium">Category</th>
+                <th class="short">Category</th>
                 <th class="short">Stock</th>
                 <th class="short">Price</th>
               </tr>
@@ -45,10 +45,10 @@
               <table class="tbl">
                 {% for product in products %}
                   <tr class="tbl-data">
-                    <td class="short invID">{{ product.invID }}</td>
+                    <td class="short invID" style="display:none;">{{ product.invID }}</td>
                     <td class="short data-sku">{{ product.prod_code }}</td>
                     <td class="long data-name">{{ product.prod_name }}</td>
-                    <td class="medium data-type">{{ product.prod_type }}</td>
+                    <td class="short data-type">{{ product.prod_type }}</td>
                     <td class="short data-stock">{{ product.stock }}</td>
                     <td class="short data-price">&#8369;{{ product.prod_price }}</td>
                   </tr>
@@ -131,7 +131,7 @@
         <input type="hidden" class="item-id" name="itemID" />
 
         <div class="input-container">
-          <input type="text" name="item_code" class="input item-code-val" autocomplete="off" placeholder="11-digit combination" disabled>
+          <input type="text" name="item_code" class="input-val item-code-val" autocomplete="off" placeholder="11-digit combination" disabled>
 
           <div class="input-description">
             <p>Item Code</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
@@ -139,7 +139,7 @@
         </div>
 
         <div class="input-container">
-          <input type="text" name="item_name" class="input item-name-val" autocomplete="off" placeholder="Name of this product" disabled>
+          <input type="text" name="item_name" class="input-val item-name-val" autocomplete="off" placeholder="Name of this product" disabled>
 
           <div class="input-description">
             <p>Product Name</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
@@ -148,10 +148,10 @@
 
         <div class="input-container">
           <div class="category">
-            <input type="text" name="category" class="input item-type-val"autocomplete="off" placeholder="Category of this product" disabled>
+            <input type="text" name="category" class="input-val item-type-val"autocomplete="off" placeholder="Category of this product" disabled>
 
             {% if products %}
-              <select class="input" disabled>
+              <select class="input-val" disabled>
                 {% for category in categories %}
                   <option value="{{ category }}">{{ category }}</option>
                 {% endfor %}
@@ -166,14 +166,14 @@
 
         <div class="numbers">
           <div class="input-container">
-            <input type="number" name="stock" min=0 max=999999 class="input item-stock-val"value=0 disabled>
+            <input type="number" name="stock" min=0 max=999999 class="input-val item-stock-val"value=0 disabled>
             <div class="input-description">
               <p>Stock</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
             </div>
           </div>
 
           <div class="input-container">
-            <input type="number" name="price" min=0 class="input item-price-val" value=0 disabled>
+            <input type="number" name="price" min=0 class="input-val item-price-val" value=0 disabled>
             <div class="input-description">
               <p>Product Price</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
             </div>

@@ -4,29 +4,37 @@
 
 .table-scroll {
   width: 100%;
-  height: 500px;
+  height: 450px;
   overflow: auto;
+}
+
+.outer-border {
+  border: 3px solid #333;
 }
 
 .tbl-head {
   font-family: Oxygen;
   color: #fff;
-  background: #208973;
+  background: #3c3a3a;
 }
 
 .tbl-head th {
-  padding: 5px;
+  padding: 15px 10px;
 }
 
 .tbl-data td {
-  padding: 10px;
+  padding: 20px 10px;
+}
+
+.tbl-data {
+  border-bottom: 1px dashed #aaa;
 }
 
 .tbl-data {
   background: #fff;
+  transition-duration: 0.4s
 }
 
 .tbl-data:hover {
   cursor: pointer;
-  background: #e7e7e7;
 }

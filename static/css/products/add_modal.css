@@ -7,10 +7,6 @@
   margin: 5px;
 }
 
-.item-name {
-  width: 100%;
-}
-
 select {
   margin-left: 3px;
 }
@@ -20,6 +16,29 @@ select {
   flex-wrap: wrap;
   flex-direction: column;
   padding: 10px;
+}
+
+.input {
+  font-size: 25px;
+  border: none;
+  border-bottom: 2px solid #444;
+  border-radius: 0;
+}
+
+.item-code {
+  width: 250px;
+}
+
+.item-name {
+  width: 80%;
+}
+
+.item-type {
+  width: 290px;
+}
+
+.numbers .input {
+  width: 150px;
 }
 
 .numbers, .action-btns {

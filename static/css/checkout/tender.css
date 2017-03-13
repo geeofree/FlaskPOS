@@ -115,7 +115,7 @@
   background: #2a5e62;
 }
 
-.clear {
+.clear-cart {
   background: #c33838;
 }
 
@@ -123,6 +123,6 @@
   background: #214548;
 }
 
-.clear:hover {
+.clear-cart:hover {
   background: #932b2b;
 }

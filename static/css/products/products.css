@@ -15,5 +15,10 @@
 }
 
 .selected {
-  background: #e7e7e7;
+  background: #595959 !important;
+  color: #fff;
+}
+
+select {
+  width: 150px;
 }

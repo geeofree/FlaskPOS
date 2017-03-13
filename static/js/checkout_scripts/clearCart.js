@@ -3,7 +3,7 @@ import { btnOpenModal, closeModal } from "../misc/modal"
 
 
 export default function clearCart() {
-  const $clearBtn   = $('.clear')
+  const $clearBtn   = $('.clear-cart')
   const $clearModal = $('.clear-modal')
 
   btnOpenModal($clearBtn, $clearModal, modalEvent)
@@ -11,12 +11,18 @@ export default function clearCart() {
 
 
 function modalEvent(content, showModal) {
-  // SHOW MODAL
-  showModal()
+  const $cancel    = $('.cancel')
+  const $confirm   = $('.confirm-clear')
+  const $items     = $('.items')
+  const $purchased = $('.purchased-item')
 
-  const $cancel  = $('.cancel')
-  const $confirm = $('.confirm')
-  const $items   = $('.items')
+  if($purchased.length > 0) {
+    // SHOW MODAL
+    showModal()
+  }
+  else {
+    alert('No item(s) in cart to clear!')
+  }
 
   $cancel.click(function() {
     const $self = $(this)

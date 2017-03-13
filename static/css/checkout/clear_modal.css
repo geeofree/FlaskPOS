@@ -21,7 +21,7 @@
   justify-content: flex-end;
 }
 
-.cancel, .confirm {
+.cancel, .confirm-clear {
   border: 1px solid #b7b7b7;
 }
 
@@ -29,7 +29,7 @@
   background: #1a9591;
 }
 
-.confirm {
+.confirm-clear {
   background: #c33838;
   text-align: center;
   width: 60px;

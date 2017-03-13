@@ -119,7 +119,7 @@ function modalEvent(content, showModal) {
 // HELPER FUNCTIONS
 function lockToggle(childEL) {
   const $parent   = childEL.parents('.input-container')
-  const $inputs   = $parent.find('.input')
+  const $inputs   = $parent.find('.input-val')
   const $disabled = $inputs.attr('disabled')
 
   if($disabled) {
@@ -132,7 +132,7 @@ function lockToggle(childEL) {
 
 function lockInput(childEL) {
   const $parent   = childEL.parents('.input-container')
-  const $inputs   = $parent.find('.input')
+  const $inputs   = $parent.find('.input-val')
   const $disabled = $inputs.attr('disabled')
 
   if($disabled == undefined) {
@@ -142,7 +142,7 @@ function lockInput(childEL) {
 
 function unlockInput(childEL) {
   const $parent   = childEL.parents('.input-container')
-  const $inputs   = $parent.find('.input')
+  const $inputs   = $parent.find('.input-val')
 
   $inputs.each(function(_, el) {
     const $el = $(el)

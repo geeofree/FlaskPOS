@@ -17,6 +17,10 @@
 input {
   -moz-user-select: text;
   user-select: text;
+  padding: 3px;
+  border: 2px solid #bcbaba;
+  border-radius: 3px;
+  background:#fff
 }
 
 body{
