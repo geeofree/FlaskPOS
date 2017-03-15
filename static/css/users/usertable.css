@@ -14,11 +14,17 @@
 }
 
 .user {
+  position: relative;
   width: 100%;
   height: 90px;
   align-items: center;
-  background: #5c5c5c;
+  background: #fff;
   text-align: center;
+  color: #444;
+}
+
+.selected-user {
+  background: #444;
   color: #fff;
 }
 
@@ -44,6 +50,19 @@
   width: 27.5%;
 }
 
-.user-ol-status {
-  
+.status {
+  position: absolute;
+  top: 5px;
+  right: 10px;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+}
+
+.online {
+  background: #10d84b;
+}
+
+.offline {
+  background: tomato;
 }

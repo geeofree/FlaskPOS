@@ -32,11 +32,18 @@
           <div class="user-desc short">
             {% if user.online %}
               <span class="user-ol-status">Online</span>
-            {% else%}
+            {% else %}
               <span class="user-ol-status">Offline</span>
             {% endif %}
             <p>Status</p>
           </div>
+
+          {% if user.online %}
+            <div class="status online"></div>
+          {% else %}
+            <div class="status offline"></div>
+          {% endif %}
+          
         </div>
       {% endfor %}
     </div>

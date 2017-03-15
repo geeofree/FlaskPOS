@@ -9,6 +9,10 @@
   display: inline-block;
 }
 
+.user-button:hover {
+  cursor: pointer;
+}
+
 .create-user {
   background: #38a586;
 }
