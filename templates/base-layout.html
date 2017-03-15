@@ -35,7 +35,7 @@
       <!-- RIGHT NAVIGATION -->
       <div class="right">
         <div class="profile">
-          <p id="name">{{ user.fullname }}</p>
+          <p id="name">{{ user.firstname + " " + user.lastname }}</p>
 
           {% if user.role == 1 %}
             <p id="position">Admin</p>

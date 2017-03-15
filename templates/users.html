@@ -3,9 +3,54 @@
 {% block TITLE %} Users {% endblock %}
 
 {% block DASH_STYLE %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/users.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/users/users.css') }}">
 {% endblock %}
 
 {% block DASH %}
-  <h1>USERS</h1>
+  <div class="user-table">
+    <div class="user-header">
+      <h3>User List</h3>
+    </div>
+
+    <div class="user-table-body">
+      {% for user in users %}
+        <div class="user" id="uID{{ user.uID }}">
+          <div class="user-desc long">
+            <span class="user-fullname">{{ user.firstname + " " + user.lastname }}</span>
+            <p>Fullname</p>
+          </div>
+
+          <div class="user-desc short">
+            {% if user.role %}
+              <span class="user-role">Admin</span>
+            {% else %}
+              <span class="user-role">Staff Member</span>
+            {% endif %}
+            <p>Role</p>
+          </div>
+
+          <div class="user-desc short">
+            {% if user.online %}
+              <span class="user-ol-status">Online</span>
+            {% else%}
+              <span class="user-ol-status">Offline</span>
+            {% endif %}
+            <p>Status</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="user-profile">
+    <div class="user-header">
+      <h3>User Profile</h3>
+
+      <div class="user-buttons">
+        <div class="user-button remove-user">Remove</div>
+        <div class="user-button create-user">Create</div>
+      </div>
+    </div>
+
+  </div>
 {% endblock %}

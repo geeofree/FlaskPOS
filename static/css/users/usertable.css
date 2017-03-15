@@ -1,0 +1,49 @@
+.user {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.user-table {
+  width: 600px;
+}
+
+
+.user-table-body {
+  height: 90%;
+  overflow: auto;
+}
+
+.user {
+  width: 100%;
+  height: 90px;
+  align-items: center;
+  background: #5c5c5c;
+  text-align: center;
+  color: #fff;
+}
+
+.user span {
+  font-size: 20px;
+}
+
+.user p {
+  color: #999;
+  margin: 2px 0;
+  font-style: italic;
+}
+
+.user:hover {
+  cursor: pointer;
+}
+
+.long {
+  width: 45%;
+}
+
+.short {
+  width: 27.5%;
+}
+
+.user-ol-status {
+  
+}

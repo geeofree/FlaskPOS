@@ -1,0 +1,18 @@
+.user-profile {
+  width: 550px;
+}
+
+.user-button {
+  color: #fff;
+  padding: 5px;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.create-user {
+  background: #38a586;
+}
+
+.remove-user {
+  background: #e7553b;
+}

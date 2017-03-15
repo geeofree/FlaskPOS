@@ -9,12 +9,13 @@ class BaseModel(Model):
 
 
 class User(BaseModel):
-    uID      = PrimaryKeyField()
-    username = CharField()
-    password = TextField()
-    fullname = CharField()
-    role     = IntegerField()
-
+    uID       = PrimaryKeyField()
+    username  = CharField()
+    password  = TextField()
+    firstname = CharField()
+    lastname  = CharField()
+    role      = IntegerField()
+    online    = IntegerField()
 
 class Inventory(BaseModel):
     invID      = PrimaryKeyField()

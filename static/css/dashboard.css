@@ -41,4 +41,5 @@
   flex-wrap: wrap;
   width: 96.5%;
   height: 100%;
+  overflow: auto;
 }

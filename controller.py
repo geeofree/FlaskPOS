@@ -18,8 +18,12 @@ app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 """ HELPER Function """
 def valid(username, password):
     try:
-        hashed = User.get(User.username == username).password
-        return checkpass(hashed, password)
+        user   = User.get(User.username == username)
+        hashed = user.password
+        if checkpass(hashed, password):
+            user.online = 1
+            user.save()
+            return True
     except User.DoesNotExist:
         return False
 
@@ -109,7 +113,7 @@ def dashboard(subdir):
             return render_template("logs.html", **context)
 
         elif subdir == 'users':
-            return render_template("users.html", **context)
+            return render_template("users.html", **context, users = User.select())
 
         else:
             return render_template("default.html", **context)
@@ -170,6 +174,9 @@ def del_product():
 @app.route("/logout")
 def logout():
     if 'logged_in' in session:
+        user = User.get(User.username == session['client_name'])
+        user.online = 0
+        user.save()
         session.pop('logged_in')
         session.pop('client_name')
         return redirect(url_for("home"))
