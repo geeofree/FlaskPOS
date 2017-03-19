@@ -26,10 +26,10 @@
   text-align: center;
   width: 100%;
   cursor: pointer;
-  height: 150px;
+  height: 80px;
   background: #c33838;
   color: #fff;
-  border-bottom: 2px dashed #aaa;
+  transition-duration: 0.3s;
 }
 
 .in-stock {
@@ -47,6 +47,7 @@
   max-width: 100%;
   max-height: 80%;
   overflow-y: auto;
+  text-align: justify;
 }
 
 .item-description span {
@@ -61,16 +62,6 @@
 }
 
 .selected-product {
-  background: #2a5e62;
-  border-bottom: 2px dashed #fff;
+  background: #5c5c5c;
   color: #fff;
-}
-
-.selected-product:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  border-top: 30px solid orange;
-  border-right: 30px solid transparent;
 }

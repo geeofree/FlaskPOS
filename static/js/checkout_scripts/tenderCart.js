@@ -31,26 +31,37 @@ function modalEvent(content, showModal) {
   const payAmount   = Number($payment.val())
 
   calculateChange(totalAmount, payAmount)
-  //
-  // $payment.change(function() {
-  //   const $self = $(this)
-  //   let    $val = Number($self.val())
-  //
-  //   if(isNaN($val)) {
-  //     $val = 0
-  //     $self.val(0)
-  //   }
-  //
-  //   calculateChange(totalAmount, $val)
-  // })
+
+  $payment.keydown(function(event) {
+    const $self  = $(this)
+    const button = event.which || event.button
+    const keyVal = String.fromCharCode(button)
+
+    if(!(button >= 48 && button <= 57 || button >= 96 && button <= 105 || button == 8
+      || button == 37 || button == 39 || event.ctrlKey && button == 65)) {
+      event.preventDefault()
+    }
+  })
 
   $payment.keyup(function(event) {
-    const $self = $(this)
+    const $self  = $(this)
+    const $val   = $self.val()
     const button = event.which || event.button
+    const keyVal = String.fromCharCode(button)
 
-    if(button >= 48 || button <= 57 || button == 8) {
-      let $val = Number($self.val())
-      calculateChange(totalAmount, $val)
+    if(keyVal !== " " && !isNaN(keyVal) || button == 8) {
+
+      if($val < 0) {
+        $self.val(0)
+      }
+
+      if($val > 999999) {
+        $self.val(999999)
+      }
+
+      let value = Number($self.val())
+
+      calculateChange(totalAmount, value)
     }
   })
 
@@ -60,7 +71,8 @@ function modalEvent(content, showModal) {
 
   // CLOSE MODAL
   closeModal(function() {
-    $payment.off("change")
+    $payment.off("keyup")
+    $payment.off("keydown")
     $purchaseBtn.off("click")
   })
 }

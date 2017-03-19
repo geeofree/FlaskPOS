@@ -89,7 +89,7 @@ function validInputs(name, code, type, stock, price) {
   const digitOnly = /^\d+$/
 
   // Valid Variables
-  const validName = Boolean(name) && name.length <= 140
+  const validName = Boolean(name) && name.length <= 65
   const validCode = Boolean(code) && maxDigit.test(code)
   const validType = Boolean(type) && type.length <= 25
   const validStock = Boolean(stock) && stock >= 0 && stock <= 999999 && digitOnly.test(stock)
