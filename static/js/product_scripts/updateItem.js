@@ -19,7 +19,7 @@ function modalEvent(content, showModal) {
 
 
   if($selected.length == 0) {
-    alert('ERROR: No item selected to update')
+    alert('No item selected to update')
     return
   }
 
@@ -28,7 +28,7 @@ function modalEvent(content, showModal) {
   const $dataName  = $selData.find('.data-name').text()
   const $dataCode  = $selData.find('.data-sku').text()
   const $dataType  = $selData.find('.data-type').text()
-  const $dataStock = $selData.find('.data-stock').text()
+  const $dataStock = $selData.find('.data-max-stock').text()
   let   $dataPrice = $selData.find('.data-price').text()
         $dataPrice = $dataPrice.match(/\d+/)[0]
   const $dataArr   = [$dataID, $dataName, $dataCode, $dataType, $dataStock, $dataPrice]
@@ -38,7 +38,7 @@ function modalEvent(content, showModal) {
   const $itemName  = $('.item-name-val')
   const $itemCode  = $('.item-code-val')
   const $itemType  = $('.item-type-val')
-  const $itemStock = $('.item-stock-val')
+  const $itemStock = $('.item-max-stock-val')
   const $itemPrice = $('.item-price-val')
   const $inputArr  = [$itemID, $itemName, $itemCode, $itemType, $itemStock, $itemPrice]
 

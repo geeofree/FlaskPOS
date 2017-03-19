@@ -36,12 +36,7 @@
       <div class="right">
         <div class="profile">
           <p id="name">{{ user.firstname + " " + user.lastname }}</p>
-
-          {% if user.role == 1 %}
-            <p id="position">Admin</p>
-          {% elif user.role == 2 %}
-            <p id="position">Staff Member</p>
-          {% endif %}
+          <p id="position">{{ user.role }}</p>
         </div>
 
       </div>

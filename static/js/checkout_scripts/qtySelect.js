@@ -33,11 +33,11 @@ export default function qtyModal($selected) {
       const $val = Number($qty.val())
 
       if($val > largest) {
-        $self.val(largest)
+        $self.val(1)
       }
 
       if($val < 1) {
-        $self.val(1)
+        $self.val(largest)
       }
     })
 

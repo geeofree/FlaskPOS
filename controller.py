@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template, redirect, session, abort
+from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
 from model import *
@@ -8,45 +8,35 @@ from model import *
 app = Flask(__name__)
 bcrypt = Bcrypt(app)
 
-""" Store bcrypt methods on a different name """
-gen_hash   = bcrypt.generate_password_hash
-checkpass  = bcrypt.check_password_hash
+""" User Authentication Object"""
+user_auth = UserAuth(bcrypt)
 
 """ Key Config """
 app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 
-""" HELPER Function """
-def valid(username, password):
-    try:
-        user   = User.get(User.username == username)
-        hashed = user.password
-        if checkpass(hashed, password):
-            user.online = 1
-            user.save()
-            return True
-    except User.DoesNotExist:
-        return False
 
 
-""" Views """
+""" Before Request Handler """
 @app.before_request
 def before():
     init_db()
 
 
-
+""" Teardown Request Handler """
 @app.teardown_request
 def teardown(exception):
     db.close()
 
 
-
+""" After Request Handler """
 @app.after_request
 def after(response):
+    user_init(user_auth)
     response.headers.add('Cache-control', 'no-store, no cache, must-revalidate, post-check=0, pre-check=0')
     return response
 
 
+""" Home Route """
 @app.route("/", methods=["GET", "POST"])
 def home():
     if request.method == "POST":
@@ -54,20 +44,20 @@ def home():
             username = request.form['username']
             password = request.form['password']
 
-            if valid(username, password):
+            if user_auth.valid(username, password):
                 session['logged_in'] = True
                 session['client_name'] = username
-                print("hello world!")
                 return redirect(url_for('checkout'))
             else:
                 return render_template("home.html", status="fail")
-        else:
-            return redirect(url_for("checkout"))
     if request.method == "GET":
-        return render_template("home.html", status=None)
+        if not session.get('logged_in', False):
+            return render_template("home.html", status=None)
+        else:
+            return redirect(url_for('checkout'))
 
 
-
+""" Checkout Route """
 @app.route("/checkout")
 def checkout():
     if 'logged_in' in session:
@@ -80,17 +70,7 @@ def checkout():
     return redirect(url_for('home'))
 
 
-
-@app.route("/payment", methods=["POST"])
-def payment():
-    json = request.get_json()
-    product = Inventory.get(Inventory.invID == json['id'])
-    product.stock = product.stock - json['qty']
-    product.save()
-    return url_for('checkout')
-
-
-
+""" Dashboard Route """
 @app.route("/dashboard/<subdir>")
 @app.route("/dashboard/", defaults={'subdir': ''})
 def dashboard(subdir):
@@ -122,23 +102,39 @@ def dashboard(subdir):
     abort(400)
 
 
+""" Payment POST Route """
+@app.route("/payment", methods=["POST"])
+def payment():
+    json = request.get_json()
+    product = Inventory.get(Inventory.invID == json['id'])
+    product.stock = product.stock - json['qty']
+    product.save()
 
+    data = dict(
+        url = url_for('checkout')
+    )
+
+    return jsonify(data)
+
+
+""" Add Product POST Route """
 @app.route("/add_product", methods=["POST"])
 def add_product():
     if 'logged_in' in session:
         fields = dict(
-            prod_name  = request.form['item_name'],
-            prod_code  = request.form['item_code'],
-            prod_type  = request.form['category'],
-            stock      = request.form['stock'],
-            prod_price = request.form['price']
+            prod_name       = request.form['item_name'],
+            prod_code       = request.form['item_code'],
+            prod_type       = request.form['category'],
+            prod_price      = request.form['price'],
+            prod_max_stock  = request.form['max_stock'],
+            prod_stock      = 0
         )
 
         Inventory.create(**fields)
     return redirect(url_for('dashboard', subdir='products'))
 
 
-
+""" Edit Product POST Route """
 @app.route("/edit_product", methods=["POST"])
 def edit_product():
     if 'logged_in' in session and id:
@@ -149,7 +145,7 @@ def edit_product():
         item.save()
         item.prod_type  = request.form["category"]
         item.save()
-        item.stock      = request.form["stock"]
+        item.max_stock  = request.form["max_stock"]
         item.save()
         item.prod_code  = request.form["item_code"]
         item.save()
@@ -158,7 +154,7 @@ def edit_product():
     return redirect(url_for("dashboard", subdir="products"))
 
 
-
+""" Delete Product POST Route """
 @app.route("/del_product", methods=["POST"])
 def del_product():
     if 'logged_in' in session:
@@ -172,7 +168,27 @@ def del_product():
     return redirect(url_for("dashboard", subdir="products"))
 
 
+""" User Request POST Route """
+@app.route("/user_req", methods=["POST"])
+def find_user():
+    if 'logged_in' in session:
+        json = request.get_json()
+        user = User.get(User.uID == json['uID'])
 
+        print(json, user)
+
+        data = dict(
+            firstname = user.firstname,
+            lastname = user.lastname,
+            username = user.username,
+            join_date = user.join_date,
+            last_login = user.last_login
+        )
+
+        return jsonify(data)
+
+
+""" Logout Route """
 @app.route("/logout")
 def logout():
     if 'logged_in' in session:

@@ -21,11 +21,7 @@
           </div>
 
           <div class="user-desc short">
-            {% if user.role %}
-              <span class="user-role">Admin</span>
-            {% else %}
-              <span class="user-role">Staff Member</span>
-            {% endif %}
+            <span class="user-role">{{ user.role }}</span>
             <p>Role</p>
           </div>
 
@@ -63,11 +59,11 @@
         <div class="user-profile-column">
           <div class="profile-desc user-firstname">
             <p class="profile-tag">Firstname</p>
-            <p class="profile-data">John</p>
+            <p class="profile-data data-firstname"></p>
           </div>
           <div class="profile-desc user-lastname">
             <p class="profile-tag">Lastname</p>
-            <p class="profile-data">Doe</p>
+            <p class="profile-data data-lastname"></p>
           </div>
         </div>
 
@@ -75,18 +71,18 @@
         <div class="user-profile-column">
           <div class="profile-desc user-username">
             <p class="profile-tag">Username</p>
-            <p class="profile-data">admin</p>
+            <p class="profile-data data-username"></p>
           </div>
           <div class="profile-desc user-date-created">
             <p class="profile-tag">Date Created</p>
-            <p class="profile-data">3/15/2017</p>
+            <p class="profile-data data-date-join"></p>
           </div>
         </div>
 
         <!-- Column 3: Date Created -->
         <div class="user-profile-column">
           <div class="profile-desc user-last-login">
-            <p class="profile-data">January 15, 2017 5:25PM</p>
+            <p class="profile-data data-last-login"></p>
             <p class="profile-tag">Last Login</p>
           </div>
         </div>

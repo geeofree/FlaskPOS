@@ -20,7 +20,7 @@ function modalEvent(content, showModal) {
   const $itemName  = $('.item-name')
   const $itemCode  = $('.item-code')
   const $itemType  = $('.item-type')
-  const $itemStock = $('.item-stock')
+  const $itemStock = $('.item-max-stock')
   const $itemPrice = $('.item-price')
 
   // BUTTONS
@@ -76,7 +76,7 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
   })
 
   // Select Element Click Event Handler
-  $sel.click(function() {
+  $sel.change(function() {
     const $self = $(this)
     const $selVal = $self.val()
     $type.val($selVal)
@@ -92,8 +92,8 @@ function validInputs(name, code, type, stock, price) {
   const validName = Boolean(name) && name.length <= 65
   const validCode = Boolean(code) && maxDigit.test(code)
   const validType = Boolean(type) && type.length <= 25
-  const validStock = Boolean(stock) && stock >= 0 && stock <= 999999 && digitOnly.test(stock)
-  const validPrice = Boolean(price) && price >= 0 && stock <= 999999 && digitOnly.test(price)
+  const validStock = Boolean(stock) && stock >= 0 && stock <= 999 && digitOnly.test(stock)
+  const validPrice = Boolean(price) && price >= 0 && stock <= 500000 && digitOnly.test(price)
 
   if(!validCode) {
     alert('Invalid ITEM CODE input')
@@ -108,11 +108,11 @@ function validInputs(name, code, type, stock, price) {
     return false
   }
   else if(!validStock) {
-    alert('Invalid input on STOCK, must be 0 or more and less than 1,000,000')
+    alert('Invalid input on MAX STOCK, must be 0 or more and less than 1000')
     return false
   }
   else if(!validPrice) {
-    alert('Invalid input on PRICE, must be 0 or more and less than 1,000,000')
+    alert('Invalid input on PRICE, must be 0 or more and less than or equal to 500000')
     return false
   }
 
