@@ -8,7 +8,7 @@
 
 {% block DASH %}
   <div class="user-table">
-    <div class="user-header">
+    <div class="user-table-header">
       <h3>User List</h3>
     </div>
 
@@ -32,23 +32,124 @@
           <div class="user-desc short">
             {% if user.online %}
               <span class="user-ol-status">Online</span>
-            {% else%}
+              <div class="status online"></div>
+            {% else %}
               <span class="user-ol-status">Offline</span>
+              <div class="status offline"></div>
             {% endif %}
             <p>Status</p>
           </div>
+
         </div>
       {% endfor %}
     </div>
   </div>
 
-  <div class="user-profile">
-    <div class="user-header">
-      <h3>User Profile</h3>
+  <div class="user-main">
+    <!-- USER PROFILE -->
+    <div class="user-profile">
+      <!-- User Profile Header -->
+      <div class="user-main-header">
+        <h3>User Profile</h3>
 
-      <div class="user-buttons">
-        <div class="user-button remove-user">Remove</div>
-        <div class="user-button create-user">Create</div>
+        <div class="user-buttons">
+          <div class="user-button remove-user">Remove</div>
+        </div>
+      </div>
+
+      <!-- User Profile Body -->
+      <div class="user-profile-body">
+        <!-- Column 1: First and Last Name -->
+        <div class="user-profile-column">
+          <div class="profile-desc user-firstname">
+            <p class="profile-tag">Firstname</p>
+            <p class="profile-data">John</p>
+          </div>
+          <div class="profile-desc user-lastname">
+            <p class="profile-tag">Lastname</p>
+            <p class="profile-data">Doe</p>
+          </div>
+        </div>
+
+        <!-- Column 2: Username and Last Login -->
+        <div class="user-profile-column">
+          <div class="profile-desc user-username">
+            <p class="profile-tag">Username</p>
+            <p class="profile-data">admin</p>
+          </div>
+          <div class="profile-desc user-date-created">
+            <p class="profile-tag">Date Created</p>
+            <p class="profile-data">3/15/2017</p>
+          </div>
+        </div>
+
+        <!-- Column 3: Date Created -->
+        <div class="user-profile-column">
+          <div class="profile-desc user-last-login">
+            <p class="profile-data">January 15, 2017 5:25PM</p>
+            <p class="profile-tag">Last Login</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE USER -->
+    <div class="new-user">
+      <!-- New User Header -->
+      <div class="user-main-header">
+        <h3>Create User</h3>
+
+        <div class="user-buttons">
+          <div class="user-button create-user">Create</div>
+        </div>
+      </div>
+
+      <!-- New User Body -->
+      <div class="new-user-body">
+        <!-- Column 1: Firstname and Lastname Inputs -->
+        <div class="user-profile-column">
+          <!-- Firstname -->
+          <div class="profile-desc">
+            <p class="profile-tag">Firstname</p>
+            <input type="text" name="input-firstname" class="create-user-input">
+          </div>
+
+          <!-- Lastname -->
+          <div class="profile-desc">
+            <p class="profile-tag">Lastname</p>
+            <input type="text" name="input-lastname" class="create-user-input">
+          </div>
+        </div>
+
+        <!-- Column 2: Username and Password Inputs -->
+        <div class="user-profile-column">
+          <!-- Username -->
+          <div class="profile-desc">
+            <p class="profile-tag">Username</p>
+            <input type="text" name="input-username" class="create-user-input">
+          </div>
+
+          <!-- Password -->
+          <div class="profile-desc">
+            <p class="profile-tag">Password</p>
+            <input type="password" name="input-password" class="create-user-input">
+          </div>
+        </div>
+
+        <!-- Column 3: Role Type -->
+        <div class="user-profile-column">
+          <div class="profile-desc role-type">
+            <p class="profile-tag">User Role</p>
+
+            <div class="user-role-container">
+              <div class="user-roles">
+                <div class="user-role-type selected-role">Basic</div>
+                <div class="user-role-type">Admin</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 

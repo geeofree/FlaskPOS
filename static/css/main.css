@@ -14,13 +14,18 @@
   box-sizing: border-box;
 }
 
-input {
+input, textarea {
   -moz-user-select: text;
   user-select: text;
   padding: 3px;
   border: 2px solid #bcbaba;
   border-radius: 3px;
   background:#fff
+}
+
+textarea {
+  resize: none;
+  font-size: 15px;
 }
 
 body{
@@ -84,7 +89,7 @@ a {
 
 .brand-name {
   margin: 0;
-  color: tomato;
+  color: #c5972b;
 }
 
 .dir:hover {
@@ -107,17 +112,6 @@ a {
 
 .right #position {
   font-size: 12px;
-}
-
-.logout {
-  margin-right: 5px;
-}
-
-.logout span {
-  padding: 10px;
-  color: orange;
-  background: #303030;
-  border-radius: 10px;
 }
 
 .current_dir {

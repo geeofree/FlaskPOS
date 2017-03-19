@@ -9,13 +9,12 @@
 }
 
 .outer-border {
-  border: 3px solid #333;
+  background: #444;
 }
 
 .tbl-head {
   font-family: Oxygen;
   color: #fff;
-  background: #3c3a3a;
 }
 
 .tbl-head th {
@@ -26,8 +25,8 @@
   padding: 20px 10px;
 }
 
-.tbl-data {
-  border-bottom: 1px dashed #aaa;
+.tbl-data:nth-child(even) {
+  background: #f2f2f2;
 }
 
 .tbl-data {

@@ -57,10 +57,12 @@ def home():
             if valid(username, password):
                 session['logged_in'] = True
                 session['client_name'] = username
+                print("hello world!")
                 return redirect(url_for('checkout'))
             else:
                 return render_template("home.html", status="fail")
-
+        else:
+            return redirect(url_for("checkout"))
     if request.method == "GET":
         return render_template("home.html", status=None)
 

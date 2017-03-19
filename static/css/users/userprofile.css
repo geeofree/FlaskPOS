@@ -1,5 +1,56 @@
-.user-profile {
+.user-main {
   width: 550px;
+  height: 100%;
+}
+
+.user-profile, .user-profile-body, .new-user-body {
+  width: 100%;
+}
+
+.user-profile-body,  .new-user-body{
+  color: #fff;
+  height: 80%;
+}
+
+.user-header {
+  height: 20%;
+}
+
+.user-profile {
+  height: 45%;
+  margin-bottom: 15px;
+}
+
+.user-profile-column {
+  display: flex;
+  height: 33.33%;
+}
+
+.user-profile-column p {
+  margin: 2px 0;
+}
+
+.profile-desc {
+  padding: 5px;
+  width: 50%;
+  background: #fff;
+  border: 1px solid #444;
+  color: #444;
+}
+
+.profile-data {
+  text-align: center;
+  font-size: 30px;
+}
+
+.profile-tag {
+  color: #5c5c5c;
+  font-style: italic;
+}
+
+.user-last-login {
+  width: 100%;
+  text-align: center;
 }
 
 .user-button {
@@ -9,10 +60,64 @@
   display: inline-block;
 }
 
+.user-button:hover {
+  cursor: pointer;
+}
+
 .create-user {
   background: #38a586;
 }
 
 .remove-user {
   background: #e7553b;
+}
+
+/* NEW USER BODY */
+.new-user {
+  background: #5c5c5c;
+  height: 50%;
+}
+
+.create-user-input {
+  background: none;
+  color: #444;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #444;
+  text-align: center;
+  margin-left: 10px;
+}
+
+.role-type {
+  width: 100%;
+}
+
+.user-role-container, .user-roles {
+  display: flex;
+}
+
+.user-role-container {
+  justify-content: center;
+}
+
+.user-roles {
+  align-items: center;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.user-role-type {
+  color: #fff;
+  font-size: 30px;
+  padding: 2px 10px;
+  background: #666;
+  transition-duration: 0.3s;
+}
+
+.user-role-type:hover {
+  cursor: pointer;
+}
+
+.selected-role {
+  background: #444;
 }

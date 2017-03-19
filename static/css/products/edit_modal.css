@@ -12,6 +12,10 @@
   align-items: center;
 }
 
+.item-name-val {
+  width: 70%;
+}
+
 .desc-icon {
   margin: 0 5px;
 }
