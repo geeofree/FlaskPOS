@@ -7,7 +7,7 @@
   align-items: center;
 }
 
-.user-table, .user-profile {
+.user-table, .user-main {
   display: flex;
   flex-wrap: wrap;
   height: 100%;
@@ -15,9 +15,8 @@
   flex-direction: column;
 }
 
-.user-header {
+.user-table-header, .user-main-header {
   display: flex;
-  height: 10%;
   padding: 0 8px;
   align-items: center;
   justify-content: space-between;

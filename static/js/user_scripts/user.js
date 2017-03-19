@@ -1,6 +1,6 @@
-import selectUser from "./selectUser"
+import selectUserEl from "./selectUserEl"
 
 
 export default function users() {
-  selectUser()
+  selectUserEl()
 }

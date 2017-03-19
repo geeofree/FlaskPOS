@@ -18,19 +18,12 @@ select {
   padding: 10px;
 }
 
-.input {
-  font-size: 25px;
-  border: none;
-  border-bottom: 2px solid #444;
-  border-radius: 0;
-}
-
 .item-code {
   width: 250px;
 }
 
 .item-name {
-  width: 80%;
+  width: 70%;
 }
 
 .item-type {

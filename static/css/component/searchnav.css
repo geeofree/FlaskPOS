@@ -11,14 +11,32 @@
 .search-input {
   font-family: sans-serif;
   margin-left: 15px;
+  background: none;
   border: none;
-  border-radius: 10px;
+  border-radius: 0;
+  border-bottom: 1px solid #fff;
+  width: 200px;
+  height: 30px;
+  color: #fff;
   font-size: 13px;
-  height: 20px;
-  width: 160px;
   padding-left: 10px;
 }
 
 .search-icon {
   margin-left: 5px;
+  color: #fff;
+  text-align: center;
+  padding: 5px;
+}
+
+.add {
+  background: #32b358;
+}
+
+.edit {
+  background: #3c77b1;
+}
+
+.delete {
+  background: #b05342;
 }
