@@ -41,8 +41,11 @@ function numInputValidation($inputEL, callback) {
     const button = event.which || event.button
     const keyVal = String.fromCharCode(button)
 
-    if(keyVal !== " " && !isNaN(keyVal) || button == 8) {
-      callback($self, event)
+    if(callback) {
+      if(keyVal !== " " && !isNaN(keyVal) || button == 8) {
+        callback($self, event)
+      }
     }
+
   })
 }

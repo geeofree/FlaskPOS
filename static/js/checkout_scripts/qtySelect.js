@@ -1,5 +1,6 @@
 import $ from "jquery"
 import { openModal, closeModal } from '../misc/modal'
+import { numInputValidation } from '../misc/misc'
 import createItem from "./createCart"
 
 
@@ -21,6 +22,8 @@ export default function qtyModal($selected) {
     function closeEv() {
       $qtyBtn.off("click")
       $qty.off("change")
+      $qty.off("keydown")
+      $qty.off("keyup")
       $qty.val(1)
     }
 
@@ -30,11 +33,26 @@ export default function qtyModal($selected) {
       const $val = Number($qty.val())
 
       if($val > largest) {
-        $self.val(1)
+        $self.val(largest)
       }
 
       if($val < 1) {
-        $self.val(largest)
+        $self.val(1)
+      }
+    })
+
+    // QTY INPUT KEYUP/KEYDOWN EVENT HANDLER
+    numInputValidation($qty, function($input) {
+      const $val = Number($input.val())
+
+      console.log($val)
+
+      if($val > largest) {
+        $input.val(largest)
+      }
+
+      if($val < 1) {
+        $input.val(1)
       }
     })
 
