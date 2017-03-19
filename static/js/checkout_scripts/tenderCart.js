@@ -1,5 +1,6 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import { numInputValidation } from "../misc/misc"
 
 export default function tenderItems() {
   const $tenderBtn   = $('.tender')
@@ -32,37 +33,22 @@ function modalEvent(content, showModal) {
 
   calculateChange(totalAmount, payAmount)
 
-  $payment.keydown(function(event) {
-    const $self  = $(this)
+  numInputValidation($payment, function($input, event) {
+    const $val   = $input.val()
     const button = event.which || event.button
     const keyVal = String.fromCharCode(button)
 
-    if(!(button >= 48 && button <= 57 || button >= 96 && button <= 105 || button == 8
-      || button == 37 || button == 39 || event.ctrlKey && button == 65)) {
-      event.preventDefault()
+    if($val < 0) {
+      $input.val(0)
     }
-  })
 
-  $payment.keyup(function(event) {
-    const $self  = $(this)
-    const $val   = $self.val()
-    const button = event.which || event.button
-    const keyVal = String.fromCharCode(button)
-
-    if(keyVal !== " " && !isNaN(keyVal) || button == 8) {
-
-      if($val < 0) {
-        $self.val(0)
-      }
-
-      if($val > 999999) {
-        $self.val(999999)
-      }
-
-      let value = Number($self.val())
-
-      calculateChange(totalAmount, value)
+    if($val > 999999) {
+      $input.val(999999)
     }
+
+    let value = Number($input.val())
+
+    calculateChange(totalAmount, value)
   })
 
   $purchaseBtn.click(function() {
