@@ -10,3 +10,19 @@
   flex-wrap: wrap;
   align-items: center;
 }
+
+.add {
+  background: #32b358;
+}
+
+.edit {
+  background: #3c77b1;
+}
+
+.restock {
+  background: cadetblue;
+}
+
+.delete {
+  background: #b05342;
+}
