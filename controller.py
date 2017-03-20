@@ -145,7 +145,7 @@ def edit_product():
         item.save()
         item.prod_type  = request.form["category"]
         item.save()
-        item.max_stock  = request.form["max_stock"]
+        item.prod_max_stock  = request.form["max_stock"]
         item.save()
         item.prod_code  = request.form["item_code"]
         item.save()
