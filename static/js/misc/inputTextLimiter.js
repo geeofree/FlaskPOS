@@ -7,7 +7,7 @@ export default function inputLimiter($inputEL, max_text_limit) {
     const inputLen = $val.length
     const button = event.which || event.button
 
-    if(!(inputLen != max_text_limit || button == 8 || event.ctrlKey && button == 65)) {
+    if(!(inputLen != max_text_limit || button == 8 || event.ctrlKey && button == 65 || button == 9)) {
       event.preventDefault()
     }
   })
