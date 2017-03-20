@@ -1,5 +1,9 @@
 @import url('usertable.css');
 @import url('userprofile.css');
+@import url('createUserModal.css');
+@import url('removeUserModal.css');
+@import url('../component/buttons.css');
+@import url('../component/modal.css');
 
 .dash-content {
   padding: 10px 20px;
@@ -27,4 +31,16 @@
 .user-header h3 {
   margin-left: 5px;
   font-family: Oxygen;
+}
+
+.button {
+  border: none;
+}
+
+.user-mc-header {
+  color: #444;
+}
+
+input[type='password'] {
+  text-align: center;
 }

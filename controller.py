@@ -161,7 +161,7 @@ def del_product():
         username = session['client_name']
         password = request.form['pw']
 
-        if valid(username, password):
+        if user_auth.valid(username, password):
             itemID = request.args.get("id")
             Inventory.delete().where(Inventory.invID == itemID).execute()
 
@@ -175,8 +175,6 @@ def find_user():
         json = request.get_json()
         user = User.get(User.uID == json['uID'])
 
-        print(json, user)
-
         data = dict(
             firstname = user.firstname,
             lastname = user.lastname,
@@ -186,6 +184,50 @@ def find_user():
         )
 
         return jsonify(data)
+
+
+""" Create User POST Route """
+@app.route("/new_user", methods=["POST"])
+def create_user():
+    if 'logged_in' in session:
+        json     = request.get_json()
+        username = session['client_name']
+        password = json['auth_pass']
+
+        if user_auth.valid(username, password):
+
+            user_data = dict(
+                firstname = json['firstname'],
+                lastname = json['lastname'],
+                username = json['username'],
+                password = json['password'],
+                role = json['role'],
+            )
+
+            user_auth.create_user(**user_data)
+
+            success_data = dict(
+                status = 'success',
+                url = url_for('dashboard', subdir='users')
+            )
+
+            return jsonify(success_data)
+        else:
+            return jsonify({'status': "fail", 'error': 'Invalid Password'})
+
+
+""" Create User POST Route """
+@app.route("/remove_user", methods=["POST"])
+def remove_user():
+    if 'logged_in' in session:
+        json     = request.get_json()
+        username = session['client_name']
+        password = request.form['urm-pw']
+
+        if user_auth.valid(username, password):
+            return jsonify(json)
+        else:
+            return jsonify({'status': "fail", 'error': 'Invalid Password'})
 
 
 """ Logout Route """

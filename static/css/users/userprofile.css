@@ -30,11 +30,16 @@
   margin: 2px 0;
 }
 
+.user-profile-column .profile-desc:nth-child(even) {
+  border-left: none;
+}
+
 .profile-desc {
   padding: 5px;
   width: 50%;
   background: #fff;
   border: 1px solid #444;
+  border-top: none;
   color: #444;
 }
 
@@ -46,6 +51,10 @@
 .profile-tag {
   color: #5c5c5c;
   font-style: italic;
+}
+
+.data-last-login {
+  height: 30px;
 }
 
 .user-last-login {

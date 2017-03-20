@@ -1,0 +1,20 @@
+.create-user-modal .header-text {
+  background: #38a586;
+  color: #fff;
+}
+
+.create-user-form {
+  text-align: center;
+  padding: 10px;
+}
+
+.confirm-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.confirm-create {
+  background: #38a586;
+  margin: 5px 10px;
+}

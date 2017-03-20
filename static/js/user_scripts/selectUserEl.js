@@ -61,15 +61,14 @@ function getUser($selectedUser) {
   ajax({ uID: $userID }, '/user_req', function(data) {
     const dateJoin = data.join_date.split(/(\s\d+:\d+)/)[0]
 
-    const logDateData = data.last_login.split(/(\s\d+:\d+)/)
-    const lastLogDate = logDateData[0]
-    const lastLogTime = TwelveHourFormat(logDateData[1])
+    let logDateData = data.last_login ? data.last_login.split(/(\s\d+:\d+)/) : false
+    logDateData = logDateData ? logDateData[0] + " " + TwelveHourFormat(logDateData[1]) : "Never"
 
 
     fNameEL.text(data.firstname)
     lNameEL.text(data.lastname)
     uNameEL.text(data.username)
     dateJoinEL.text(dateJoin)
-    lastLogEL.text(`${lastLogDate} ${lastLogTime}`)
+    lastLogEL.text(logDateData)
   })
 }

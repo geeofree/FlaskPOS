@@ -107,13 +107,13 @@
           <!-- Firstname -->
           <div class="profile-desc">
             <p class="profile-tag">Firstname</p>
-            <input type="text" name="input-firstname" class="create-user-input">
+            <input type="text" name="input-firstname" class="create-user-input input-firstname">
           </div>
 
           <!-- Lastname -->
           <div class="profile-desc">
             <p class="profile-tag">Lastname</p>
-            <input type="text" name="input-lastname" class="create-user-input">
+            <input type="text" name="input-lastname" class="create-user-input input-lastname">
           </div>
         </div>
 
@@ -122,13 +122,13 @@
           <!-- Username -->
           <div class="profile-desc">
             <p class="profile-tag">Username</p>
-            <input type="text" name="input-username" class="create-user-input">
+            <input type="text" name="input-username" class="create-user-input input-username">
           </div>
 
           <!-- Password -->
           <div class="profile-desc">
             <p class="profile-tag">Password</p>
-            <input type="password" name="input-password" class="create-user-input">
+            <input type="password" name="input-password" class="create-user-input input-password">
           </div>
         </div>
 
@@ -149,5 +149,51 @@
       </div>
     </div>
 
+  </div>
+{% endblock %}
+
+{% block MODAL %}
+  <div class="modal">
+
+    <div class="create-user-modal modal-content">
+      <div class="header-text">
+        <h3>Create User</h3>
+      </div>
+
+      <div class="create-user-form">
+        <h2 class="user-mc-header">Authentication Required</h2>
+
+        <div class="input-container">
+          <input type="password" name="uc-pw" class="user-create-pw-input">
+          <p>Enter password to verify</p>
+        </div>
+
+        <div class="confirm-wrapper">
+          <button class="button confirm-create">Create User</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="remove-user-modal modal-content">
+      <div class="header-text">
+        <h3>Create User</h3>
+      </div>
+
+      <div class="remove-user-form">
+        <h4 class="user-mc-header">Are you sure you want to remove <span class="selected-user-fullname"></span>?</h4>
+
+        <div class="input-container">
+          <input type="password" name="urm-pw" class="user-remove-pw-input">
+          <p>Enter password to verify</p>
+        </div>
+
+        <div class="confirm-wrapper">
+          <button class="button confirm-remove">Remove User</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="close">&times;</div>
   </div>
 {% endblock %}
