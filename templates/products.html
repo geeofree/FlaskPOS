@@ -201,14 +201,8 @@
       </div>
 
       <div class="restock-content">
+        <!-- Main Container -->
         <div class="restock-items-container">
-          <div class="restock-items-content restock-items-header">
-            <div class="restock-all">
-              <p>Restock All: </p>
-              <input type="number" class="all-stock stock-input" value=0>
-            </div>
-          </div>
-
           <div class="restock-items-content">
             <!-- Selected Item Header Descriptions -->
             <div class="ric sel-table-header">
@@ -219,15 +213,23 @@
                 <span>Stock Val</span>
               </div>
               <div class="short-div">
+                <span>Current Stock</span>
+              </div>
+              <div class="short-div">
                 <span>Max Stock</span>
               </div>
             </div>
 
             <!-- Selected Items Container -->
-            <div class="ric selected-table-items">
+            <div class="ric selected-table-items"></div>
 
+            <!-- Bottom -->
+            <div class="restock-items-content restock-items-header">
+              <div class="restock-all">
+                <p>Restock All: </p>
+                <input class="all-stock stock-input" value=0>
+              </div>
             </div>
-
           </div>
 
         </div>

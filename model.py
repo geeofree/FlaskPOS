@@ -81,7 +81,7 @@ class UserAuth:
             lastname   = user.get('lastname'),
             username   = user.get('username'),
             password   = self.gen_hash(user.get('password')),
-            role       = "Admin" if user.get('role') else "Basic Staff Member",
+            role       = "Admin" if user.get('role') else "Staff Member",
             online     = 0,
             employee   = 1,
             join_date  = datetime.now().date(),

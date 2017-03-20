@@ -1,6 +1,6 @@
 import $ from "jquery"
 import { openModal, closeModal } from '../misc/modal'
-import { numInputValidation } from '../misc/misc'
+import { numInputValidation, changeHandler } from '../misc/misc'
 import createItem from "./createCart"
 
 
@@ -28,18 +28,7 @@ export default function qtyModal($selected) {
     }
 
     // QTY INPUT CHANGE EVENT HANDLER
-    $qty.change(function() {
-      const $self = $(this)
-      const $val = Number($qty.val())
-
-      if($val > largest) {
-        $self.val(1)
-      }
-
-      if($val < 1) {
-        $self.val(largest)
-      }
-    })
+    changeHandler($qty, 1, largest)
 
     // QTY INPUT KEYUP/KEYDOWN EVENT HANDLER
     numInputValidation($qty, function($input) {

@@ -51,7 +51,7 @@
     <!-- PRODUCTS -->
     <div class="products">
       {% for product in products %}
-        {% if product.stock %}
+        {% if product.prod_stock %}
         <div class="product in-stock" id="no{{product.invID}}">
         {% else %}
         <div class="product" id="no{{product.invID}}">

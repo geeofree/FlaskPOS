@@ -107,10 +107,11 @@ def dashboard(subdir):
 def payment():
     json = request.get_json()
     product = Inventory.get(Inventory.invID == json['id'])
-    product.stock = product.stock - json['qty']
+    product.prod_stock = product.prod_stock - json['qty']
     product.save()
 
     data = dict(
+        status = 'success',
         url = url_for('checkout')
     )
 
@@ -137,7 +138,7 @@ def add_product():
 """ Edit Product POST Route """
 @app.route("/edit_product", methods=["POST"])
 def edit_product():
-    if 'logged_in' in session and id:
+    if 'logged_in' in session:
         itemID = request.form["itemID"]
         item = Inventory.get(Inventory.invID == itemID)
 
@@ -152,6 +153,19 @@ def edit_product():
         item.prod_price = request.form["price"]
         item.save()
     return redirect(url_for("dashboard", subdir="products"))
+
+
+""" Restock Product POST Route """
+@app.route("/restock_product", methods=["POST"])
+def restock_product():
+    if 'logged_in' in session:
+        json = request.get_json()
+        itemID = json['item_id']
+
+        item = Inventory.get(Inventory.invID == itemID)
+        item.prod_stock = item.prod_stock + json['stock']
+        item.save()
+        return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='products')})
 
 
 """ Delete Product POST Route """

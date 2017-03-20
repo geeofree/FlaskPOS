@@ -1,5 +1,5 @@
 import $ from 'jquery'
-export { highlightMagnet, numInputValidation }
+export { highlightMagnet, numInputValidation, changeHandler }
 
 
 function highlightMagnet() {
@@ -24,6 +24,7 @@ function highlightMagnet() {
   })
 }
 
+// Input Length Validator
 function numInputValidation($inputEL, callback) {
 
   $inputEL.keydown(function(event) {
@@ -31,7 +32,7 @@ function numInputValidation($inputEL, callback) {
     const keyVal = String.fromCharCode(button)
 
     if(!(button >= 48 && button <= 57 || button >= 96 && button <= 105 || button == 8
-      || button == 37 || button == 39 || event.ctrlKey && button == 65)) {
+      || button == 37 || button == 39 || event.ctrlKey && button == 65 || button == 9)) {
       event.preventDefault()
     }
   })
@@ -47,5 +48,23 @@ function numInputValidation($inputEL, callback) {
       }
     }
 
+  })
+}
+
+// Change Handler for Number Type Inputs
+function changeHandler($input, min, max) {
+  $input.change(function() {
+    const $self = $(this)
+    const val = Number($self.val())
+
+    if(val < min) {
+      $self.val(max)
+      return
+    }
+
+    if(val > max) {
+      $self.val(min)
+      return
+    }
   })
 }

@@ -1,7 +1,7 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
 import { numInputValidation } from "../misc/misc"
-import { ajax } from "../misc/ajax"
+import ajax from "../misc/ajax"
 
 
 export default function tenderItems() {
@@ -75,23 +75,22 @@ function calculateChange(totalAmount, payAmount) {
 
 
 function sendData($purchases) {
+  $purchases.each((_, itemData) => {
+    const $itemData = $(itemData)
+    const $id = Number($itemData.find('.id').text())
+    const $qty = Number($itemData.find('.item-qty').text())
 
-  $purchases.each((_, data) => {
-    const $data = $(data)
-    const $id = Number($data.find('.id').text())
-    const $qty = Number($data.find('.item-qty').text())
-
-    const ajaxData = {
+    const data = {
       id: $id,
       qty: $qty
     }
 
-    ajax(ajaxData, '/payment', function(data) {
-      alert('Success!')
-
-      setTimeout(function(){
-        window.location.replace(data.url)
-      }, 600)
+    ajax(data, '/payment', function(resp) {
+      if(resp.status == 'success') {
+        alert('success!')
+        setTimeout(() => window.location.replace(resp.url), 800)
+      }
     })
+
   })
 }

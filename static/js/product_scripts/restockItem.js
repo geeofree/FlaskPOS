@@ -1,5 +1,8 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import restockNumInputEvent from "./stockNumInput"
+import ajax from "../misc/ajax"
+
 
 
 export default function itemRestock() {
@@ -21,11 +24,20 @@ function modalEvent(content, showModal) {
   // SHOW MODAL
   showModal()
 
+  // Create Item Table of Selected Items
   createSelItems($selected, $selContainer)
+
+  // Stock Input Events
+  restockNumInputEvent()
+
+  // Confirm Stock Button Event
+  restock()
 
   // CLOSE MODAL
   closeModal(function() {
     clearContainer()
+    $('.all-stock').val(0)
+    $('.confirm-restock').off("click")
   })
 }
 
@@ -65,8 +77,14 @@ function stockSelItem($id, $name, $stock, $max) {
   // ITEM STOCK INPUT ELEMENT
   const stockInput = document.createElement('input')
   stockInput.setAttribute('class', 'short-div sel-item-stock stock-input')
-  stockInput.setAttribute('type', 'number')
-  stockInput.setAttribute('value', $stock)
+  stockInput.setAttribute('type', 'text')
+  stockInput.setAttribute('value', 0)
+
+  // ITEM IN-STOCK ELEMENT
+  const inStock = document.createElement('span')
+  const stockVal = document.createTextNode($stock)
+  inStock.setAttribute('class', 'short-div sel-item-instock')
+  $(inStock).append(stockVal)
 
   // ITEM MAX STOCK ELEMENT
   const maxStock = document.createElement('span')
@@ -75,7 +93,7 @@ function stockSelItem($id, $name, $stock, $max) {
   $(maxStock).append(maxVal)
 
 
-  const itemData = [itemName, stockInput, maxStock]
+  const itemData = [itemName, stockInput, inStock, maxStock]
   itemData.forEach(el => $item.append(el))
 
   return $item
@@ -84,6 +102,43 @@ function stockSelItem($id, $name, $stock, $max) {
 // CLEAR CONTAINER
 function clearContainer() {
   const $item = $('.sel-tbl-item')
-
   $item.each((_, data) => $(data).remove())
+}
+
+// RESTOCK
+function restock() {
+  const $confirm = $('.confirm-restock')
+  const $items   = $('.sel-tbl-item')
+
+  function confirmClick() {
+    var url;
+
+    // Iterate all over the items
+    function item(_, item) {
+      const $item = $(item)
+      const $itemID = Number($item.attr('id').match(/\d+/)[0])
+      const $stock = Number($item.find('.stock-input').val())
+
+      // Data for to send on Route
+      const data = {
+        item_id: $itemID,
+        stock: $stock
+      }
+
+
+      function data_resp(data) {
+        if(data.status == "success") {
+          url = data.url
+        }
+      }
+
+      ajax(data, '/restock_product', data_resp)
+    }
+
+    $items.each(item)
+    alert('Success!')
+    setTimeout(() => window.location.replace(url) , 800)
+  }
+
+  $confirm.click(confirmClick)
 }
