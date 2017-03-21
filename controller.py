@@ -1,6 +1,7 @@
 from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
+from playhouse.shortcuts import model_to_dict
 from model import *
 
 
@@ -64,7 +65,8 @@ def checkout():
         context = dict (
             user = User.get(User.username == session['client_name']),
             products = Inventory.select(),
-            current_dir = 'checkout'
+            current_dir = 'checkout',
+            categories = set(item.prod_type for item in SelectQuery(Inventory, Inventory.prod_type))
         )
         return render_template("checkout.html", **context)
     return redirect(url_for('home'))
@@ -105,9 +107,9 @@ def dashboard(subdir):
 """ Payment POST Route """
 @app.route("/payment", methods=["POST"])
 def payment():
-    json = request.get_json()
-    product = Inventory.get(Inventory.invID == json['id'])
-    product.prod_stock = product.prod_stock - json['qty']
+    req = request.get_json()
+    product = Inventory.get(Inventory.invID == req['id'])
+    product.prod_stock = product.prod_stock - req['qty']
     product.save()
 
     data = dict(
@@ -115,6 +117,34 @@ def payment():
         url = url_for('checkout')
     )
 
+    return jsonify(data)
+
+
+""" DB Query POST Route """
+@app.route("/search", methods=["POST"])
+def search():
+    req  = request.get_json()
+    value = req['query']
+    field = req['filter']
+    scope = req['scope']
+    result = None
+
+    if not scope:
+        if value == "":
+            result = Inventory.select()
+        elif field == 'prod_name':
+            result = Inventory.select().where(Inventory.prod_name.contains(value))
+        elif field == 'prod_code':
+            result = Inventory.select().where(Inventory.prod_code.contains(value))
+    else:
+        if value == "":
+            result = Inventory.select().where(Inventory.prod_type == scope)
+        elif field == 'prod_name':
+            result = Inventory.select().where((Inventory.prod_name.contains(value)) & (Inventory.prod_type == scope))
+        elif field == 'prod_code':
+            result = Inventory.select().where((Inventory.prod_code.contains(value)) & (Inventory.prod_type == scope))
+
+    data = [model_to_dict(product) for product in result]
     return jsonify(data)
 
 
@@ -159,11 +189,11 @@ def edit_product():
 @app.route("/restock_product", methods=["POST"])
 def restock_product():
     if 'logged_in' in session:
-        json = request.get_json()
-        itemID = json['item_id']
+        req = request.get_json()
+        itemID = req['item_id']
 
         item = Inventory.get(Inventory.invID == itemID)
-        item.prod_stock = item.prod_stock + json['stock']
+        item.prod_stock = item.prod_stock + req['stock']
         item.save()
         return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='products')})
 
@@ -186,8 +216,8 @@ def del_product():
 @app.route("/user_req", methods=["POST"])
 def find_user():
     if 'logged_in' in session:
-        json = request.get_json()
-        user = User.get(User.uID == json['uID'])
+        req = request.get_json()
+        user = User.get(User.uID == req['uID'])
 
         data = dict(
             firstname = user.firstname,
@@ -204,18 +234,18 @@ def find_user():
 @app.route("/new_user", methods=["POST"])
 def create_user():
     if 'logged_in' in session:
-        json     = request.get_json()
+        req     = request.get_json()
         username = session['client_name']
-        password = json['auth_pass']
+        password = req['auth_pass']
 
         if user_auth.valid(username, password):
 
             user_data = dict(
-                firstname = json['firstname'],
-                lastname = json['lastname'],
-                username = json['username'],
-                password = json['password'],
-                role = json['role'],
+                firstname = req['firstname'],
+                lastname = req['lastname'],
+                username = req['username'],
+                password = req['password'],
+                role = req['role'],
             )
 
             user_auth.create_user(**user_data)
@@ -234,12 +264,12 @@ def create_user():
 @app.route("/remove_user", methods=["POST"])
 def remove_user():
     if 'logged_in' in session:
-        json     = request.get_json()
+        req    = request.get_json()
         username = session['client_name']
         password = request.form['urm-pw']
 
         if user_auth.valid(username, password):
-            return jsonify(json)
+            return jsonify(req)
         else:
             return jsonify({'status': "fail", 'error': 'Invalid Password'})
 

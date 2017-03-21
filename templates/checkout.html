@@ -42,8 +42,25 @@
     <!-- SEARCH NAVIGATION -->
     <div class="search-nav">
       <div class="search">
+        <!-- Search INPUT -->
         <input type="text" class="search-input" placeholder="search products">
         <i class="fa fa-search search-icon" aria-hidden="true"></i>
+
+        <!-- Filter Search Query -->
+        <select class="search-select search-filter">
+          <option value="" disabled selected>Search By</option>
+          <option value="prod_name">Name</option>
+          <option value"prod_code">SKU</option>
+        </select>
+
+        <!-- Scope Search With Category -->
+        <select class="search-select search-scope">
+            <option value="" disabled selected>Category</option>
+            <option value="">None</option>
+          {% for category in categories %}
+            <option value="{{ category }}">{{ category }}</option>
+          {% endfor %}
+        </select>
       </div>
 
     </div>

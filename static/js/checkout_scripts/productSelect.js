@@ -4,7 +4,7 @@ import qtyModal from "./qtySelect"
 
 
 export default function productSelect() {
-  const $product = $('.product')
+  const $products = $('.products')
   const $body    = $("body")
 
   // Body Key Event Helper Function
@@ -54,9 +54,9 @@ export default function productSelect() {
       if($('.selected-product').length > 0) {
         bodyKeyEvent($body)
       }
-      
+
     }
   }
 
-  $product.click(clickEvent)
+  $products.on("click", ".product", clickEvent)
 }
