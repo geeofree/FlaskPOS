@@ -3,7 +3,6 @@ import search from "../misc/searchQuery"
 
 export default function tableSearch() {
   const $wrapper = $('.data-wrapper tbody')
-
   search(tableDataEL, $wrapper)
 }
 

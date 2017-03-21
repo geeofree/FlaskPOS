@@ -8,7 +8,6 @@ export default function search(itemELCreator, $wrapper) {
   const $filter = $('.search-filter')
   const $scope  = $('.search-scope')
 
-
   function resp_callback(resp) {
     resp.forEach(data => $wrapper.append(itemELCreator(data)))
   }
@@ -32,7 +31,7 @@ export default function search(itemELCreator, $wrapper) {
       scope: $scopeVal ? $scopeVal : false
     }
 
-    if(latin || ((button == 8 || button == 13) && $searchVal == "")) {
+    if(latin || (button == 8 && $searchVal == "")) {
       const child = $wrapper.children()
       child.remove()
       sendSearchQuery(search_query, resp_callback)
