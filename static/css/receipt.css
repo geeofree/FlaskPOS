@@ -1,0 +1,17 @@
+html {
+  overflow: auto;
+  background: #fff;
+  padding: 30px;
+}
+
+body {
+  margin: auto;
+  width: 3.5in;
+  height: 11in;
+  background: #444;
+  overflow: hidden;
+}
+
+@media print and (width: 3in) and (height: 11in) {
+
+}

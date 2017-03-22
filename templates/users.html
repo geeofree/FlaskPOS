@@ -85,6 +85,8 @@
     </div>
 
   </div>
+
+  <div id="client-account" style="display:none">{{ user.username }}</div>
 {% endblock %}
 
 {% block MODAL %}
@@ -173,7 +175,7 @@
           </div>
 
           <div class="input-wrapper select-wrapper">
-            <select class="user-update-gender user-role-input">
+            <select class="user-update-gender">
               <option value="Male">Male</option>
               <option value="Female">Female</option>
             </select>
@@ -189,7 +191,7 @@
 
           {% if user.role == "Super Admin" %}
           <div class="input-wrapper">
-            <select class="user-role-input user-update-role">
+            <select class="user-update-role">
               <option value=2 selected>Basic Member</option>
               <option value=1>Admin</option>
             </select>

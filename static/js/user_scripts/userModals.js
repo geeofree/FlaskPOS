@@ -19,22 +19,37 @@ function removeUser() {
     const $selectedUser = $('.selected-user')
     const $fullname = $('.selected-user-fullname')
     const $confirmRem = $('.confirm-remove')
+    const $pass_input = $('.user-remove-pw-input')
 
-    if($selectedUser.length) {
-      // SHOW MODAL
-      showModal()
+    const client_username = $('#client-account').text()
+    const client_role = $('#position').text()
+
+    const user_username = $('.data-username').text()
+    const user_role = $('.selected-user').find('.user-role').text()
+
+    if(user_username && $selectedUser.length) {
+      if(user_username == client_username) {
+        alert('You cannot remove yourself')
+        return
+      }
+      else if((client_role == user_role || (user_role == "Super Admin" && client_role == "Admin")) && user_username != client_username) {
+        alert('You do not have enough privilages to remove another admin')
+        return
+      }
+      else {
+        // SHOW MODAL
+        showModal()
+      }
     }
-    else {
+    else if($selectedUser.length == 0) {
       alert('No user selected to remove!')
-      return
     }
+
 
     // FULLNAME FOR H2 Element on Remove User Modal
     const fName = $('.data-firstname').text()
     const lName = $('.data-lastname').text()
     $fullname.text(fName + " " + lName)
-
-    const $pass_input = $('.user-remove-pw-input')
 
 
     $confirmRem.click(function() {
@@ -80,14 +95,26 @@ function updateUser() {
     const $selectedUser = $('.selected-user')
     const $confirmUpdate = $('.confirm-update')
 
-    if($selectedUser.length) {
-      // SHOW MODAL
-      showModal()
+    const client_username = $('#client-account').text()
+    const client_role = $('#position').text()
+
+    const user_username = $('.data-username').text()
+    const user_role = $('.selected-user').find('.user-role').text()
+
+    if(user_username && $selectedUser.length) {
+      if((client_role == user_role || (user_role == "Super Admin" && client_role == "Admin")) && user_username != client_username) {
+        alert('You do not have enough privilages to update another admin')
+        return
+      }
+      else {
+        // SHOW MODAL
+        showModal()
+      }
     }
-    else {
+    else if($selectedUser.length == 0) {
       alert('No user selected to update!')
-      return
     }
+
 
     const $fnameInput  = $('.user-update-firstname')
     const $lnameInput  = $('.user-update-lastname')
@@ -212,6 +239,8 @@ function createUser() {
         gender: $gender,
         role: Number($role)
       }
+
+      // console.log(data)
 
       if($fname.length < 1) {
         alert("No input given on user's FIRST NAME")

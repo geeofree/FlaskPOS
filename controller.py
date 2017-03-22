@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify
+from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify, make_response
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
 from model import *
@@ -122,6 +122,12 @@ def payment():
     )
 
     return jsonify(data)
+
+
+""" Receipt Generator Route """
+@app.route("/receipt")
+def receipt():
+    return render_template('receipt.html')
 
 
 """ Add Product POST Route """
