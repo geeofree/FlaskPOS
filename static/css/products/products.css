@@ -23,3 +23,11 @@
 select {
   width: 150px;
 }
+
+.show {
+  display: inherit;
+}
+
+.hide {
+  display: none;
+}

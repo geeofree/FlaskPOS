@@ -21,3 +21,11 @@
 .id {
   display: none;
 }
+
+.show {
+  display: flex;
+}
+
+.hide {
+  display: none;
+}
