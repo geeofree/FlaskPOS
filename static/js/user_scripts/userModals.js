@@ -4,12 +4,13 @@ import ajax from "../misc/ajax"
 
 export default function userButtonEvent() {
   removeUser()
+  updateUser()
   createUser()
 }
 
 
 
-
+// REMOVE USER MODAL EVENT
 function removeUser() {
   const $remUserBtn   = $('.remove-user')
   const $remUserModal = $('.remove-user-modal')
@@ -25,6 +26,7 @@ function removeUser() {
     }
     else {
       alert('No user selected to remove!')
+      return
     }
 
     // FULLNAME FOR H2 Element on Remove User Modal
@@ -44,8 +46,6 @@ function removeUser() {
         user_id: $userID,
         auth_pass: $pass
       }
-
-      console.log(data)
 
       ajax(data, '/remove_user', function(resp) {
         if(resp.status == "success") {
@@ -71,9 +71,114 @@ function removeUser() {
 
 
 
+// UPDATE USER MODAL EVENT
+function updateUser() {
+  const $editUserBtn = $('.update-user')
+  const $editModal = $('.update-user-modal')
+
+  function editUserModalEv(content, showModal) {
+    const $selectedUser = $('.selected-user')
+    const $confirmUpdate = $('.confirm-update')
+
+    if($selectedUser.length) {
+      // SHOW MODAL
+      showModal()
+    }
+    else {
+      alert('No user selected to update!')
+      return
+    }
+
+    const $fnameInput  = $('.user-update-firstname')
+    const $lnameInput  = $('.user-update-lastname')
+    const $unameInput  = $('.user-update-username')
+    const $genderInput = $('.user-update-gender')
+    const $roleInput   = $('.user-update-role')
+    const $passInput   = $('.user-update-password')
+
+    const $fnameVal = $('.data-firstname').text()
+    const $lnameVal = $('.data-lastname').text()
+    const $unameVal = $('.data-username').text()
+    const $genderVal = $('.data-sex').text()
+    const $roleVal = $selectedUser.find('.user-role').text()
+
+    $fnameInput.val($fnameVal)
+    $lnameInput.val($lnameVal)
+    $unameInput.val($unameVal)
+    $genderInput.val($genderVal)
+    $roleInput.val($roleVal)
+
+    function send_data(data) {
+
+      function response(resp, $self) {
+        if(resp.status == 'success') {
+          alert('Update Success')
+          window.location.replace(resp.url)
+          $self.off("click")
+        }
+        else {
+          alert(resp.error)
+        }
+      }
+
+      ajax(data, '/update_user', response)
+    }
+
+    $confirmUpdate.click(function() {
+      const $self = $(this)
+      const $userID = Number($selectedUser.attr('id').match(/\d+/)[0])
+
+      const $newFname = $fnameInput.val()
+      const $newLname = $lnameInput.val()
+      const $newUname = $unameInput.val()
+      const $newGender = $genderInput.val()
+      const $newRole = $roleInput.val() ? Number($roleInput.val()) : ''
+      const $newPass = $passInput.val()
+
+
+      if($newFname.length < 1) {
+        alert("No input given on user's FIRSTNAME")
+        return
+      }
+      else if($newFname.length < 1) {
+        alert("No input given on user's lastname")
+        return
+      }
+      else if($newUname.length < 5) {
+        alert("USERNAME must be more than 5 characters")
+        return
+      }
+      else if($newPass.length > 0 && $newPass.length < 8) {
+        alert("PASSWORD must be more than 8 characters")
+        return
+      }
+
+      const data = {
+        user_id: $userID,
+        firstname: $newFname,
+        lastname: $newLname,
+        username: $newUname,
+        password: $newPass,
+        gender: $newGender,
+        role: $newRole
+      }
+
+      send_data(data, $self)
+    })
+
+    // CLOSE MODAL
+    closeModal(function() {
+      $confirmUpdate.off("click")
+    })
+  }
+
+  btnOpenModal($editUserBtn, $editModal, editUserModalEv)
+}
 
 
 
+
+// CREATE USER MODAL EVENT
 function createUser() {
   const $newUserBtn   = $('.create-user')
   const $newUserModal = $('.create-user-modal')

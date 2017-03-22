@@ -100,7 +100,8 @@ def dashboard(subdir):
             return render_template("logs.html", **context)
 
         elif subdir == 'users':
-            return render_template("users.html", **context, users = User.select())
+            users = User.select()
+            return render_template("users.html", **context, users = users)
 
         else:
             return render_template("default.html", **context)
@@ -147,13 +148,13 @@ def edit_product():
         itemID = request.form["itemID"]
         item = Inventory.get(Inventory.invID == itemID)
 
-        item.prod_name  = request.form["item_name"]
+        item.prod_name = request.form["item_name"]
         item.save()
-        item.prod_type  = request.form["category"]
+        item.prod_type = request.form["category"]
         item.save()
-        item.prod_max_stock  = request.form["max_stock"]
+        item.prod_max_stock = request.form["max_stock"]
         item.save()
-        item.prod_code  = request.form["item_code"]
+        item.prod_code = request.form["item_code"]
         item.save()
         item.prod_price = request.form["price"]
         item.save()
@@ -229,7 +230,44 @@ def create_user():
             return jsonify({'status': "fail", 'error': 'Username already taken'})
 
 
-""" Create User POST Route """
+""" Update User POST Route """
+@app.route("/update_user", methods=["POST"])
+def update_user():
+    if 'logged_in' in session:
+        req = request.get_json()
+        user_id = req['user_id']
+        user = User.get(User.uID == user_id)
+
+        firstname = req['firstname']
+        lastname = req['lastname']
+        username = req['username']
+        password = req['password']
+        sex = req['gender']
+        role = req['role']
+
+        try:
+            with db.transaction():
+                user.firstname = firstname
+                user.save()
+                user.lastname = lastname
+                user.save()
+                user.username = username
+                user.save()
+                user.sex = sex
+                user.save()
+                if bool(password):
+                    user.password = user_auth.gen_hash(password)
+                    user.save()
+                if bool(role):
+                    user.role = "Admin" if role == 1 else "Basic Member"
+                    user.save()
+
+                return jsonify({'status':'success', 'url': url_for('dashboard', subdir='users')})
+        except IntegrityError:
+            return jsonify({'status': 'fail', 'error': 'Username already taken'})
+
+
+""" Remove User POST Route """
 @app.route("/remove_user", methods=["POST"])
 def remove_user():
     if 'logged_in' in session:

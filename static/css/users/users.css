@@ -1,6 +1,7 @@
 @import url('usertable.css');
 @import url('userprofile.css');
 @import url('createUserModal.css');
+@import url('updateUserModal.css');
 @import url('removeUserModal.css');
 @import url('../component/buttons.css');
 @import url('../component/modal.css');

@@ -39,6 +39,7 @@
 
         <div class="user-buttons">
           <div class="user-button remove-user">Remove</div>
+          <div class="user-button update-user">Update</div>
           <div class="user-button create-user">Create</div>
         </div>
       </div>
@@ -88,7 +89,7 @@
 
 {% block MODAL %}
   <div class="modal">
-
+    <!-- CREATE USER MODAL -->
     <div class="create-user-modal modal-content">
       <div class="header-text">
         <h3>Create User</h3>
@@ -146,6 +147,65 @@
       </div>
     </div>
 
+    <!-- UPDATE USER MODAL -->
+    <div class="update-user-modal modal-content">
+      <div class="header-text">
+        <h3>Update User</h3>
+      </div>
+
+      <div class="create-user-form">
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-update-firstname user-form-input">
+            <p>Firstname</p>
+          </div>
+
+          <div class="input-wrapper">
+            <input class="user-update-lastname user-form-input">
+            <p>Lastname</p>
+          </div>
+        </div>
+
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-update-username user-form-input">
+            <p>Username</p>
+          </div>
+
+          <div class="input-wrapper select-wrapper">
+            <select class="user-update-gender user-role-input">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <p>Sex</p>
+          </div>
+        </div>
+
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input type="password" class="user-update-password user-form-input">
+            <p>Change Password</p>
+          </div>
+
+          {% if user.role == "Super Admin" %}
+          <div class="input-wrapper">
+            <select class="user-role-input user-update-role">
+              <option value=2 selected>Basic Member</option>
+              <option value=1>Admin</option>
+            </select>
+            <p>User Role</p>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="confirm-wrapper">
+        <button class="button confirm-update">Update User</button>
+      </div>
+    </div>
+
+    <!-- REMOVE USER MODAL -->
     <div class="remove-user-modal modal-content">
       <div class="header-text">
         <h3>Remove User</h3>

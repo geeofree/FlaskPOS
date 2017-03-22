@@ -1,9 +1,9 @@
-.create-user-modal {
+.update-user-modal {
   width: 420px !important;
 }
 
-.create-user-modal .header-text {
-  background: #38a586;
+.update-user-modal .header-text {
+  background: #3c77b1;
   color: #fff;
 }
 
@@ -34,7 +34,7 @@
   justify-content: flex-end;
 }
 
-.confirm-create {
-  background: #38a586;
+.confirm-update {
+  background: #3c77b1;
   margin: 5px 10px;
 }
