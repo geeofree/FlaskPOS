@@ -2,12 +2,12 @@ import $ from "jquery"
 import inputLimiter from "../misc/inputTextLimiter"
 
 export default function formKeyEvents() {
-  const $fnameInput = $('.input-firstname')
-  const $lnameInput = $('.input-lastname')
-  const $unameInput = $('.input-username')
-  const $passInput  = $('.input-password')
+  const $fnameInput = $('.user-firstname-input')
+  const $lnameInput = $('.user-lastname-input')
+  const $unameInput = $('.user-username-input')
+  const $passInput  = $('.user-password-input')
 
-  const inputs = [[$fnameInput, 25], [$lnameInput, 25], [$unameInput, 20], [$passInput, 25]]
+  const inputs = [[$fnameInput, 20], [$lnameInput, 20], [$unameInput, 20]]
 
   inputs.forEach(input => {
     const inputEL    = input[0]

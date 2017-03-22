@@ -4,8 +4,24 @@
 }
 
 .create-user-form {
-  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
   padding: 10px;
+}
+
+.user-form-input {
+  width: 100%;
+}
+
+.user-input {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input-wrapper {
+  width: 45%;
+  margin: 0 5px;
 }
 
 .confirm-wrapper {

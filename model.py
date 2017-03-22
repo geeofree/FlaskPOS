@@ -13,22 +13,20 @@ class BaseModel(Model):
 """ User Table """
 class User(BaseModel):
     uID        = PrimaryKeyField()
-    username   = CharField(max_length=20, unique=True)
+    username   = CharField(unique=True)
     password   = CharField()
-    firstname  = CharField(max_length=25)
-    lastname   = CharField(max_length=25)
+    firstname  = CharField(max_length=20)
+    lastname   = CharField(max_length=20)
+    sex        = CharField()
     role       = CharField()
-    online     = IntegerField()
-    employee   = IntegerField()
     join_date  = DateField(formats="%m-%d-%Y")
-    last_login = DateTimeField(formats="%m-%d-%Y %H:%M", null=True)
 
 """ Inventory Table """
 class Inventory(BaseModel):
     invID          = PrimaryKeyField()
     prod_code      = CharField(max_length=11)
     prod_name      = CharField(max_length=65)
-    prod_type      = CharField(max_length=25)
+    prod_type      = CharField(max_length=20)
     prod_stock     = IntegerField()
     prod_max_stock = IntegerField()
     prod_price     = IntegerField()
@@ -66,26 +64,31 @@ class UserAuth:
             user   = User.get(User.username == username)
             hashed = user.password
             if self.checkpass(hashed, password):
-                user.online = 1
-                user.save()
-                user.last_login = datetime.now()
-                user.save()
                 return True
         except User.DoesNotExist:
             return False
 
     """ Create User """
     def create_user(self, **user):
+        user_role = user.get('role')
+
+        if user_role == 0:
+            user_role = "Super Admin"
+        elif user_role == 1:
+            user_role = "Admin"
+        elif user_role == 2:
+            user_role = "Basic Member"
+
+        print(user_role)
+
         new_user = dict(
             firstname  = user.get('firstname'),
             lastname   = user.get('lastname'),
             username   = user.get('username'),
+            sex        = user.get('sex'),
             password   = self.gen_hash(user.get('password')),
-            role       = "Admin" if user.get('role') else "Staff Member",
-            online     = 0,
-            employee   = 1,
+            role       = user_role,
             join_date  = datetime.now().date(),
-            last_login = None
         )
 
         User.create(**new_user)
@@ -100,9 +103,10 @@ def user_init(UserAuthObj):
         user = dict(
                 firstname = input("Firstname: "),
                 lastname  = input("Lastname: "),
-                username  = input("Username: "),
-                password  = getpass("Password: "),
-                role      = 1
+                sex       = "Male",
+                username  = input("What should your username be?\n"),
+                password  = getpass("Enter desired password\n"),
+                role      = 0
             )
 
         UserAuthObj.create_user(**user)

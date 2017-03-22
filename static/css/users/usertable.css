@@ -8,7 +8,7 @@
 }
 
 .user-table {
-  width: 600px;
+  width: 500px;
 }
 
 .user-table-body {
@@ -49,11 +49,11 @@
 }
 
 .long {
-  width: 40%;
+  width: 60%;
 }
 
 .short {
-  width: 30%;
+  width: 40%;
 }
 
 .status {

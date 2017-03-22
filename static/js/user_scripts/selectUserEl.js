@@ -45,30 +45,16 @@ function getUser($selectedUser) {
   const lNameEL    = $('.data-lastname')
   const uNameEL    = $('.data-username')
   const dateJoinEL = $('.data-date-join')
-  const lastLogEL  = $('.data-last-login')
+  const genderEL   = $('.data-sex')
 
-  function TwelveHourFormat(timeStr) {
-    const time    = timeStr.split(':')
-    const oldHour = Number(time[0])
-
-    const hour        = oldHour < 12 ? oldHour : oldHour - 12
-    const minute      = time[1]
-    const time_period = oldHour < 12 ? "AM" : "PM"
-
-    return `${hour}:${minute} ${time_period}`
-  }
 
   ajax({ uID: $userID }, '/user_req', function(data) {
     const dateJoin = data.join_date.split(/(\s\d+:\d+)/)[0]
-
-    let logDateData = data.last_login ? data.last_login.split(/(\s\d+:\d+)/) : false
-    logDateData = logDateData ? logDateData[0] + " " + TwelveHourFormat(logDateData[1]) : "Never"
-
 
     fNameEL.text(data.firstname)
     lNameEL.text(data.lastname)
     uNameEL.text(data.username)
     dateJoinEL.text(dateJoin)
-    lastLogEL.text(logDateData)
+    genderEL.text(data.gender)
   })
 }

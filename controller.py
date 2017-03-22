@@ -1,7 +1,6 @@
 from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
-from playhouse.shortcuts import model_to_dict
 from model import *
 
 
@@ -48,6 +47,7 @@ def home():
             if user_auth.valid(username, password):
                 session['logged_in'] = True
                 session['client_name'] = username
+                session['client_role'] = User.get(User.username == username).role
                 return redirect(url_for('checkout'))
             else:
                 return render_template("home.html", status="fail")
@@ -76,9 +76,12 @@ def checkout():
 @app.route("/dashboard/<subdir>")
 @app.route("/dashboard/", defaults={'subdir': ''})
 def dashboard(subdir):
-    if 'logged_in' in session:
+    user_role = session['client_role']
+
+    if 'logged_in' in session and user_role == "Super Admin" or user_role == "Admin":
         if subdir and subdir not in ['reports', 'products', 'logs', 'users']:
             abort(404)
+
 
         context = dict (
             user = User.get(User.username == session['client_name']),
@@ -117,34 +120,6 @@ def payment():
         url = url_for('checkout')
     )
 
-    return jsonify(data)
-
-
-""" DB Query POST Route """
-@app.route("/search", methods=["POST"])
-def search():
-    req  = request.get_json()
-    value = req['query']
-    field = req['filter']
-    scope = req['scope']
-    result = None
-
-    if not scope:
-        if value == "":
-            result = Inventory.select()
-        elif field == 'prod_name':
-            result = Inventory.select().where(Inventory.prod_name.contains(value))
-        elif field == 'prod_code':
-            result = Inventory.select().where(Inventory.prod_code.contains(value))
-    else:
-        if value == "":
-            result = Inventory.select().where(Inventory.prod_type == scope)
-        elif field == 'prod_name':
-            result = Inventory.select().where((Inventory.prod_name.contains(value)) & (Inventory.prod_type == scope))
-        elif field == 'prod_code':
-            result = Inventory.select().where((Inventory.prod_code.contains(value)) & (Inventory.prod_type == scope))
-
-    data = [model_to_dict(product) for product in result]
     return jsonify(data)
 
 
@@ -224,7 +199,7 @@ def find_user():
             lastname = user.lastname,
             username = user.username,
             join_date = user.join_date,
-            last_login = user.last_login
+            gender = user.sex
         )
 
         return jsonify(data)
@@ -234,30 +209,24 @@ def find_user():
 @app.route("/new_user", methods=["POST"])
 def create_user():
     if 'logged_in' in session:
-        req     = request.get_json()
-        username = session['client_name']
-        password = req['auth_pass']
+        req = request.get_json()
 
-        if user_auth.valid(username, password):
+        try:
+            with db.transaction():
+                user_data = dict(
+                    firstname = req['firstname'],
+                    lastname = req['lastname'],
+                    username = req['username'],
+                    password = req['password'],
+                    sex = req['gender'],
+                    role = req['role'],
+                )
 
-            user_data = dict(
-                firstname = req['firstname'],
-                lastname = req['lastname'],
-                username = req['username'],
-                password = req['password'],
-                role = req['role'],
-            )
-
-            user_auth.create_user(**user_data)
-
-            success_data = dict(
-                status = 'success',
-                url = url_for('dashboard', subdir='users')
-            )
-
-            return jsonify(success_data)
-        else:
-            return jsonify({'status': "fail", 'error': 'Invalid Password'})
+                user_auth.create_user(**user_data)
+                success_data = dict(status = 'success', url = url_for('dashboard', subdir='users'))
+                return jsonify(success_data)
+        except IntegrityError:
+            return jsonify({'status': "fail", 'error': 'Username already taken'})
 
 
 """ Create User POST Route """
@@ -266,10 +235,12 @@ def remove_user():
     if 'logged_in' in session:
         req    = request.get_json()
         username = session['client_name']
-        password = request.form['urm-pw']
+        password = req['auth_pass']
 
         if user_auth.valid(username, password):
-            return jsonify(req)
+            user_id = req['user_id']
+            User.delete().where(User.uID == user_id).execute()
+            return jsonify({'status': 'success', 'url': url_for('dashboard', subdir='users')})
         else:
             return jsonify({'status': "fail", 'error': 'Invalid Password'})
 
@@ -278,9 +249,6 @@ def remove_user():
 @app.route("/logout")
 def logout():
     if 'logged_in' in session:
-        user = User.get(User.username == session['client_name'])
-        user.online = 0
-        user.save()
         session.pop('logged_in')
         session.pop('client_name')
         return redirect(url_for("home"))

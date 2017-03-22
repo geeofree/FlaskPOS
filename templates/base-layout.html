@@ -23,9 +23,11 @@
 
         <!-- MAIN DIRECTORIES -->
         <div class="directories">
+          {% if user.role == "Super Admin" or user.role == "Admin"%}
           <a href="{{ url_for('dashboard') }}" class="dir {% if current_dir == 'dashboard' %}current_dir{% endif %}">
             <span>Dashboard</span>
           </a>
+          {% endif %}
           <a href="{{ url_for('checkout') }}" class="dir {% if current_dir == 'checkout'%}current_dir{% endif %}">
             <span>Checkout</span>
           </a>
