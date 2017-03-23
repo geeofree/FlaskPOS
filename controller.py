@@ -1,6 +1,7 @@
 from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify, make_response
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
+from datetime import datetime
 from model import *
 
 
@@ -112,23 +113,64 @@ def dashboard(subdir):
 @app.route("/payment", methods=["POST"])
 def payment():
     req = request.get_json()
-    product = Inventory.get(Inventory.invID == req['id'])
-    product.prod_stock = product.prod_stock - req['qty']
-    product.save()
+    merchant = req['merchant']
+    subtotal = req['subtotal']
+    totalqty = req['totalqty']
+    payment = req['payment']
+    change = req['change']
+    items_sold = req['items_sold']
 
-    data = dict(
-        status = 'success',
-        url = url_for('checkout')
+    employee = User.get(User.username == merchant)
+
+    transaction_data = dict(
+        merchant = employee,
+        totalqty = totalqty,
+        subtotal = subtotal,
+        payment = payment,
+        change = change,
+        date_sold = datetime.now().date()
     )
 
-    return jsonify(data)
+    transaction = Transactions.create(**transaction_data)
+
+    for item in items_sold:
+        product = Inventory.get(Inventory.invID == item['id'])
+        product.prod_stock = product.prod_stock - item['qty_sold']
+        product.save()
+
+        items_sold_data = dict(
+            transID = transaction,
+            item = product,
+            qty = item['qty_sold'],
+            linetotal = item['linetotal']
+        )
+
+        Items_Sold.create(**items_sold_data)
+
+    response = dict(
+        status = 'success',
+        url = url_for('receipt', transID=transaction.transID)
+    )
+
+    return jsonify(response)
 
 
 """ Receipt Generator Route """
-@app.route("/receipt")
-def receipt():
-    return render_template('receipt.html')
+@app.route("/transactions/receipt_no/<transID>")
+def receipt(transID):
+    if 'logged_in' in session:
+        transaction = (Transactions.select()
+                        .where(Transactions.transID == transID)
+                        .join(User))
 
+        items_sold = (Items_Sold.select()
+                        .where(Items_Sold.transID == transID)
+                        .join(Inventory))
+
+        if transaction:
+            return render_template('receipt.html', transaction=transaction, items=items_sold)
+        abort(400)
+    abort(404)
 
 """ Add Product POST Route """
 @app.route("/add_product", methods=["POST"])

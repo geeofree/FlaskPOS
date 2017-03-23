@@ -15,9 +15,11 @@ function modalEvent(content, showModal) {
   const $purchaseBtn = $('.purchase')
   const $purchased = $('.purchased-item')
   const $subtotal = $('#sub-total')
+  const $qtytotal =  $('#sub-qty')
   const $payment  = $('.payment-value')
-  let   $tendersub = $('.subtotal-value')
   const $totalVal = $subtotal.text()
+
+  let $tendersub = $('.subtotal-value')
 
   if($purchased.length > 0) {
     // SHOW MODAL
@@ -31,9 +33,11 @@ function modalEvent(content, showModal) {
   $tendersub = $tendersub.text()
 
   const totalAmount = Number($tendersub.match(/\d+/)[0])
+  const totalQty    = Number($qtytotal.text())
   const payAmount   = Number($payment.val())
 
   let change = 0
+  let payment = 0
 
   change = calculateChange(totalAmount, payAmount)
 
@@ -50,9 +54,9 @@ function modalEvent(content, showModal) {
       $input.val(999999)
     }
 
-    let value = Number($input.val())
+    payment = Number($input.val())
 
-    change = calculateChange(totalAmount, value)
+    change = calculateChange(totalAmount, payment)
   })
 
   $purchaseBtn.click(function() {
@@ -60,7 +64,7 @@ function modalEvent(content, showModal) {
       alert('Insufficient Pay Amount')
     }
     else {
-      sendData($purchased)
+      sendData($purchased, totalAmount, totalQty, payment, change)
     }
   })
 
@@ -82,23 +86,39 @@ function calculateChange(totalAmount, payAmount) {
 }
 
 
-function sendData($purchases) {
+function sendData($purchases, totalAmount, totalQty, payment, change) {
+  const $merchant = $('.merchant').text()
+
+  const data = {
+    merchant: $merchant,
+    subtotal: totalAmount,
+    totalqty: totalQty,
+    payment: payment,
+    change: change,
+    items_sold: []
+  }
+
   $purchases.each((_, itemData) => {
     const $itemData = $(itemData)
     const $id = Number($itemData.find('.id').text())
     const $qty = Number($itemData.find('.item-qty').text())
+    let $linetotal = $itemData.find('.item-total').text()
+    $linetotal = Number($linetotal.match(/\d+/)[0])
 
-    const data = {
+    const item_data = {
       id: $id,
-      qty: $qty
+      qty_sold: $qty,
+      linetotal: $linetotal
     }
 
-    ajax(data, '/payment', function(resp) {
-      if(resp.status == 'success') {
-        alert('success!')
-        setTimeout(() => window.location.replace(resp.url), 800)
-      }
-    })
+    data['items_sold'].push(item_data)
+  })
 
+  ajax(data, '/payment', function(resp) {
+    if(resp.status == 'success') {
+      console.log(resp.transID)
+      alert('success!')
+      window.location.replace(resp.url)
+    }
   })
 }

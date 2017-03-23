@@ -4,9 +4,98 @@
   <title>Invoice</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/receipt.css') }}"
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/receipt.css') }}">
 </head>
 <body>
-  <div class="test"></div>
+
+  <div class="receipt-header">
+    <h1 class="company-name">JCC Bike Shop</h1>
+    <p>1799 Rizal Avenue, Olongapo City</p>
+    <p>Zambales, Philippines</p>
+  </div>
+
+  <div class="receipt-info">
+    {% for sale in transaction %}
+    <div class="receipt-info-header">
+      <div class="date-invoice-id">
+        <span>{{ sale.date_sold }}</span>
+        <span>Inv # {{ sale.transID }}</span>
+      </div>
+      <span>Merchant: {{ sale.merchant.firstname }} {{ sale.merchant.lastname }}</span>
+    </div>
+    {% endfor %}
+
+    <div class="purchases">
+      <!-- Purchases HEADER -->
+      <div class="item item-desc-header">
+        <div class="description">
+          <p>Quantity</p>
+        </div>
+
+        <div class="description long-div">
+          <p>Item Desc.</p>
+        </div>
+
+        <div class="description">
+          <p>Line Total</p>
+        </div>
+      </div>
+
+      <!-- PURCHASES LIST -->
+      {% for sold in items %}
+      <div class="item">
+        <div class="description item-data">
+          <p>{{ sold.qty }}</p>
+        </div>
+
+        <div class="description item-data long-div">
+          <p>{{ sold.item.prod_name }}</p>
+        </div>
+
+        <div class="description item-data data-end">
+          <p>&#8369;{{ sold.linetotal }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+      <!-- PURCHASES FOOTER -->
+      {% for sale in transaction %}
+      <div class="item item-desc-footer subtotal">
+        <div class="description">
+          <p>{{ sale.totalqty }}</p>
+        </div>
+
+        <div class="description subtotal-val long-div">
+          <p>Subtotal</p>
+        </div>
+
+        <div class="description data-end">
+          <p>&#8369;{{ sale.subtotal }}</p>
+        </div>
+      </div>
+
+      <div class="item item-desc-footer payment-desc">
+        <div class="description footer-desc">
+          <p>Payment</p>
+        </div>
+
+        <div class="description footer-data data-end">
+          <p>&#8369;{{ sale.payment }}</p>
+        </div>
+      </div>
+
+      <div class="item item-desc-footer">
+        <div class="description footer-desc">
+          <p>Change</p>
+        </div>
+
+        <div class="description footer-data data-end">
+          <p>&#8369;{{ sale.change }}</p>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
 </body>
 </html>

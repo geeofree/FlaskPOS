@@ -31,22 +31,29 @@ class Inventory(BaseModel):
     prod_max_stock = IntegerField()
     prod_price     = IntegerField()
 
-""" Sales Log Table """
-class Sales_Log(BaseModel):
-    slogID      = PrimaryKeyField()
-    cashier     = ForeignKeyField(User, related_name="person")
-    product     = ForeignKeyField(Inventory, related_name="item")
-    product_qty = IntegerField()
-    line_total  = IntegerField()
-    date_sold   = DateField(formats="%m-%d-%Y")
+""" Transactions Table """
+class Transactions(BaseModel):
+    transID = PrimaryKeyField()
+    merchant = ForeignKeyField(User, related_name="person", to_field="uID")
+    totalqty = IntegerField()
+    payment = IntegerField()
+    change = IntegerField()
+    subtotal = IntegerField()
+    date_sold = DateField(formats="%m-%d-%Y")
 
-
+""" Items Sold Table """
+class Items_Sold(BaseModel):
+    saleID = PrimaryKeyField()
+    transID = ForeignKeyField(Transactions, related_name="transaction", to_field="transID")
+    item = ForeignKeyField(Inventory, related_name="item_sold", to_field="invID")
+    qty = IntegerField()
+    linetotal = IntegerField()
 
 
 """ INIT DB """
 def init_db():
     db.connect()
-    db.create_tables([User, Inventory, Sales_Log], True)
+    db.create_tables([User, Inventory, Transactions, Items_Sold], True)
 
 
 
