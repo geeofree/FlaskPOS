@@ -20,7 +20,6 @@
 }
 
 .index {
-  color: #36a894;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -41,4 +40,17 @@
 .logo {
   color: #465c71;
   font-size: 90px;
+  transition-duration: 0.3s;
+}
+
+.products-dir:hover .logo{
+  color: #67b98b;
+}
+
+.sales-dir:hover .logo{
+  color: #ffba3d;
+}
+
+.users-dir:hover .logo{
+  color: #4343f8;
 }

@@ -31,6 +31,7 @@
   color: #fff;
   background: #444;
   font-family: Oxygen;
+  box-shadow: 0 5px 3px #aaa;
 }
 
 .descriptors span {
@@ -71,7 +72,9 @@
 
 .purchase-summary {
   height: 15%;
-  background: #fff;
+  background: #444;
+  color: #fff;
+  box-shadow: 0px -5px 3px #aaa;
 }
 
 .total {

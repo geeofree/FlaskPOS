@@ -80,7 +80,7 @@ def dashboard(subdir):
     user_role = session['client_role']
 
     if 'logged_in' in session and user_role == "Super Admin" or user_role == "Admin":
-        if subdir and subdir not in ['reports', 'products', 'logs', 'users']:
+        if subdir and subdir not in ['products', 'logs', 'users']:
             abort(404)
 
 
@@ -90,10 +90,7 @@ def dashboard(subdir):
             current_dir = 'dashboard'
         )
 
-        if subdir == 'reports':
-            return render_template("reports.html", **context)
-
-        elif subdir == 'products':
+        if subdir == 'products':
             categories = set(item.prod_type for item in SelectQuery(Inventory, Inventory.prod_type))
             return render_template("products.html", **context, categories=categories)
 
@@ -156,7 +153,7 @@ def payment():
 
 
 """ Receipt Generator Route """
-@app.route("/transactions/receipt_no/<transID>")
+@app.route("/transactions/receipt/<transID>")
 def receipt(transID):
     if 'logged_in' in session:
         transaction = (Transactions.select()

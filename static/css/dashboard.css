@@ -20,10 +20,6 @@
   cursor: pointer;
 }
 
-#chart:hover {
-  background: #CC4949;
-}
-
 #tag:hover {
   background: #67b98b;
 }

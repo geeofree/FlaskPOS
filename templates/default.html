@@ -10,26 +10,29 @@
   <div class="greetings">
     <h1>Welcome to the Dashboard!</h1>
     <h3>
-      From here you can see your reports summary, products, activity logs,
-      and users who are currently using the system!
+      From here you can see your inventory, sales log, and users!
     </h3>
   </div>
   <div class="index">
-    <div class="info">
-      <i class="fa fa-area-chart logo" aria-hidden="true"></i>
-      <p>Reports Summary</p>
-    </div>
-    <div class="info">
-      <i class="fa fa-tag logo" aria-hidden="true"></i>
-      <p>Products</p>
-    </div>
-    <div class="info">
-      <i class="fa fa-table logo" aria-hidden="true"></i>
-      <p>Activity Logs</p>
-    </div>
-    <div class="info">
-      <i class="fa fa-users logo" aria-hidden="true"></i>
-      <p>User Accounts</p>
-    </div>
+    <a href="{{ url_for('dashboard', subdir='products') }}" class="products-dir">
+      <div class="info">
+        <i class="fa fa-tag logo" aria-hidden="true"></i>
+        <p>Products</p>
+      </div>
+    </a>
+
+    <a href="{{ url_for('dashboard', subdir='logs') }}" class="sales-dir">
+      <div class="info">
+        <i class="fa fa-table logo" aria-hidden="true"></i>
+        <p>Sales Logs</p>
+      </div>
+    </a>
+
+    <a href="{{ url_for('dashboard', subdir='users') }}" class="users-dir">
+      <div class="info">
+        <i class="fa fa-users logo" aria-hidden="true"></i>
+        <p>User Accounts</p>
+      </div>
+    </a>
   </div>
 {% endblock %}
