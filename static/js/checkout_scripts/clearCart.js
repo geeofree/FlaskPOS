@@ -1,8 +1,8 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+export { clearCart, removeItem }
 
-
-export default function clearCart() {
+function clearCart() {
   const $clearBtn   = $('.clear-cart')
   const $clearModal = $('.clear-modal')
 

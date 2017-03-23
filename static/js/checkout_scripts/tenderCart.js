@@ -33,7 +33,9 @@ function modalEvent(content, showModal) {
   const totalAmount = Number($tendersub.match(/\d+/)[0])
   const payAmount   = Number($payment.val())
 
-  calculateChange(totalAmount, payAmount)
+  let change = 0
+
+  change = calculateChange(totalAmount, payAmount)
 
   numInputValidation($payment, function($input, event) {
     const $val   = $input.val()
@@ -50,11 +52,16 @@ function modalEvent(content, showModal) {
 
     let value = Number($input.val())
 
-    calculateChange(totalAmount, value)
+    change = calculateChange(totalAmount, value)
   })
 
   $purchaseBtn.click(function() {
-    sendData($purchased)
+    if(change < 0) {
+      alert('Insufficient Pay Amount')
+    }
+    else {
+      sendData($purchased)
+    }
   })
 
   // CLOSE MODAL
@@ -71,6 +78,7 @@ function calculateChange(totalAmount, payAmount) {
   const change = payAmount - totalAmount
 
   changeEL.text("₱" + change)
+  return change
 }
 
 

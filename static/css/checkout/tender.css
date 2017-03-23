@@ -47,6 +47,7 @@
 }
 
 .purchased-item {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
@@ -120,4 +121,29 @@
 
 .clear-cart:hover {
   background: #932b2b;
+}
+
+.option-nav {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+}
+
+.item-option {
+  visibility: hidden;
+  opacity: 0;
+  margin: 0 3px;
+  transition-duration: 0.25s;
+}
+
+.item-option:hover {
+  cursor: pointer;
+}
+
+.show-option {
+  opacity: 1;
+  visibility: visible;
 }

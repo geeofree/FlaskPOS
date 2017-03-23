@@ -96,6 +96,17 @@ function newItem(itemID, itemName, itemPrice, qty, total) {
   item.setAttribute("class", "purchased-item")
   item.setAttribute("id", itemID)
 
+  const $item_option = $(document.createElement('div'))
+  $item_option.attr('class', 'option-nav')
+
+  const $trash_icon = $(document.createElement('i'))
+  $trash_icon.attr({'class': 'fa fa-trash-o item-option trash', 'aria-hidden':'true'})
+
+  const $checkbox = $(document.createElement('input'))
+  $checkbox.attr({'class': 'item-option checkbox', 'type': 'checkbox'})
+
+  $item_option.append($trash_icon, $checkbox)
+
   itemData
   .map(data => {
     const value = data[0]
@@ -112,6 +123,8 @@ function newItem(itemID, itemName, itemPrice, qty, total) {
   .forEach(span => {
     $(item).append(span)
   })
+
+  $(item).append($item_option)
 
   return item
 }
