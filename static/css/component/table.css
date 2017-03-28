@@ -25,10 +25,6 @@
   padding: 20px 10px;
 }
 
-.tbl-data:nth-child(even) {
-  background: #f2f2f2;
-}
-
 .tbl-data {
   background: #fff;
   transition-duration: 0.4s

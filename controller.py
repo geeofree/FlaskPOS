@@ -1,8 +1,8 @@
 from flask import Flask, url_for, request, render_template, redirect, session, abort, jsonify, make_response
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
-from datetime import datetime
 from model import *
+import datetime
 
 
 """ Init Stuff """
@@ -95,7 +95,12 @@ def dashboard(subdir):
             return render_template("products.html", **context, categories=categories)
 
         elif subdir == 'logs':
-            return render_template("logs.html", **context)
+            date = dict(
+                cur = Transactions.select().where(Transactions.date_sold.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1))),
+                min = Transactions.get(Transactions.transID == 1).date_sold,
+                max = Transactions.select().order_by(Transactions.transID.desc()).get().date_sold
+            )
+            return render_template("logs.html", **context, date = date)
 
         elif subdir == 'users':
             users = User.select()
@@ -125,7 +130,7 @@ def payment():
         subtotal = subtotal,
         payment = payment,
         change = change,
-        date_sold = datetime.now().date()
+        date_sold = datetime.datetime.now().date()
     )
 
     transaction = Transactions.create(**transaction_data)
@@ -168,6 +173,51 @@ def receipt(transID):
             return render_template('receipt.html', transaction=transaction, items=items_sold)
         abort(400)
     abort(404)
+
+
+""" Receipt Request POST Route """
+@app.route('/receipt_request', methods=['POST'])
+def receipt_request():
+    if 'logged_in' in session:
+        req = request.get_json()
+        transID = req['transID']
+        items_sold = Items_Sold.select().where(Items_Sold.transID == transID).join(Inventory)
+        data = []
+
+        for item in items_sold:
+            item = {
+                'name': item.item.prod_name,
+                'qty_sold': item.qty,
+                'linetotal': item.linetotal
+            }
+
+            data.append(item)
+
+        return jsonify(data)
+
+
+""" Transactions Request POST Route """
+@app.route("/transaction_req", methods=['POST'])
+def transaction_req():
+    if 'logged_in' in session:
+        req = request.get_json()
+        transactions = Transactions.select().where(Transactions.date_sold == req['date'])
+
+        data = []
+
+        for invoice in transactions:
+            invoice_data = dict(
+                invoice_no = invoice.transID,
+                retailer = invoice.merchant.firstname + " " + invoice.merchant.lastname,
+                date_sold = invoice.date_sold,
+                totalqty = invoice.totalqty,
+                subtotal = invoice.subtotal
+            )
+
+            data.append(invoice_data)
+
+        return jsonify(data)
+
 
 """ Add Product POST Route """
 @app.route("/add_product", methods=["POST"])

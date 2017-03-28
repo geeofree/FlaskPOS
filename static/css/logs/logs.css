@@ -1,3 +1,46 @@
+@import url('transactions.css');
+@import url('itemsSold.css');
+
 .dash-content {
-  background: tomato;
+  justify-content: center;
+  padding: 20px;
 }
+
+.left-content h3 {
+  font-weight: 300;
+}
+
+.sales-log-content {
+  margin: 10px;
+}
+
+.slog-content-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  background: #444;
+  height: 10%;
+  padding: 0 10px;
+}
+
+.slog-content-header h3 {
+  margin: 0;
+}
+
+.ui-datepicker-trigger{
+  border: none;
+  background: #666;
+  color: #fff;
+  padding: 2px 4px;
+  cursor: pointer;
+  border-radius: 0 5px 5px 0;
+ }
+
+ #datepicker {
+  width: 120px;
+  border: none;
+  text-align: center;
+  border-radius: 5px 0 0 5px;
+ }

@@ -1,0 +1,57 @@
+.transactions {
+  width: 700px;
+  height: 500px;
+  overflow: auto;
+  background: #fff;
+}
+
+.trans-column {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 5px;
+}
+
+.trans-data-wrapper {
+  height: 40px;
+  transition-duration: 0.3s;
+}
+
+.trans-data-wrapper:hover {
+  cursor: pointer;
+}
+
+.selected-transaction {
+  border-left: 6px solid orange;
+  background: #5c5c5c;
+  color: #fff;
+}
+
+.transactions-body {
+  height: 80%;
+  overflow: auto;
+}
+
+.trans-data {
+  font-size: 15px;
+  text-align: center;
+  width: 25%;
+}
+
+.retailer {
+  /*text-align: left;*/
+}
+
+.transactions-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  height: 10%;
+}
+
+.trans-footer {
+  width: 100%;
+  height: 100%;
+  background: #444;
+  color: #fff;
+}
