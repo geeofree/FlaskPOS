@@ -78,8 +78,8 @@ body {
 }
 
 .item-desc-header {
-  border-top: 3px double #444;
-  border-bottom: 3px double #444;
+  border-top: 5px double #444;
+  border-bottom: 5px double #444;
 }
 
 .item-desc-footer p {
@@ -88,7 +88,7 @@ body {
 
 .subtotal {
   padding-top: 5px;
-  border-top: 3px double #444;
+  border-top: 1px dashed #444;
   margin-top: 5px;
 }
 
@@ -99,7 +99,7 @@ body {
 .payment-desc {
   margin: 6px 0;
   padding-bottom: 5px;
-  border-bottom: 3px double #444;
+  border-bottom: 1px dashed #444;
 }
 
 .footer-desc {

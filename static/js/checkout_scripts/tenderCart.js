@@ -60,10 +60,13 @@ function modalEvent(content, showModal) {
   })
 
   $purchaseBtn.click(function() {
+    const $self = $(this)
+
     if(change < 0) {
       alert('Insufficient Pay Amount')
     }
     else {
+      $self.off("click")
       sendData($purchased, totalAmount, totalQty, payment, change)
     }
   })
@@ -116,7 +119,6 @@ function sendData($purchases, totalAmount, totalQty, payment, change) {
 
   ajax(data, '/payment', function(resp) {
     if(resp.status == 'success') {
-      console.log(resp.transID)
       alert('success!')
       window.location.replace(resp.url)
     }
