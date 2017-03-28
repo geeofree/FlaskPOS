@@ -95,12 +95,15 @@ def dashboard(subdir):
             return render_template("products.html", **context, categories=categories)
 
         elif subdir == 'logs':
-            date = dict(
-                cur = Transactions.select().where(Transactions.date_sold.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1))),
-                min = Transactions.get(Transactions.transID == 1).date_sold,
-                max = Transactions.select().order_by(Transactions.transID.desc()).get().date_sold
-            )
-            return render_template("logs.html", **context, date = date)
+            try:
+                date = dict(
+                    cur = Transactions.select().where(Transactions.date_sold.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1))),
+                    min = Transactions.get(Transactions.transID == 1).date_sold,
+                    max = Transactions.select().order_by(Transactions.transID.desc()).get().date_sold
+                )
+                return render_template("logs.html", **context, date = date)
+            except DoesNotExist:
+                return render_template("logs.html", **context)
 
         elif subdir == 'users':
             users = User.select()
@@ -115,21 +118,19 @@ def dashboard(subdir):
 @app.route("/payment", methods=["POST"])
 def payment():
     req = request.get_json()
-    merchant = req['merchant']
-    subtotal = req['subtotal']
-    totalqty = req['totalqty']
-    payment = req['payment']
-    change = req['change']
+    employee   = req['merchant']
+    subtotal   = req['subtotal']
+    totalqty   = req['totalqty']
+    payment    = req['payment']
+    change     = req['change']
     items_sold = req['items_sold']
 
-    employee = User.get(User.username == merchant)
-
     transaction_data = dict(
-        merchant = employee,
-        totalqty = totalqty,
-        subtotal = subtotal,
-        payment = payment,
-        change = change,
+        retailer  = employee,
+        totalqty  = totalqty,
+        subtotal  = subtotal,
+        payment   = payment,
+        change    = change,
         date_sold = datetime.datetime.now().date()
     )
 
@@ -141,9 +142,9 @@ def payment():
         product.save()
 
         items_sold_data = dict(
-            transID = transaction,
-            item = product,
-            qty = item['qty_sold'],
+            transID   = transaction,
+            item      = product.prod_name,
+            qty       = item['qty_sold'],
             linetotal = item['linetotal']
         )
 
@@ -158,16 +159,14 @@ def payment():
 
 
 """ Receipt Generator Route """
-@app.route("/transactions/receipt/<transID>")
+@app.route("/receipt/<transID>")
 def receipt(transID):
     if 'logged_in' in session:
-        transaction = (Transactions.select()
-                        .where(Transactions.transID == transID)
-                        .join(User))
+        transaction = (Transactions.select().where(Transactions.transID == transID))
 
         items_sold = (Items_Sold.select()
                         .where(Items_Sold.transID == transID)
-                        .join(Inventory))
+                        .join(Transactions))
 
         if transaction:
             return render_template('receipt.html', transaction=transaction, items=items_sold)
@@ -181,14 +180,14 @@ def receipt_request():
     if 'logged_in' in session:
         req = request.get_json()
         transID = req['transID']
-        items_sold = Items_Sold.select().where(Items_Sold.transID == transID).join(Inventory)
+        items_sold = Items_Sold.select().where(Items_Sold.transID == transID).join(Transactions)
         data = []
 
-        for item in items_sold:
+        for line_item in items_sold:
             item = {
-                'name': item.item.prod_name,
-                'qty_sold': item.qty,
-                'linetotal': item.linetotal
+                'name': line_item.item,
+                'qty_sold': line_item.qty,
+                'linetotal': line_item.linetotal
             }
 
             data.append(item)

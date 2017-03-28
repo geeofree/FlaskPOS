@@ -8,60 +8,64 @@
 {% endblock %}
 
 {% block DASH %}
-  <div class="transactions sales-log-content">
-    <!-- Header -->
-    <div class="transactions-header slog-content-header">
-      <div class="left-content">
-        <h3>Transactions</h3>
-      </div>
-
-      <div class="right-content">
-        <input id="datepicker" disabled>
-      </div>
+{% if date %}
+<div class="transactions sales-log-content">
+  <!-- Header -->
+  <div class="transactions-header slog-content-header">
+    <div class="left-content">
+      <h3>Transactions</h3>
     </div>
 
-    <!-- Content -->
-    <div class="transactions-body">
-      {% for transaction in date.cur %}
-      <div class="trans-column trans-data-wrapper">
-        <span class="transID" style="display:none;">{{ transaction.transID }}</span>
-        <span class="trans-data retailer">{{ transaction.merchant.firstname }} {{ transaction.merchant.lastname }}</span>
-        <span class="trans-data trans-total-qty">{{ transaction.totalqty }}</span>
-        <span class="trans-data trans-subtotal">&#8369;{{ transaction.subtotal }}</span>
-        <span class="trans-data date-sold">{{ transaction.date_sold }}</span>
-      </div>
-      {% endfor %}
-    </div>
-
-    <div class="transactions-footer">
-      <div class="trans-column trans-footer">
-        <span class="trans-data trans-desc">Retailer</span>
-        <span class="trans-data trans-desc">Total Qty. Sold</span>
-        <span class="trans-data trans-desc">Subtotal</span>
-        <span class="trans-data trans-desc">Date Sold</span>
-      </div>
+    <div class="right-content">
+      <input id="datepicker" disabled>
     </div>
   </div>
 
-  <div class="items-sold sales-log-content">
-    <!-- Header -->
-    <div class="items-sold-header slog-content-header">
-      <div class="left-content">
-        <h3>Items Sold</h3>
-      </div>
+  <!-- Content -->
+  <div class="transactions-body">
+    {% for transaction in date.cur %}
+    <div class="trans-column trans-data-wrapper">
+      <span class="transID" style="display:none;">{{ transaction.transID }}</span>
+      <span class="trans-data retailer">{{ transaction.retailer }}</span>
+      <span class="trans-data trans-total-qty">{{ transaction.totalqty }}</span>
+      <span class="trans-data trans-subtotal">&#8369;{{ transaction.subtotal }}</span>
+      <span class="trans-data date-sold">{{ transaction.date_sold }}</span>
     </div>
+    {% endfor %}
+  </div>
 
-    <!-- Item Sold Wrapper -->
-    <div class="items-sold-wrapper"></div>
+  <div class="transactions-footer">
+    <div class="trans-column trans-footer">
+      <span class="trans-data trans-desc">Retailer</span>
+      <span class="trans-data trans-desc">Total Qty. Sold</span>
+      <span class="trans-data trans-desc">Subtotal</span>
+      <span class="trans-data trans-desc">Date Sold</span>
+    </div>
+  </div>
+</div>
 
-    <!-- Description Footer -->
-    <div class="items-sold-footer sold-column">
-      <p class="long-width">Item Name</p>
-      <p class="short-width">Qty.</p>
-      <p class="short-width">Linetotal</p>
+<div class="items-sold sales-log-content">
+  <!-- Header -->
+  <div class="items-sold-header slog-content-header">
+    <div class="left-content">
+      <h3>Items Sold</h3>
     </div>
   </div>
 
-  <div id="minDate" style="display:none;">{{ date.min }}</div>
-  <div id="maxDate" style="display:none;">{{ date.max }}</div>
+  <!-- Item Sold Wrapper -->
+  <div class="items-sold-wrapper"></div>
+
+  <!-- Description Footer -->
+  <div class="items-sold-footer sold-column">
+    <p class="long-width">Item Name</p>
+    <p class="short-width">Qty.</p>
+    <p class="short-width">Linetotal</p>
+  </div>
+</div>
+
+<div id="minDate" style="display:none;">{{ date.min }}</div>
+<div id="maxDate" style="display:none;">{{ date.max }}</div>
+{% else %}
+<h1>There are no transactions yet</h1>
+{% endif %}
 {% endblock %}

@@ -33,20 +33,20 @@ class Inventory(BaseModel):
 
 """ Transactions Table """
 class Transactions(BaseModel):
-    transID = PrimaryKeyField()
-    merchant = ForeignKeyField(User, related_name="person", to_field="uID")
-    totalqty = IntegerField()
-    payment = IntegerField()
-    change = IntegerField()
-    subtotal = IntegerField()
+    transID   = PrimaryKeyField()
+    retailer  = CharField()
+    totalqty  = IntegerField()
+    payment   = IntegerField()
+    change    = IntegerField()
+    subtotal  = IntegerField()
     date_sold = DateField(formats="%m-%d-%Y")
 
 """ Items Sold Table """
 class Items_Sold(BaseModel):
-    saleID = PrimaryKeyField()
-    transID = ForeignKeyField(Transactions, related_name="transaction", to_field="transID")
-    item = ForeignKeyField(Inventory, related_name="item_sold", to_field="invID")
-    qty = IntegerField()
+    saleID    = PrimaryKeyField()
+    transID   = ForeignKeyField(Transactions, related_name="transaction", to_field="transID")
+    item      = CharField()
+    qty       = IntegerField()
     linetotal = IntegerField()
 
 

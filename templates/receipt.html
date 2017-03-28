@@ -21,7 +21,7 @@
         <span>{{ sale.date_sold }}</span>
         <span>Inv # {{ sale.transID }}</span>
       </div>
-      <span>Merchant: {{ sale.merchant.firstname }} {{ sale.merchant.lastname }}</span>
+      <span>Retailer: {{ sale.retailer }}</span>
     </div>
     {% endfor %}
 
@@ -49,7 +49,7 @@
         </div>
 
         <div class="description item-data long-div">
-          <p>{{ sold.item.prod_name }}</p>
+          <p>{{ sold.item }}</p>
         </div>
 
         <div class="description item-data data-end">
