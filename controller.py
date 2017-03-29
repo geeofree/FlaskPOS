@@ -207,7 +207,7 @@ def transaction_req():
         for invoice in transactions:
             invoice_data = dict(
                 invoice_no = invoice.transID,
-                retailer = invoice.merchant.firstname + " " + invoice.merchant.lastname,
+                retailer = invoice.retailer,
                 date_sold = invoice.date_sold,
                 totalqty = invoice.totalqty,
                 subtotal = invoice.subtotal
