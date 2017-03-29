@@ -3,12 +3,13 @@ import homepage from "./homepage"
 import checkout from "./checkout_scripts/checkout"
 import product from "./product_scripts/product"
 import users from "./user_scripts/user"
+import dropdown from "./misc/dropdown"
 import logs from "./log_scripts/logs"
-
 
 (function() {
   // MISC
   highlightMagnet()
+  dropdown()
 
   // MAIN
   homepage()

@@ -16,20 +16,24 @@
           <input type="text" class="search-input" placeholder="search products">
 
           <!-- Filter Search Query -->
-          <select class="search-select search-filter">
-            <option value="" disabled selected>Search By</option>
-            <option value="prod_name">Name</option>
-            <option value="prod_code">SKU</option>
-          </select>
+          <div class="dropdown search-select search-filter">
+            <div class="dropdown-text">Search By <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-content">
+              <span class="dropdown-option">Name</span>
+              <span class="dropdown-option">SKU</span>
+            </div>
+          </div>
 
           <!-- Scope Search With Category -->
-          <select class="search-select search-scope">
-              <option value="" disabled selected>Category</option>
-              <option value="">All</option>
-            {% for category in categories %}
-              <option value="{{ category }}">{{ category }}</option>
-            {% endfor %}
-          </select>
+          <div class="dropdown search-select search-scope">
+            <div class="dropdown-text">Category Filter <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-content">
+              <span class="dropdown-option">All</span>
+              {% for category in categories %}
+              <span class="dropdown-option">{{ category }}</span>
+              {% endfor %}
+            </div>
+          </div>
         </div>
 
         <div class="buttons">
