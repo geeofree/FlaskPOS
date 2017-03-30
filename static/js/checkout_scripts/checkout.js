@@ -1,11 +1,13 @@
 import $ from "jquery"
 import productSelect from "./productSelect"
 import { clearCart, removeItem } from "./clearCart"
+import { scrollbar } from "../misc/misc"
 import tenderItems from "./tenderCart"
 import productSearch from "./productSearch"
 
-
 export default function checkout() {
+  const $products = $('.products')
+  scrollbar($products)
   showOptionNav()
   productSearch()
   productSelect()

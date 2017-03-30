@@ -1,6 +1,6 @@
 import $ from "jquery"
 import { openModal, closeModal } from '../misc/modal'
-import { numInputValidation, changeHandler } from '../misc/misc'
+import { numInputValidation, changeHandler, scrollbar } from '../misc/misc'
 import createItem from "./createCart"
 
 

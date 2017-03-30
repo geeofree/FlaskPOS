@@ -1,5 +1,6 @@
 import $ from 'jquery'
-export { highlightMagnet, numInputValidation, changeHandler }
+import "../../bower_components/jquery-mousewheel/jquery.mousewheel.min"
+export { highlightMagnet, numInputValidation, changeHandler, scrollbar }
 
 
 function highlightMagnet() {
@@ -67,4 +68,89 @@ function changeHandler($input, min, max) {
       return
     }
   })
+}
+
+// SCROLLBAR
+function scrollbar($parent) {
+
+  if($parent.constructor == Array) {
+    $parent.forEach( el => customScroll($(el)) )
+  }
+  else {
+    customScroll($parent)
+  }
+
+  function customScroll($el) {
+    const $elParent = $el.parent()
+    const $elChild = $el.children()
+    const elHeight = $el.height()
+
+    const $scrollBar = $(document.createElement('div'))
+    $scrollBar.addClass('scrollbar')
+
+    const $scrollWrapper = $(document.createElement('div'))
+    $scrollWrapper.height(elHeight)
+    $scrollWrapper.addClass('scroll-wrapper')
+
+    $scrollWrapper.append($el, $scrollBar)
+    $elParent.append($scrollWrapper)
+
+    $el.addClass('scroll-content')
+
+    const contentChildHeight = $($elChild[0]).height()
+    const contentHeight = $el.height()
+    const scrollMax = contentHeight / contentChildHeight
+    const maxHeight = contentHeight - elHeight
+    const scrollIter = Math.floor(maxHeight / scrollMax)
+    const scrollBarIter = Number((elHeight / scrollMax).toFixed(2))
+    let scrollSpeed = 0
+    let scrollBarSpeed = 0
+
+    $scrollBar.height(scrollBarIter)
+
+    function drag(goUp, goDown) {
+      if(goUp) {
+        scrollSpeed -= scrollIter
+        scrollBarSpeed = Number((scrollBarSpeed + scrollBarIter).toFixed(2))
+
+        if(Math.abs(scrollSpeed) < maxHeight) {
+          $el.css('top', scrollSpeed + "px")
+        }
+        else {
+          scrollSpeed += scrollIter
+        }
+
+        if(scrollBarSpeed < elHeight) {
+          $scrollBar.css('top', scrollBarSpeed + "px")
+        }
+        else {
+          scrollBarSpeed -= scrollBarIter
+        }
+
+      }
+      else if(goDown) {
+        scrollSpeed += scrollIter
+        $el.css('top', scrollSpeed + "px")
+
+        if(scrollBarSpeed > 0) {
+          scrollBarSpeed = Number((scrollBarSpeed - scrollBarIter).toFixed(2))
+          $scrollBar.css('top', scrollBarSpeed + "px")
+        }
+      }
+
+      console.log(scrollBarSpeed)
+    }
+
+    function mousewheelEv(event) {
+      const scrollY = event.deltaY
+      const goUp = scrollY < 0 && Math.abs(scrollSpeed) < elHeight
+      const goDown = scrollY > 0 && scrollSpeed < 0
+
+      drag(goUp, goDown)
+    }
+
+    $el.mousewheel(mousewheelEv)
+  }
+
+
 }

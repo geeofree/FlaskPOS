@@ -41,8 +41,6 @@
 }
 
 .items {
-  overflow-y: auto;
-  overflow-x: hidden;
   height: 93%;
   background: #fff;
 }

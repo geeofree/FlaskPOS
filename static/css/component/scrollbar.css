@@ -1,0 +1,25 @@
+.scroll-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.scrollbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 5px;
+  background: crimson;
+  opacity: 0.6;
+  transition-duration: 0.3s;
+}
+
+.scrollbar:hover {
+  opacity: 1;
+  width: 10px;
+}
+
+.scroll-content {
+  position: relative;
+  height: initial !important;
+}
