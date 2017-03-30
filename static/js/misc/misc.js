@@ -113,10 +113,22 @@ function scrollbar($element) {
       $el.parent('.scroll-wrapper').append($scrollBar)
     }
 
-    if($elParent.find('.scrollbar').length) {
+
+
+    if(contentHeight > wrapperHeight && $elParent.find('.scrollbar').length) {
       $elParent.find('.scrollbar').height(scrollBarIter)
+      $el.css('top', 0 + 'px')
+      $elParent.find('.scrollbar').css('top', 0 + 'px')
       addScrollEv($el)
     }
+    else if(contentHeight < wrapperHeight && $elParent.find('.scrollbar').length) {
+      $el.css('top', 0 + 'px')
+      $el.off("mouseover")
+      $el.off("mousewheel")
+      $elParent.find('.scrollbar').css('top', 0 + 'px')
+      $elParent.find('.scrollbar').remove()
+    }
+
 
     function drag(goUp, goDown) {
       if(goUp) {
@@ -130,10 +142,9 @@ function scrollbar($element) {
           scrollSpeed += scrollIter
         }
 
-        console.log(scrollBarSpeed, wrapperHeight)
 
-        if(scrollBarSpeed < wrapperHeight) {
-          $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
+        if(Math.round(scrollBarSpeed) < wrapperHeight) {
+          $elParent.find('.scrollbar').css('top', Math.floor(scrollBarSpeed) + "px")
         }
         else {
           scrollBarSpeed -= scrollBarIter
@@ -150,7 +161,6 @@ function scrollbar($element) {
         }
       }
 
-      // console.log(`scroll: ${scrollSpeed}, sSpeed: ${scrollIter}, bar: ${scrollBarSpeed}, bSpeed: ${scrollBarIter}, mHeight: ${maxHeight}, wHeight: ${wrapperHeight}`)
     }
 
     function mousewheelEv(event) {

@@ -55,6 +55,14 @@
   font-family: Oxygen;
 }
 
+.purchased-item:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  border-bottom: 1px dashed #aaa;
+}
+
 .purchased-item:hover {
   cursor: pointer;
 }

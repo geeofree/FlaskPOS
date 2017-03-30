@@ -2,12 +2,9 @@
 
 .receipt {
   font-family: monospace;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin: 50px auto;
   padding: 10px 10px 20px 10px;
-  width: 10cm;
+  width: 3.8in;
   background: #fff;
   overflow: hidden;
   box-shadow: 3px 5px 10px;
