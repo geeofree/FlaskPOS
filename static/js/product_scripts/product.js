@@ -1,4 +1,5 @@
 import { addItem } from "./addItem"
+import { scrollbar } from "../misc/misc"
 import delItem from "./delItem"
 import updateItem from "./updateItem"
 import itemRestock from "./restockItem"
@@ -7,6 +8,7 @@ import $ from "jquery"
 
 
 export default function product() {
+  scrollbar($('.data-table-body'))
   selectItem()
   addItem()
   delItem()
@@ -16,9 +18,9 @@ export default function product() {
 }
 
 function selectItem() {
-  const $table = $('.data-wrapper')
+  const $table = $('.data-table')
 
-  $table.on("click", '.tbl-data', function() {
+  $table.on("click", '.data-info', function() {
     const $self = $(this)
 
     if($self.hasClass('selected')) {

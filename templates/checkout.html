@@ -49,7 +49,7 @@
         <div class="dropdown search-select search-filter">
           <div class="dropdown-text">Search By <i class="fa fa-caret-down" aria-hidden="true"></i></div>
           <div class="dropdown-content">
-            <span class="dropdown-option">Name</span>
+            <span class="dropdown-option selected-query">Name</span>
             <span class="dropdown-option">SKU</span>
           </div>
         </div>
@@ -58,7 +58,7 @@
         <div class="dropdown search-select search-scope">
           <div class="dropdown-text">Category Filter <i class="fa fa-caret-down" aria-hidden="true"></i></div>
           <div class="dropdown-content">
-            <span class="dropdown-option">All</span>
+            <span class="dropdown-option selected-query">All</span>
             {% for category in categories %}
             <span class="dropdown-option">{{ category }}</span>
             {% endfor %}

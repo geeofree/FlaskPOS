@@ -1,5 +1,6 @@
 import '../../bower_components/jquery-ui/ui/widgets/datepicker'
 import { select, createEl} from "./transSelect"
+import { scrollbar } from "../misc/misc"
 import ajax from "../misc/ajax"
 import $ from "jquery"
 
@@ -30,12 +31,14 @@ function request_trans_by_date(date) {
 
   ajax({'date': date}, '/transaction_req', resp => {
     resp.forEach(data => createTransRecord(data))
+    scrollbar($('.transactions-body'))
   })
 }
 
 function clearTransactions() {
   const $trans_data = $('.trans-data-wrapper')
   $trans_data.each((_, data) => $(data).remove())
+  scrollbar($('.transactions-body'))
 }
 
 function createTransRecord(data) {

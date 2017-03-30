@@ -1,17 +1,28 @@
 import $ from "jquery"
-
+import { scrollbar } from "./misc"
 
 export default function search($parent, sku, name, type) {
   const $search = $('.search-input')
-  const $select = $('.search-select')
+  const $select = $('.dropdown-option')
   const $filter = $('.search-filter')
   const $scope  = $('.search-scope')
   const $child  = $parent.children()
 
   function searchEvent(event) {
+    const $self = $(this)
+
+    console.log($self.hasClass('search-input'))
+
+    if(!$self.hasClass('selected-query') && !$self.hasClass('search-input')) {
+      $self.parent('.dropdown-content').find('.selected-query').removeClass('selected-query')
+      $self.addClass('selected-query')
+    }
+
+    $self.parent('.dropdown-content').removeClass('show-dropdown')
+
     const $searchVal = $search.val()
-    const $filterVal = $filter.val()
-    const $scopeVal  = $scope.val()
+    const $filterVal = $filter.find('.selected-query').text()
+    const $scopeVal  = $scope.find('.selected-query').text()
 
     const button = event.which || event.button
     const keyval = String.fromCharCode(button)
@@ -27,12 +38,14 @@ export default function search($parent, sku, name, type) {
       searchEL($child, sku, name, type, query, 'keyup')
     }
 
-    if(!button) {
-      searchEL($child, sku, name, type, query, 'change')
+    if(button) {
+      searchEL($child, sku, name, type, query, 'click')
     }
+
+    scrollbar($parent)
   }
 
-  $select.change(searchEvent)
+  $select.click(searchEvent)
   $search.keyup(searchEvent)
 }
 
@@ -42,12 +55,10 @@ function searchEL($child, sku, name, type, query, evType) {
   const filter = query.filter
   const scope  = query.scope
 
-
   function pattern(matcher) {
 
     function escape(str) {
       const invalid = (/[[\\({^$?*+]/gi).test(str)
-      console.log(invalid, str)
       return invalid ? "\\" + str : str
     }
 
@@ -62,7 +73,7 @@ function searchEL($child, sku, name, type, query, evType) {
     const itemName  = $item.find(name).text()
     const itemType  = $item.find(type).text()
 
-    function query_check(query, callee) {
+    function query_check(query) {
       if(query) {
         if($item.hasClass('hide')) {
           $item.removeClass('hide')
@@ -75,14 +86,14 @@ function searchEL($child, sku, name, type, query, evType) {
       }
     }
 
-    const name_check = (filter == "prod_name" || filter == null) && !pattern(itemName) && filter != itemName
-    const code_check = filter == "prod_code" && !pattern(itemCode) && filter != itemCode
+    const name_check = (filter == "Name" || filter == null) && !pattern(itemName) && filter != itemName
+    const code_check = filter == "SKU" && !pattern(itemCode) && filter != itemCode
 
-    const select_check = !(scope == "" || scope == null) && scope != itemType
-    const def_sel_check = (scope == "" || scope == null) && scope != itemType
+    const select_check = !(scope == "" || scope == "All") && scope != itemType
+    const def_sel_check = (scope == "" || scope == "All") && scope != itemType
     const input_check = (name_check || code_check)
 
-    if(evType == 'change') {
+    if(evType == 'click') {
       if((!select_check || select_check) && !input_check) {
         query_check(select_check)
       }

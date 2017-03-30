@@ -29,17 +29,12 @@
 
 .transactions-body {
   height: 80%;
-  overflow: auto;
 }
 
 .trans-data {
   font-size: 15px;
   text-align: center;
   width: 25%;
-}
-
-.retailer {
-  /*text-align: left;*/
 }
 
 .transactions-footer {

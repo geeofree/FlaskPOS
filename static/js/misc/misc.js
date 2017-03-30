@@ -113,7 +113,7 @@ function scrollbar($element) {
       $el.parent('.scroll-wrapper').append($scrollBar)
     }
 
-
+    console.log(contentHeight, wrapperHeight, elHeight)
 
     if(contentHeight > wrapperHeight && $elParent.find('.scrollbar').length) {
       $elParent.find('.scrollbar').height(scrollBarIter)

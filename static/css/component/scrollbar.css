@@ -8,15 +8,15 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: 5px;
-  background: crimson;
-  opacity: 0.6;
+  width: 10px;
+  background: orange;
+  opacity: 0.8;
   transition-duration: 0.3s;
 }
 
 .scrollbar:hover {
   opacity: 1;
-  width: 10px;
+  width: 20px;
 }
 
 .scroll-content {

@@ -13,12 +13,17 @@
 
 .dash-content {
   position: relative;
-  padding: 20px;
+  padding: 5px;
 }
 
 .selected {
-  background: #595959 !important;
+  background: crimson !important;
   color: #fff;
+}
+
+.scrollbar {
+  background: #2ed860;
+  opacity: 0.9;
 }
 
 select {

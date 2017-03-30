@@ -1,4 +1,5 @@
 import $ from "jquery"
+import { scrollbar } from "../misc/misc"
 import ajax from "../misc/ajax"
 export { select, createEl }
 
@@ -22,20 +23,22 @@ function select() {
     if($('.selected-transaction').length == 0) {
       clearItems()
     }
+
   })
 }
 
 function request_transaction_info(receiptNo) {
   clearItems()
-
   ajax({transID: receiptNo}, '/receipt_request', resp => {
     resp.forEach(data => createItemEL(data))
+    scrollbar($('.items-sold-wrapper'))
   })
 }
 
 function clearItems() {
   const $item_sold = $('.sold-item')
   $item_sold.each((_, data) => $(data).remove())
+  scrollbar($('.items-sold-wrapper'))
 }
 
 

@@ -59,6 +59,11 @@
 }
 
 .selected-product {
-  background: #5c5c5c;
+  background: #469bb7;
   color: #fff;
+  border-bottom: 1px dashed #fff;
+}
+
+.selected-product .item-description p {
+  display: none;
 }

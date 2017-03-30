@@ -19,7 +19,7 @@
           <div class="dropdown search-select search-filter">
             <div class="dropdown-text">Search By <i class="fa fa-caret-down" aria-hidden="true"></i></div>
             <div class="dropdown-content">
-              <span class="dropdown-option">Name</span>
+              <span class="dropdown-option selected-query">Name</span>
               <span class="dropdown-option">SKU</span>
             </div>
           </div>
@@ -28,7 +28,7 @@
           <div class="dropdown search-select search-scope">
             <div class="dropdown-text">Category Filter <i class="fa fa-caret-down" aria-hidden="true"></i></div>
             <div class="dropdown-content">
-              <span class="dropdown-option">All</span>
+              <span class="dropdown-option selected-query">All</span>
               {% for category in categories %}
               <span class="dropdown-option">{{ category }}</span>
               {% endfor %}
@@ -44,44 +44,32 @@
         </div>
       </div>
 
-      <table class="tbl">
-        <tr class="outer-border">
-          <td>
-            <table class="tbl">
-              <tr class="tbl-head">
-                <th class="short" style="display:none;">ID</th>
-                <th class="short">SKU</th>
-                <th class="long">Item Description</th>
-                <th class="short">Category</th>
-                <th class="short">Stock</th>
-                <th class="short">Price</th>
-              </tr>
-            </table>
-          </td>
-        </tr>
+      <div class="data-table">
+        <div class="data-table-header">
+          <div class="short" style="display:none;">ID</div>
+          <div class="short">SKU</div>
+          <div class="long">Item Description</div>
+          <div class="short">Category</div>
+          <div class="short">Stock</div>
+          <div class="short">Price</div>
+        </div>
 
-        <tr>
-          <td style="padding:0;">
-            <div class="table-scroll">
-              <table class="tbl data-wrapper">
-                {% for product in products %}
-                  <tr class="tbl-data">
-                    <td class="short invID" style="display:none;">{{ product.invID }}</td>
-                    <td class="short data-sku">{{ product.prod_code }}</td>
-                    <td class="long data-name">{{ product.prod_name }}</td>
-                    <td class="short data-type">{{ product.prod_type }}</td>
-                    <td class="short">
-                      <span class="stock data-stock">{{ product.prod_stock }}</span>/
-                      <span class="data-max-stock">{{ product.prod_max_stock }}</span>
-                    </td>
-                    <td class="short data-price">&#8369;{{ product.prod_price }}</td>
-                  </tr>
-                {% endfor %}
-              </table>
+        <div class="data-table-body">
+          {% for product in products %}
+          <div class="data-info">
+            <div class="short invID" style="display:none;">{{ product.invID }}</div>
+            <div class="short data-sku">{{ product.prod_code }}</div>
+            <div class="long data-name">{{ product.prod_name }}</div>
+            <div class="short data-type">{{ product.prod_type }}</div>
+            <div class="short">
+              <span class="stock data-stock">{{ product.prod_stock }}</span>/
+              <span class="data-max-stock">{{ product.prod_max_stock }}</span>
             </div>
-          </td>
-        </tr>
-      </table>
+            <div class="short data-price">&#8369;{{ product.prod_price }}</div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
 
     </div>
   {% else %}

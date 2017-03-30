@@ -21,6 +21,15 @@
     </div>
   </div>
 
+  <div class="transactions-footer">
+    <div class="trans-column trans-footer">
+      <span class="trans-data trans-desc">Retailer</span>
+      <span class="trans-data trans-desc">Total Qty. Sold</span>
+      <span class="trans-data trans-desc">Subtotal</span>
+      <span class="trans-data trans-desc">Date Sold</span>
+    </div>
+  </div>
+
   <!-- Content -->
   <div class="transactions-body">
     {% for transaction in date.cur %}
@@ -33,15 +42,6 @@
     </div>
     {% endfor %}
   </div>
-
-  <div class="transactions-footer">
-    <div class="trans-column trans-footer">
-      <span class="trans-data trans-desc">Retailer</span>
-      <span class="trans-data trans-desc">Total Qty. Sold</span>
-      <span class="trans-data trans-desc">Subtotal</span>
-      <span class="trans-data trans-desc">Date Sold</span>
-    </div>
-  </div>
 </div>
 
 <div class="items-sold sales-log-content">
@@ -52,15 +52,15 @@
     </div>
   </div>
 
-  <!-- Item Sold Wrapper -->
-  <div class="items-sold-wrapper"></div>
-
   <!-- Description Footer -->
   <div class="items-sold-footer sold-column">
     <p class="long-width">Item Name</p>
     <p class="short-width">Qty.</p>
     <p class="short-width">Linetotal</p>
   </div>
+
+  <!-- Item Sold Wrapper -->
+  <div class="items-sold-wrapper"></div>
 </div>
 
 <div id="minDate" style="display:none;">{{ date.min }}</div>

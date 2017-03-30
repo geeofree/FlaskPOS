@@ -13,14 +13,6 @@
   align-items: center;
 }
 
-.search-nav select {
-  color: #fff;
-  padding: 3px;
-  background: none;
-  border: none;
-  width: 100px;
-}
-
 .search-input {
   font-family: sans-serif;
   margin-left: 15px;
@@ -42,9 +34,8 @@
 }
 
 .dropdown-text {
-  padding: 7px;
+  padding: 5px;
   background: #333;
-  border-radius: 5px;
 }
 
 .dropdown:hover {
@@ -57,10 +48,12 @@
   background: #333;
   width: 100%;
   flex-direction: column;
+  z-index: 2;
 }
 
 .dropdown-option {
   padding: 7px;
+  transition-duration: 0.3s;
 }
 
 .dropdown-option:hover {
@@ -70,4 +63,8 @@
 
 .show-dropdown {
   display: flex;
+}
+
+.selected-query {
+  background: crimson;
 }
