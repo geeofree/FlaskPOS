@@ -14,7 +14,6 @@ export default function qtyModal($selected) {
     const $qty = $('.qty-input')
     const $qtyBtn  = $('.confirm-qty')
 
-
     // SHOW MODAL
     showModal()
 
@@ -49,6 +48,7 @@ export default function qtyModal($selected) {
     $qtyBtn.click(function() {
       const qty = Number($qty.val())
       createItem($selected, qty)
+      scrollbar($('.items'))
 
       $('.active').removeClass('active')
       closeEv()

@@ -71,13 +71,12 @@ function changeHandler($input, min, max) {
 }
 
 // SCROLLBAR
-function scrollbar($parent) {
-
-  if($parent.constructor == Array) {
-    $parent.forEach( el => customScroll($(el)) )
+function scrollbar($element) {
+  if($element.constructor == Array) {
+    $element.forEach( el => customScroll($(el)) )
   }
   else {
-    customScroll($parent)
+    customScroll($element)
   }
 
   function customScroll($el) {
@@ -85,28 +84,39 @@ function scrollbar($parent) {
     const $elChild = $el.children()
     const elHeight = $el.height()
 
-    const $scrollBar = $(document.createElement('div'))
-    $scrollBar.addClass('scrollbar')
+    let $scrollWrapper, $scrollBar
 
-    const $scrollWrapper = $(document.createElement('div'))
-    $scrollWrapper.height(elHeight)
-    $scrollWrapper.addClass('scroll-wrapper')
 
-    $scrollWrapper.append($el, $scrollBar)
-    $elParent.append($scrollWrapper)
-
-    $el.addClass('scroll-content')
+    if(!$elParent.hasClass('scroll-wrapper')) {
+      $scrollWrapper = $(document.createElement('div'))
+      $scrollWrapper.height(elHeight)
+      $scrollWrapper.addClass('scroll-wrapper')
+      $scrollWrapper.append($el)
+      $elParent.append($scrollWrapper)
+      $el.addClass('scroll-content')
+    }
 
     const contentChildHeight = $($elChild[0]).height()
-    const contentHeight = $el.height()
-    const scrollMax = contentHeight / contentChildHeight
-    const maxHeight = contentHeight - elHeight
+    const contentHeight = Math.floor($el.height())
+    const wrapperHeight = Math.floor($el.parent('.scroll-wrapper').height())
+    const scrollMax = (contentHeight / contentChildHeight)
+    const maxHeight = contentHeight - wrapperHeight
     const scrollIter = Math.floor(maxHeight / scrollMax)
-    const scrollBarIter = Number((elHeight / scrollMax).toFixed(2))
+    const scrollBarIter = Number((wrapperHeight / scrollMax).toFixed(2))
     let scrollSpeed = 0
     let scrollBarSpeed = 0
 
-    $scrollBar.height(scrollBarIter)
+
+    if(contentHeight > wrapperHeight && $elParent.find('.scrollbar').length == 0) {
+      $scrollBar = $(document.createElement('div'))
+      $scrollBar.addClass('scrollbar')
+      $el.parent('.scroll-wrapper').append($scrollBar)
+    }
+
+    if($elParent.find('.scrollbar').length) {
+      $elParent.find('.scrollbar').height(scrollBarIter)
+      addScrollEv($el)
+    }
 
     function drag(goUp, goDown) {
       if(goUp) {
@@ -120,8 +130,10 @@ function scrollbar($parent) {
           scrollSpeed += scrollIter
         }
 
-        if(scrollBarSpeed < elHeight) {
-          $scrollBar.css('top', scrollBarSpeed + "px")
+        console.log(scrollBarSpeed, wrapperHeight)
+
+        if(scrollBarSpeed < wrapperHeight) {
+          $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
         }
         else {
           scrollBarSpeed -= scrollBarIter
@@ -132,25 +144,31 @@ function scrollbar($parent) {
         scrollSpeed += scrollIter
         $el.css('top', scrollSpeed + "px")
 
-        if(scrollBarSpeed > 0) {
+        if(scrollBarSpeed > 0 && $elParent.find('.scrollbar').length) {
           scrollBarSpeed = Number((scrollBarSpeed - scrollBarIter).toFixed(2))
-          $scrollBar.css('top', scrollBarSpeed + "px")
+          $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
         }
       }
 
-      console.log(scrollBarSpeed)
+      // console.log(`scroll: ${scrollSpeed}, sSpeed: ${scrollIter}, bar: ${scrollBarSpeed}, bSpeed: ${scrollBarIter}, mHeight: ${maxHeight}, wHeight: ${wrapperHeight}`)
     }
 
     function mousewheelEv(event) {
       const scrollY = event.deltaY
-      const goUp = scrollY < 0 && Math.abs(scrollSpeed) < elHeight
+      const goUp = scrollY < 0 && Math.abs(scrollSpeed) < contentHeight
       const goDown = scrollY > 0 && scrollSpeed < 0
 
       drag(goUp, goDown)
     }
 
-    $el.mousewheel(mousewheelEv)
+    function addScrollEv($element) {
+      $element.off("mouseover")
+      $element.mouseover(function() {
+        const $self = $(this)
+        $self.off("mousewheel")
+        $self.mousewheel(mousewheelEv)
+      })
+    }
   }
-
 
 }

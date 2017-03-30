@@ -25,7 +25,6 @@ export default function productSelect() {
 
       if(button == 13) {
         createCartItems($selected, 1)
-        $items.off("mousewheel")
         scrollbar($items)
       }
 
