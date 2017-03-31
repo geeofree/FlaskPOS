@@ -99,13 +99,13 @@ function scrollbar($element) {
     const contentChildHeight = $($elChild[0]).height()
     const contentHeight = Math.floor($el.height())
     const wrapperHeight = Math.floor($el.parent('.scroll-wrapper').height())
-    const scrollMax = (contentHeight / contentChildHeight)
+    const scrollMax = contentHeight / contentChildHeight
     const maxHeight = contentHeight - wrapperHeight
     const scrollIter = Math.floor(maxHeight / scrollMax)
-    const scrollBarIter = Number((wrapperHeight / scrollMax).toFixed(2))
+    const scrollBarIter = Math.floor(wrapperHeight / scrollMax)
     let scrollSpeed = 0
     let scrollBarSpeed = 0
-
+    let lastBarIter = scrollBarIter
 
     if(contentHeight > wrapperHeight && $elParent.find('.scrollbar').length == 0) {
       $scrollBar = $(document.createElement('div'))
@@ -131,7 +131,7 @@ function scrollbar($element) {
     function drag(goUp, goDown) {
       if(goUp) {
         scrollSpeed -= scrollIter
-        scrollBarSpeed = Number((scrollBarSpeed + scrollBarIter).toFixed(2))
+        scrollBarSpeed += scrollBarIter
 
         if(Math.abs(scrollSpeed) < maxHeight) {
           $el.css('top', scrollSpeed + "px")
@@ -141,8 +141,19 @@ function scrollbar($element) {
         }
 
 
-        if(Math.round(scrollBarSpeed) < wrapperHeight) {
-          $elParent.find('.scrollbar').css('top', Math.floor(scrollBarSpeed) + "px")
+        if(scrollBarSpeed <= wrapperHeight - scrollBarIter) {
+          scrollBarSpeed += scrollBarIter
+
+          if(scrollBarSpeed > wrapperHeight - scrollBarIter) {
+            scrollBarSpeed -= scrollBarIter
+            lastBarIter = (wrapperHeight - scrollBarIter) - scrollBarSpeed
+            scrollBarSpeed = scrollBarSpeed + lastBarIter
+          }
+          else {
+            scrollBarSpeed -= scrollBarIter
+          }
+
+          $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
         }
         else {
           scrollBarSpeed -= scrollBarIter
@@ -154,8 +165,9 @@ function scrollbar($element) {
         $el.css('top', scrollSpeed + "px")
 
         if(scrollBarSpeed > 0 && $elParent.find('.scrollbar').length) {
-          scrollBarSpeed = Number((scrollBarSpeed - scrollBarIter).toFixed(2))
+          scrollBarSpeed -= lastBarIter ? lastBarIter : scrollBarIter
           $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
+          lastBarIter = scrollBarIter
         }
       }
 
