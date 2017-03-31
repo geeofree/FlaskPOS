@@ -112,7 +112,8 @@
 }
 
 .action-buttons .button {
-  margin: 0 5px;
+  border-radius: 5px;
+  margin: 0 1px;
 }
 
 .button {
@@ -121,19 +122,11 @@
 }
 
 .tender {
-  background: #2a5e62;
+  background: #2a9085;
 }
 
 .clear-cart {
   background: #c33838;
-}
-
-.tender:hover {
-  background: #214548;
-}
-
-.clear-cart:hover {
-  background: #932b2b;
 }
 
 .option-nav {
