@@ -100,11 +100,14 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
     const name = $name.val()
     const code = $code.val()
     const type = $type.val()
+    const whiteSpace = /\s{2,}|\n/.test(name)
+
+    console.log(whiteSpace, whiteSpace && (name.length < 1 || name.length > 65))
 
     if(code.length < 11 || code.length > 11) {
       alert('Invalid input on item code field')
     }
-    else if(name.length < 1 || name.length > 65) {
+    else if(whiteSpace || name.length < 1 || name.length > 65) {
       alert('Invalid input in name field')
     }
     else if(type.length < 1 || type.length > 25) {

@@ -99,5 +99,6 @@
 }
 
 .confirm-restock {
-  background: cadetblue;
+  background: cadetblue !important;
+  color: #fff !important;
 }

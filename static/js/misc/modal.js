@@ -21,7 +21,7 @@ function openModal(content, modalEvent) {
 
   function showModal() {
     modal.addClass("active")
-    content.addClass("active")
+    // content.addClass("active")
   }
 
   modalEvent(content, showModal)
