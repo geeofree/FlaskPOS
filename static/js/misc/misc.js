@@ -99,7 +99,7 @@ function scrollbar($element) {
     const contentChildHeight = $($elChild[0]).height()
     const contentHeight = Math.floor($el.height())
     const wrapperHeight = Math.floor($el.parent('.scroll-wrapper').height())
-    const scrollMax = contentHeight / contentChildHeight
+    const scrollMax = Math.round(contentHeight / 100)
     const maxHeight = contentHeight - wrapperHeight
     const scrollIter = Math.floor(maxHeight / scrollMax)
     const scrollBarIter = Math.floor(wrapperHeight / scrollMax)
@@ -133,7 +133,9 @@ function scrollbar($element) {
         scrollSpeed -= scrollIter
         scrollBarSpeed += scrollBarIter
 
-        if(Math.abs(scrollSpeed) < maxHeight) {
+        console.log(scrollSpeed, maxHeight)
+
+        if(Math.abs(scrollSpeed) <= maxHeight) {
           $el.css('top', scrollSpeed + "px")
         }
         else {
@@ -164,7 +166,14 @@ function scrollbar($element) {
         scrollSpeed += scrollIter
         $el.css('top', scrollSpeed + "px")
 
-        if(scrollBarSpeed > 0 && $elParent.find('.scrollbar').length) {
+        if(scrollSpeed == 0) {
+          scrollBarSpeed = 0
+          $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
+          lastBarIter = scrollBarIter
+          return
+        }
+
+        if(scrollBarSpeed > 0) {
           scrollBarSpeed -= lastBarIter ? lastBarIter : scrollBarIter
           $elParent.find('.scrollbar').css('top', scrollBarSpeed + "px")
           lastBarIter = scrollBarIter

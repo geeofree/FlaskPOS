@@ -10,16 +10,11 @@
   right: 0;
   width: 10px;
   background: orange;
-  opacity: 0.8;
   transition-duration: 0.3s;
-}
-
-.scrollbar:hover {
-  opacity: 1;
-  width: 20px;
 }
 
 .scroll-content {
   position: relative;
   height: initial !important;
+  transition-duration: 0.3s;
 }
