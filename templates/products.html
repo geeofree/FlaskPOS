@@ -17,7 +17,10 @@
 
           <!-- Filter Search Query -->
           <div class="dropdown search-select search-filter">
-            <div class="dropdown-text">Search By <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-text">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <span>Search By</span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i></div>
             <div class="dropdown-content">
               <span class="dropdown-option selected-query">Name</span>
               <span class="dropdown-option">SKU</span>
@@ -26,7 +29,10 @@
 
           <!-- Scope Search With Category -->
           <div class="dropdown search-select search-scope">
-            <div class="dropdown-text">Category Filter <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-text">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+              <span>Filter By</span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i></div>
             <div class="dropdown-content">
               <span class="dropdown-option selected-query">All</span>
               {% for category in categories %}
@@ -37,10 +43,22 @@
         </div>
 
         <div class="buttons">
-          <div class="button delete">Delete</div>
-          <div class="button restock">Restock</div>
-          <div class="button edit">Update</div>
-          <div class="button add">Add</div>
+          <div class="button delete">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <span>Remove Product(s)</span>
+          </div>
+          <div class="button restock">
+            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+            <span>Restock Product(s)</span>
+          </div>
+          <div class="button edit">
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            <span>Update Product</span>
+          </div>
+          <div class="button add">
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            <span>Add Product</span>
+          </div>
         </div>
       </div>
 

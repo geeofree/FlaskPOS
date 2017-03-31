@@ -5,13 +5,19 @@ export default function dropdown() {
 
   function dropDownEv() {
     const $self = $(this)
-    const $content = $self.parent('.dropdown').find('.dropdown-content')
+    const $parent = $self.parent('.dropdown')
+    const $text = $parent.find('.dropdown-text')
+    const $content = $parent.find('.dropdown-content')
 
     if($content.hasClass('show-dropdown')) {
+      $text.removeClass('dropdown-pressed')
       $content.removeClass('show-dropdown')
     }
     else {
-      $content.addClass('show-dropdown')      
+      $('.dropdown-pressed').removeClass('dropdown-pressed')
+      $('.show-dropdown').removeClass('show-dropdown')
+      $text.addClass('dropdown-pressed')
+      $content.addClass('show-dropdown')
     }
   }
 

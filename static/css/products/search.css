@@ -10,18 +10,39 @@
   align-items: center;
 }
 
-.add {
+.button {
+  background: #fff;
+  color: #444;
+  border-radius: 3px;
+  transition-duration: 0.3s;
+  overflow: auto;
+}
+
+.button span {
+  font-size: 0;
+  transition-duration: 0.3s;
+}
+
+.button:hover {
+  color: #fff;
+}
+
+.button:hover span {
+  font-size: 15px;
+}
+
+.add:hover {
   background: #32b358;
 }
 
-.edit {
+.edit:hover {
   background: #3c77b1;
 }
 
-.restock {
+.restock:hover {
   background: cadetblue;
 }
 
-.delete {
+.delete:hover {
   background: #b05342;
 }

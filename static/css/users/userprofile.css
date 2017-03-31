@@ -38,7 +38,7 @@
   padding: 5px;
   width: 100%;
   background: #fff;
-  border: 1px solid #444;
+  border: 1px dashed #444;
   border-top: none;
   color: #444;
 }
@@ -67,24 +67,36 @@
 }
 
 .user-button {
-  color: #fff;
+  color: #444;
   padding: 5px;
+  background: #fff;
   border-radius: 5px;
   display: inline-block;
+  transition-duration: 0.3s;
+}
+
+.user-button span {
+  font-size: 0px;
+  transition-duration: 0.3s
 }
 
 .user-button:hover {
+  color: #fff;
   cursor: pointer;
 }
 
-.create-user {
+.user-button:hover span {
+  font-size: 15px;
+}
+
+.create-user:hover {
   background: #38a586;
 }
 
-.update-user {
+.update-user:hover {
   background: #3c77b1;
 }
 
-.remove-user {
+.remove-user:hover {
   background: #e7553b;
 }

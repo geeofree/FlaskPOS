@@ -47,7 +47,10 @@
 
         <!-- Filter Search Query -->
         <div class="dropdown search-select search-filter">
-          <div class="dropdown-text">Search By <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+          <div class="dropdown-text">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span>Search By</span>
+            <i class="fa fa-caret-down" aria-hidden="true"></i></div>
           <div class="dropdown-content">
             <span class="dropdown-option selected-query">Name</span>
             <span class="dropdown-option">SKU</span>
@@ -56,7 +59,10 @@
 
         <!-- Scope Search With Category -->
         <div class="dropdown search-select search-scope">
-          <div class="dropdown-text">Category Filter <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+          <div class="dropdown-text">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <span>Filter By</span>
+            <i class="fa fa-caret-down" aria-hidden="true"></i></div>
           <div class="dropdown-content">
             <span class="dropdown-option selected-query">All</span>
             {% for category in categories %}

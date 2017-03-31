@@ -203,12 +203,9 @@ function scrollbar($element) {
 }
 
 
-
 // LOGOUT
 function logout() {
   const btn = $('.power-btn')
-
-  console.log(btn)
 
   btn.click(function() {
     const logout = confirm('Are you sure you want to log out?')

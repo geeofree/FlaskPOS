@@ -11,10 +11,9 @@ export default function search($parent, sku, name, type) {
   function searchEvent(event) {
     const $self = $(this)
 
-    console.log($self.hasClass('search-input'))
-
     if(!$self.hasClass('selected-query') && !$self.hasClass('search-input')) {
       $self.parent('.dropdown-content').find('.selected-query').removeClass('selected-query')
+      $self.parent().parent().find('.dropdown-pressed').removeClass('dropdown-pressed')
       $self.addClass('selected-query')
     }
 
