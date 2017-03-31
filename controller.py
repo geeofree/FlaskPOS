@@ -79,7 +79,7 @@ def checkout():
 def dashboard(subdir):
     user_role = session['client_role']
 
-    if 'logged_in' in session and user_role == "Super Admin" or user_role == "Admin":
+    if 'logged_in' in session and (user_role == "Super Admin" or user_role == "Admin"):
         if subdir and subdir not in ['products', 'logs', 'users']:
             abort(404)
 

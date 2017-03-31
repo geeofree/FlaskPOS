@@ -1,4 +1,4 @@
-import { highlightMagnet } from "./misc/misc"
+import { highlightMagnet, logout } from "./misc/misc"
 import checkout from "./checkout_scripts/checkout"
 import product from "./product_scripts/product"
 import users from "./user_scripts/user"
@@ -10,6 +10,7 @@ import homepage from "./homepage"
   // MISC
   highlightMagnet()
   dropdown()
+  logout()
 
   // MAIN
   homepage()

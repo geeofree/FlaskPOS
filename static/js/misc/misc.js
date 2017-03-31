@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import "../../bower_components/jquery-mousewheel/jquery.mousewheel.min"
-export { highlightMagnet, numInputValidation, changeHandler, scrollbar }
+export { highlightMagnet, numInputValidation, changeHandler, scrollbar, logout }
 
 
 function highlightMagnet() {
@@ -200,4 +200,21 @@ function scrollbar($element) {
     }
   }
 
+}
+
+
+
+// LOGOUT
+function logout() {
+  const btn = $('.power-btn')
+
+  console.log(btn)
+
+  btn.click(function() {
+    const logout = confirm('Are you sure you want to log out?')
+
+    if(logout) {
+      window.location.replace('/logout')
+    }
+  })
 }
