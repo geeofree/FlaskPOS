@@ -22,8 +22,7 @@
 }
 
 .selected-transaction {
-  border-left: 6px solid orange;
-  background: #5c5c5c;
+  background: #3c6c87;
   color: #fff;
 }
 

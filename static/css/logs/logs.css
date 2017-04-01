@@ -13,6 +13,8 @@
 
 .sales-log-content {
   margin: 10px;
+  border-radius: 7px;
+  overflow: hidden;
 }
 
 .slog-content-header {
@@ -32,7 +34,7 @@
 
 .ui-datepicker-trigger{
   border: none;
-  background: #666;
+  background: #5d92c5;
   color: #fff;
   padding: 2px 4px;
   cursor: pointer;

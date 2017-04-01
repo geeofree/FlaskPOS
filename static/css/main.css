@@ -31,7 +31,7 @@ textarea {
 body{
   margin: 0;
   padding: 0;
-  background: #e9e9e9;
+  background: #d6e4e7;
   font-family: Roboto-light;
 }
 
@@ -148,6 +148,6 @@ a {
 }
 
 .fa-power-off:hover {
-  color: #f6701c;
+  color: #f61cbe;
   cursor: pointer;
 }

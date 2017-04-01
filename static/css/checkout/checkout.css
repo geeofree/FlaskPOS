@@ -17,6 +17,8 @@
   flex-wrap: wrap;
   flex-direction: column;
   height: 600px;
+  border-radius: 7px;
+  overflow: hidden;
 }
 
 .id {
