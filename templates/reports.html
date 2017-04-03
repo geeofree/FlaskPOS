@@ -3,7 +3,7 @@
 {% block TITLE %} Sales Reports {% endblock %}
 
 {% block DASH_STYLE %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/logs/reports.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/reports/reports.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
 {% endblock %}
 
@@ -18,12 +18,93 @@
 
 
 {% block DASH %}
-  <div>
-    <p>{{ monthly['summary']['total_sales'] }}</p>
-    <p>{{ monthly['summary']['total_items_sold'] }}</p>
-    <p>{{ daily['summary']['total_sales'] }}</p>
-    <p>{{ daily['summary']['total_items_sold'] }}</p>
-    <p>{{ weekly['summary']['total_sales'] }}</p>
-    <p>{{ weekly['summary']['total_items_sold'] }}</p>
+  <div class="reports-summary">
+    <!-- MONTHLY REPORT -->
+    <div class="report-container sale-summary monthly-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">MONTHLY SALES</p>
+        <h3 class="report-value">&#8369;{{ monthly['summary']['total_sales'] }}</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- DAIlY REPORT -->
+    <div class="report-container sale-summary daily-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">TODAY'S SALES</p>
+        <h3 class="report-value">&#8369;{{ daily['summary']['total_sales'] }}</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- WEEKLY REPORT -->
+    <div class="report-container sale-summary weekly-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">WEEKLY SALES</p>
+        <h3 class="report-value">&#8369;{{ weekly['summary']['total_sales'] }}</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-tag" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- STOCK REPORTS -->
+    <div class="report-container sale-summary all-stock-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">STOCKS IN INVENTORY</p>
+        <h3 class="report-value">{{ total_stock }}/{{ total_max_stock }}</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-tags" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- LOW STOCK REPORT -->
+    <div class="report-container sale-summary low-stock-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">LOW INVENTORY</p>
+        <h3 class="report-value">{{ low_stock.length }} item(s)</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+      </div>
+    </div>
+
+    <!-- NO STOCK REPORT -->
+    <div class="report-container sale-summary no-stock-report">
+      <!-- REPORT VALUE -->
+      <div class="report-wrapper">
+        <p class="report-header">NO INVENTORY</p>
+        <h3 class="report-value">{{ no_stock.length }} item(s)</h3>
+      </div>
+
+      <!-- REPORT LOGO -->
+      <div class="report-logo">
+        <i class="fa fa-filter" aria-hidden="true"></i>
+      </div>
+    </div>
   </div>
+{% endblock %}
+
+{% block MODAL %}
+
 {% endblock %}

@@ -137,17 +137,22 @@ def dashboard(subdir):
             return render_template("users.html", **context, users = users)
 
         elif subdir == 'reports':
-            low_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` != 0 AND ROUND((`prod_stock` / `prod_max_stock`) * 100) < 20'
+            low_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` != 0 AND ROUND((`prod_stock` / `prod_max_stock`) * 100) <= 20'
             no_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` = 0'
             stock_sum_query = 'SELECT SUM(prod_stock) FROM `inventory`'
             max_stock_sum_query = 'SELECT SUM(prod_max_stock) FROM `inventory`'
+
+            low_stock_items = []
+            no_stock_items = []
+            [low_stock_items.append(item) for item in Inventory.raw(low_stock_query)]
+            [no_stock_items.append(item) for item in Inventory.raw(no_stock_query)]
 
             reports = dict(
                 daily = fetch_reports('DAY'),
                 weekly = fetch_reports('YEARWEEK'),
                 monthly = fetch_reports('MONTH'),
-                low_stock = Inventory.raw(low_stock_query),
-                no_stock = Inventory.raw(no_stock_query),
+                low_stock = { 'length': len(low_stock_items), 'items': low_stock_items},
+                no_stock = { 'length': len(no_stock_items), 'items': no_stock_items },
                 total_stock = db.execute_sql(stock_sum_query).fetchone()[0],
                 total_max_stock = db.execute_sql(max_stock_sum_query).fetchone()[0]
             )
