@@ -102,6 +102,7 @@
       </div>
 
       <div class="sales-report-body">
+        {% if monthly.summary['total_sales'] %}
         <div class="sales-report-row report-footer">
           <span class="long-column">Retailer</span>
           <span class="short-column">Total Qty.</span>
@@ -118,6 +119,11 @@
           </div>
           {% endfor %}
         </div>
+        {% else %}
+        <div class="empty">
+          <h1>No transactions made yet.</h1>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -128,22 +134,28 @@
       </div>
 
       <div class="sales-report-body">
+        {% if weekly.summary['total_sales'] %}
         <div class="sales-report-row report-footer">
           <span class="long-column">Retailer</span>
           <span class="short-column">Total Qty.</span>
           <span class="short-column">Subtotal</span>
           <span class="short-column">Date Sold</span>
         </div>
-          <div class="sales-content">
-            {% for transaction in weekly.transactions %}
-            <div class="sales-report-row">
-              <span class="long-column">{{ transaction.retailer }}</span>
-              <span class="short-column">{{ transaction.totalqty }}</span>
-              <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
-              <span class="short-column">{{ transaction.date_sold }}</span>
-            </div>
-            {% endfor %}
+        <div class="sales-content">
+          {% for transaction in weekly.transactions %}
+          <div class="sales-report-row">
+            <span class="long-column">{{ transaction.retailer }}</span>
+            <span class="short-column">{{ transaction.totalqty }}</span>
+            <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
+            <span class="short-column">{{ transaction.date_sold }}</span>
           </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+          <h1>No transactions made yet.</h1>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -154,22 +166,28 @@
       </div>
 
       <div class="sales-report-body">
+        {% if daily.summary['total_sales'] %}
         <div class="sales-report-row report-footer">
           <span class="long-column">Retailer</span>
           <span class="short-column">Total Qty.</span>
           <span class="short-column">Subtotal</span>
           <span class="short-column">Date Sold</span>
         </div>
-          <div class="sales-content">
-            {% for transaction in daily.transactions %}
-            <div class="sales-report-row">
-              <span class="long-column">{{ transaction.retailer }}</span>
-              <span class="short-column">{{ transaction.totalqty }}</span>
-              <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
-              <span class="short-column">{{ transaction.date_sold }}</span>
-            </div>
-            {% endfor %}
+        <div class="sales-content">
+          {% for transaction in daily.transactions %}
+          <div class="sales-report-row">
+            <span class="long-column">{{ transaction.retailer }}</span>
+            <span class="short-column">{{ transaction.totalqty }}</span>
+            <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
+            <span class="short-column">{{ transaction.date_sold }}</span>
           </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+          <h1>There are no transactions for today.</h1>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -180,20 +198,26 @@
       </div>
 
       <div class="sales-report-body">
+        {% if low_stock['items'] %}
         <div class="sales-report-row report-footer">
           <span class="ultra-long-column">Product Name</span>
           <span class="short-column">In Stock</span>
           <span class="short-column">Max Stock</span>
         </div>
-          <div class="sales-content">
-            {% for item in low_stock['items'] %}
-            <div class="sales-report-row">
-              <span class="ultra-long-column">{{ item.prod_name }}</span>
-              <span class="short-column">{{ item.prod_stock }}</span>
-              <span class="short-column">{{ item.prod_max_stock }}</span>
-            </div>
-            {% endfor %}
+        <div class="sales-content">
+          {% for item in low_stock['items'] %}
+          <div class="sales-report-row">
+            <span class="ultra-long-column">{{ item.prod_name }}</span>
+            <span class="short-column">{{ item.prod_stock }}</span>
+            <span class="short-column">{{ item.prod_max_stock }}</span>
           </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+          <h1>No Inventory currently low.</h1>
+        </div>
+        {% endif %}
       </div>
     </div>
 
@@ -204,21 +228,28 @@
       </div>
 
       <div class="sales-report-body">
+        {% if no_stock['items'] %}
         <div class="sales-report-row report-footer">
           <span class="ultra-long-column">Product Name</span>
           <span class="short-column">In Stock</span>
           <span class="short-column">Max Stock</span>
         </div>
-          <div class="sales-content">
-            {% for item in no_stock['items'] %}
-            <div class="sales-report-row">
-              <span class="ultra-long-column">{{ item.prod_name }}</span>
-              <span class="short-column">{{ item.prod_stock }}</span>
-              <span class="short-column">{{ item.prod_max_stock }}</span>
-            </div>
-            {% endfor %}
+        <div class="sales-content">
+          {% for item in no_stock['items'] %}
+          <div class="sales-report-row">
+            <span class="ultra-long-column">{{ item.prod_name }}</span>
+            <span class="short-column">{{ item.prod_stock }}</span>
+            <span class="short-column">{{ item.prod_max_stock }}</span>
           </div>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty">
+          <h1>No Inventory currently out of stock.</h1>
+        </div>
+        {% endif %}
       </div>
+
     </div>
     <!-- MODAL CLOSER -->
     <div class="close">&times;</div>

@@ -32,6 +32,10 @@
   cursor: default;
 }
 
+.all-stock-report:hover .fa {
+  color: #14dc72;
+}
+
 .report-wrapper, .report-logo {
   display: flex;
   flex-wrap: wrap;

@@ -282,7 +282,7 @@ def add_product():
         )
 
         Inventory.create(**fields)
-    return redirect(url_for('dashboard', subdir='products'))
+    return redirect(url_for('dashboard', subdir='inventory'))
 
 
 """ Edit Product POST Route """
@@ -302,7 +302,7 @@ def edit_product():
         item.save()
         item.prod_price = request.form["price"]
         item.save()
-    return redirect(url_for("dashboard", subdir="products"))
+    return redirect(url_for("dashboard", subdir="inventory"))
 
 
 """ Restock Product POST Route """
@@ -315,7 +315,7 @@ def restock_product():
         item = Inventory.get(Inventory.invID == itemID)
         item.prod_stock = item.prod_stock + req['stock']
         item.save()
-        return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='products')})
+        return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='inventory')})
 
 
 """ Delete Product POST Route """
@@ -329,7 +329,7 @@ def del_product():
             itemID = request.args.get("id")
             Inventory.delete().where(Inventory.invID == itemID).execute()
 
-    return redirect(url_for("dashboard", subdir="products"))
+    return redirect(url_for("dashboard", subdir="inventory"))
 
 
 """ User Request POST Route """
