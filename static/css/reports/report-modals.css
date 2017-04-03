@@ -31,10 +31,6 @@
   overflow: auto;
 }
 
-.sales-report-row:nth-child(even) {
-  background: #efefef;
-}
-
 .reports-summary {
   width: 100%;
   padding: 20px;

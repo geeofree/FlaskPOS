@@ -17,17 +17,43 @@ app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 
 """ Fetch Reports """
 def fetch_reports(date_fn):
-    trans_query = 'SELECT * FROM `transactions` WHERE {}(`date_sold`) = {}(NOW())'.format(date_fn, date_fn)
+    trans_query = """
+                     SELECT `retailer`,
+                     DATE(`date_sold`) AS date_sold,
+                     SUM(`subtotal`) AS subtotal,
+                     SUM(`totalqty`) AS totalqty
+                     FROM `transactions`
+                     WHERE {0}(`date_sold`) = {0}(NOW())
+                     GROUP BY `retailer`, DATE(`date_sold`)
+                     ORDER BY DATE(`date_sold`) ASC;
+                   """.format(date_fn)
 
     if date_fn == 'YEARWEEK':
-        trans_query = 'SELECT * FROM `transactions` WHERE {}(`date_sold`,1) = {}(NOW(),1)'.format(date_fn, date_fn)
+        trans_query = """
+                         SELECT `retailer`,
+                         DATE(`date_sold`) AS date_sold,
+                         SUM(`subtotal`) AS subtotal,
+                         SUM(`totalqty`) AS totalqty
+                         FROM `transactions`
+                         WHERE {0}(`date_sold`,1) = {0}(NOW(),1)
+                         GROUP BY `retailer`, DATE(`date_sold`)
+                         ORDER BY DATE(`date_sold`) ASC;
+                      """.format(date_fn)
 
     """ Helper Function """
     def get_overall(column):
-        sql_query = 'SELECT SUM({}) FROM `transactions` WHERE {}(`date_sold`) = {}(NOW())'.format(column, date_fn, date_fn)
+        sql_query = """
+                        SELECT SUM({0})
+                        FROM `transactions`
+                        WHERE {1}(`date_sold`) = {1}(NOW());
+                    """.format(column, date_fn)
 
         if date_fn == 'YEARWEEK':
-            sql_query = 'SELECT SUM({}) FROM `transactions` WHERE {}(`date_sold`,1) = {}(NOW(),1)'.format(column, date_fn, date_fn)
+            sql_query = """
+                            SELECT SUM({0})
+                            FROM `transactions`
+                            WHERE {1}(`date_sold`,1) = {1}(NOW(),1)
+                        """.format(column, date_fn)
 
         total = db.execute_sql(sql_query).fetchone()[0]
         return total if total else 0
@@ -124,7 +150,10 @@ def dashboard(subdir):
         elif subdir == 'transactions':
             try:
                 date = dict(
-                    cur = Transactions.select().where(Transactions.date_sold.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1))),
+                    cur = (Transactions.select().
+                           where(Transactions.date_sold.
+                           between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1)))
+                          ),
                     min = Transactions.get(Transactions.transID == 1).date_sold,
                     max = Transactions.select().order_by(Transactions.transID.desc()).get().date_sold
                 )
@@ -137,7 +166,11 @@ def dashboard(subdir):
             return render_template("users.html", **context, users = users)
 
         elif subdir == 'reports':
-            low_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` != 0 AND ROUND((`prod_stock` / `prod_max_stock`) * 100) <= 20'
+            low_stock_query = """
+                                SELECT * FROM `inventory`
+                                WHERE `prod_stock` != 0 AND ROUND((`prod_stock` / `prod_max_stock`) * 100) <= 20
+                              """
+
             no_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` = 0'
             stock_sum_query = 'SELECT SUM(prod_stock) FROM `inventory`'
             max_stock_sum_query = 'SELECT SUM(prod_max_stock) FROM `inventory`'
