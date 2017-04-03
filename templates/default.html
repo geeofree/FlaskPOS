@@ -10,25 +10,32 @@
   <div class="greetings">
     <h1>Welcome to the Dashboard!</h1>
     <h3>
-      From here you can see your inventory, sales log, and users!
+      From here you can see your sales reports, inventory, transactions, and users!
     </h3>
   </div>
   <div class="index">
-    <a href="{{ url_for('dashboard', subdir='products') }}" class="products-dir">
+    <a href="{{ url_for('dashboard', subdir='reports') }}" class="directory reports-dir">
+      <div class="info">
+        <i class="fa fa-bar-chart logo" aria-hidden="true"></i>
+        <p>Sales Reports</p>
+      </div>
+    </a>
+
+    <a href="{{ url_for('dashboard', subdir='inventory') }}" class="directory products-dir">
       <div class="info">
         <i class="fa fa-tag logo" aria-hidden="true"></i>
-        <p>Products</p>
+        <p>Inventory</p>
       </div>
     </a>
 
-    <a href="{{ url_for('dashboard', subdir='logs') }}" class="sales-dir">
+    <a href="{{ url_for('dashboard', subdir='transactions') }}" class="directory sales-dir">
       <div class="info">
         <i class="fa fa-table logo" aria-hidden="true"></i>
-        <p>Sales Logs</p>
+        <p>Transactions</p>
       </div>
     </a>
 
-    <a href="{{ url_for('dashboard', subdir='users') }}" class="users-dir">
+    <a href="{{ url_for('dashboard', subdir='users') }}" class="directory users-dir">
       <div class="info">
         <i class="fa fa-users logo" aria-hidden="true"></i>
         <p>User Accounts</p>
