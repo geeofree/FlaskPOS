@@ -21,13 +21,11 @@
   <div class="reports-summary">
     <!-- MONTHLY REPORT -->
     <div class="report-container sale-summary monthly-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
-        <p class="report-header">MONTHLY SALES</p>
+        <p class="report-header">MONTHLY SALES({{ monthly.summary['total_items_sold'] }})</p>
         <h3 class="report-value">&#8369;{{ monthly['summary']['total_sales'] }}</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-tag" aria-hidden="true"></i>
       </div>
@@ -35,13 +33,11 @@
 
     <!-- DAIlY REPORT -->
     <div class="report-container sale-summary daily-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
-        <p class="report-header">TODAY'S SALES</p>
+        <p class="report-header">TODAY'S SALES({{ daily.summary['total_items_sold'] }})</p>
         <h3 class="report-value">&#8369;{{ daily['summary']['total_sales'] }}</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-tag" aria-hidden="true"></i>
       </div>
@@ -49,13 +45,11 @@
 
     <!-- WEEKLY REPORT -->
     <div class="report-container sale-summary weekly-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
-        <p class="report-header">WEEKLY SALES</p>
+        <p class="report-header">WEEKLY SALES({{ weekly.summary['total_items_sold'] }})</p>
         <h3 class="report-value">&#8369;{{ weekly['summary']['total_sales'] }}</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-tag" aria-hidden="true"></i>
       </div>
@@ -63,13 +57,11 @@
 
     <!-- STOCK REPORTS -->
     <div class="report-container sale-summary all-stock-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
         <p class="report-header">STOCKS IN INVENTORY</p>
         <h3 class="report-value">{{ total_stock }}/{{ total_max_stock }}</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-tags" aria-hidden="true"></i>
       </div>
@@ -77,13 +69,11 @@
 
     <!-- LOW STOCK REPORT -->
     <div class="report-container sale-summary low-stock-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
         <p class="report-header">LOW INVENTORY</p>
         <h3 class="report-value">{{ low_stock.length }} item(s)</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </div>
@@ -91,13 +81,11 @@
 
     <!-- NO STOCK REPORT -->
     <div class="report-container sale-summary no-stock-report">
-      <!-- REPORT VALUE -->
       <div class="report-wrapper">
         <p class="report-header">NO INVENTORY</p>
         <h3 class="report-value">{{ no_stock.length }} item(s)</h3>
       </div>
 
-      <!-- REPORT LOGO -->
       <div class="report-logo">
         <i class="fa fa-filter" aria-hidden="true"></i>
       </div>
@@ -106,5 +94,133 @@
 {% endblock %}
 
 {% block MODAL %}
+  <div class="modal">
+    <!-- MONTHLY SALES MODAL -->
+    <div class="monthly-modal modal-content">
+      <div class="header-text">
+        <h3>Monthly Sales</h3>
+      </div>
 
+      <div class="sales-report-body">
+        <div class="sales-report-row report-footer">
+          <span class="long-column">Retailer</span>
+          <span class="short-column">Total Qty.</span>
+          <span class="short-column">Subtotal</span>
+          <span class="short-column">Date Sold</span>
+        </div>
+        <div class="sales-content">
+          {% for transaction in monthly.transactions %}
+          <div class="sales-report-row">
+            <span class="long-column">{{ transaction.retailer }}</span>
+            <span class="short-column">{{ transaction.totalqty }}</span>
+            <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
+            <span class="short-column">{{ transaction.date_sold }}</span>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- WEEKLY SALES MODAL -->
+    <div class="weekly-modal modal-content">
+      <div class="header-text">
+        <h3>Weekly Sales</h3>
+      </div>
+
+      <div class="sales-report-body">
+        <div class="sales-report-row report-footer">
+          <span class="long-column">Retailer</span>
+          <span class="short-column">Total Qty.</span>
+          <span class="short-column">Subtotal</span>
+          <span class="short-column">Date Sold</span>
+        </div>
+          <div class="sales-content">
+            {% for transaction in weekly.transactions %}
+            <div class="sales-report-row">
+              <span class="long-column">{{ transaction.retailer }}</span>
+              <span class="short-column">{{ transaction.totalqty }}</span>
+              <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
+              <span class="short-column">{{ transaction.date_sold }}</span>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <!-- DAILY SALES MODAL  -->
+    <div class="daily-modal modal-content">
+      <div class="header-text">
+        <h3>Daily Sales</h3>
+      </div>
+
+      <div class="sales-report-body">
+        <div class="sales-report-row report-footer">
+          <span class="long-column">Retailer</span>
+          <span class="short-column">Total Qty.</span>
+          <span class="short-column">Subtotal</span>
+          <span class="short-column">Date Sold</span>
+        </div>
+          <div class="sales-content">
+            {% for transaction in daily.transactions %}
+            <div class="sales-report-row">
+              <span class="long-column">{{ transaction.retailer }}</span>
+              <span class="short-column">{{ transaction.totalqty }}</span>
+              <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
+              <span class="short-column">{{ transaction.date_sold }}</span>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <!-- LOW INVENTORY MODAL -->
+    <div class="low-stock-modal modal-content">
+      <div class="header-text">
+        <h3>Low Inventory</h3>
+      </div>
+
+      <div class="sales-report-body">
+        <div class="sales-report-row report-footer">
+          <span class="ultra-long-column">Product Name</span>
+          <span class="short-column">In Stock</span>
+          <span class="short-column">Max Stock</span>
+        </div>
+          <div class="sales-content">
+            {% for item in low_stock['items'] %}
+            <div class="sales-report-row">
+              <span class="ultra-long-column">{{ item.prod_name }}</span>
+              <span class="short-column">{{ item.prod_stock }}</span>
+              <span class="short-column">{{ item.prod_max_stock }}</span>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+
+    <!-- NO INVENTORY MODAL -->
+    <div class="no-stock-modal modal-content">
+      <div class="header-text">
+        <h3>No Inventory</h3>
+      </div>
+
+      <div class="sales-report-body">
+        <div class="sales-report-row report-footer">
+          <span class="ultra-long-column">Product Name</span>
+          <span class="short-column">In Stock</span>
+          <span class="short-column">Max Stock</span>
+        </div>
+          <div class="sales-content">
+            {% for item in no_stock['items'] %}
+            <div class="sales-report-row">
+              <span class="ultra-long-column">{{ item.prod_name }}</span>
+              <span class="short-column">{{ item.prod_stock }}</span>
+              <span class="short-column">{{ item.prod_max_stock }}</span>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+    </div>
+    <!-- MODAL CLOSER -->
+    <div class="close">&times;</div>
+  </div>
 {% endblock %}
