@@ -35,12 +35,21 @@
 
 .info p {
   color: #a59c9c;
+  transition-duration: 0.3s;
 }
 
 .logo {
   color: #465c71;
   font-size: 90px;
   transition-duration: 0.3s;
+}
+
+.directory:hover .info p{
+  color: #444;
+}
+
+.reports-dir:hover .logo {
+  color: crimson;
 }
 
 .products-dir:hover .logo{

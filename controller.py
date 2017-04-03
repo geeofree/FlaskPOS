@@ -15,6 +15,33 @@ user_auth = UserAuth(bcrypt)
 """ Key Config """
 app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 
+""" Fetch Reports """
+def fetch_reports(date_fn):
+    trans_query = 'SELECT * FROM `transactions` WHERE {}(`date_sold`) = {}(NOW())'.format(date_fn, date_fn)
+
+    if date_fn == 'YEARWEEK':
+        trans_query = 'SELECT * FROM `transactions` WHERE {}(`date_sold`,1) = {}(NOW(),1)'.format(date_fn, date_fn)
+
+    """ Helper Function """
+    def get_overall(column):
+        sql_query = 'SELECT SUM({}) FROM `transactions` WHERE {}(`date_sold`) = {}(NOW())'.format(column, date_fn, date_fn)
+
+        if date_fn == 'YEARWEEK':
+            sql_query = 'SELECT SUM({}) FROM `transactions` WHERE {}(`date_sold`,1) = {}(NOW(),1)'.format(column, date_fn, date_fn)
+
+        total = db.execute_sql(sql_query).fetchone()[0]
+        return total if total else 0
+
+    report = dict(
+        summary = dict(
+            total_sales = get_overall('subtotal'),
+            total_items_sold = get_overall('totalqty')
+        ),
+        transactions = Transactions.raw(trans_query)
+    )
+    return report
+
+
 
 
 """ Before Request Handler """
@@ -80,7 +107,7 @@ def dashboard(subdir):
     user_role = session['client_role']
 
     if 'logged_in' in session and (user_role == "Super Admin" or user_role == "Admin"):
-        if subdir and subdir not in ['products', 'logs', 'users']:
+        if subdir and subdir not in ['inventory', 'transactions', 'users', 'reports']:
             abort(404)
 
 
@@ -90,11 +117,11 @@ def dashboard(subdir):
             current_dir = 'dashboard'
         )
 
-        if subdir == 'products':
+        if subdir == 'inventory':
             categories = set(item.prod_type for item in SelectQuery(Inventory, Inventory.prod_type))
             return render_template("products.html", **context, categories=categories)
 
-        elif subdir == 'logs':
+        elif subdir == 'transactions':
             try:
                 date = dict(
                     cur = Transactions.select().where(Transactions.date_sold.between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1))),
@@ -108,6 +135,24 @@ def dashboard(subdir):
         elif subdir == 'users':
             users = User.select()
             return render_template("users.html", **context, users = users)
+
+        elif subdir == 'reports':
+            low_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` != 0 AND ROUND((`prod_stock` / `prod_max_stock`) * 100) < 20'
+            no_stock_query = 'SELECT * FROM `inventory` WHERE `prod_stock` = 0'
+            stock_sum_query = 'SELECT SUM(prod_stock) FROM `inventory`'
+            max_stock_sum_query = 'SELECT SUM(prod_max_stock) FROM `inventory`'
+
+            reports = dict(
+                daily = fetch_reports('DAY'),
+                weekly = fetch_reports('YEARWEEK'),
+                monthly = fetch_reports('MONTH'),
+                low_stock = Inventory.raw(low_stock_query),
+                no_stock = Inventory.raw(no_stock_query),
+                total_stock = db.execute_sql(stock_sum_query).fetchone()[0],
+                total_max_stock = db.execute_sql(max_stock_sum_query).fetchone()[0]
+            )
+
+            return render_template("reports.html", **context, reports = reports)
 
         else:
             return render_template("default.html", **context)

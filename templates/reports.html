@@ -1,0 +1,29 @@
+{% extends "dashboard.html" %}
+
+{% block TITLE %} Sales Reports {% endblock %}
+
+{% block DASH_STYLE %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/logs/reports.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
+{% endblock %}
+
+{# Variables #}
+{% set daily = reports['daily'] %}
+{% set monthly = reports['monthly'] %}
+{% set weekly = reports['weekly'] %}
+{% set low_stock = reports['low_stock'] %}
+{% set no_stock = reports['no_stock'] %}
+{% set total_stock = reports['total_stock'] %}
+{% set total_max_stock = reports['total_max_stock'] %}
+
+
+{% block DASH %}
+  <div>
+    <p>{{ monthly['summary']['total_sales'] }}</p>
+    <p>{{ monthly['summary']['total_items_sold'] }}</p>
+    <p>{{ daily['summary']['total_sales'] }}</p>
+    <p>{{ daily['summary']['total_items_sold'] }}</p>
+    <p>{{ weekly['summary']['total_sales'] }}</p>
+    <p>{{ weekly['summary']['total_items_sold'] }}</p>
+  </div>
+{% endblock %}
