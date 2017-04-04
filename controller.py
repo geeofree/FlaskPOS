@@ -319,8 +319,7 @@ def add_product():
         err_msg = None
 
         try:
-            with db.transaction() as txn:
-                print(txn)
+            with db.transaction():
                 fields = dict(
                     prod_name       = req['name'],
                     prod_type       = req['type'],
