@@ -2,7 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect, session, a
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
 from model import *
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, date as dt
 
 
 """ Init Stuff """
@@ -118,13 +118,13 @@ def FormatDate(date_obj):
     return date_obj.strftime("%m/%d/%y")
 
 """ Get Week Range """
-def WeekRange(date):
-    year, week, dow = date.isocalendar()
+def WeekRange(date_obj):
+    year, week, dow = date_obj.isocalendar()
 
     if dow == 1:
-        start_date = date
+        start_date = date_obj
     else:
-        start_date = date - timedelta(dow - 1)
+        start_date = date_obj - timedelta(dow - 1)
 
     end_date = start_date + timedelta(6)
 
@@ -211,15 +211,15 @@ def dashboard(subdir):
 
         elif subdir == 'transactions':
             try:
-                date = dict(
+                date_obj = dict(
                     cur = (Transactions.select().
                            where(Transactions.date_sold.
-                           between(datetime.date.today(), datetime.date.today() + datetime.timedelta(days=1)))
+                           between(dt.today(), dt.today() + timedelta(days=1)))
                           ),
                     min = Transactions.get(Transactions.transID == 1).date_sold,
                     max = Transactions.select().order_by(Transactions.transID.desc()).get().date_sold
                 )
-                return render_template("logs.html", **context, date = date)
+                return render_template("logs.html", **context, date = date_obj)
             except DoesNotExist:
                 return render_template("logs.html", **context)
 
@@ -422,7 +422,7 @@ def transaction_req():
                 invoice_no = invoice.transID,
                 retailer   = invoice.retailer,
                 date_sold  = invoice.date_sold,
-                time_sold  = invoice.time_sold,
+                time_sold  = invoice.time_sold.strftime("%H:%M:%S"),
                 totalqty   = invoice.totalqty,
                 subtotal   = invoice.subtotal
             )
