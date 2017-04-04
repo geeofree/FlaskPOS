@@ -62,7 +62,7 @@ function searchEL($child, sku, name, type, query, evType) {
     }
 
     const value = search.split('').map(str => escape(str)).join('')
-    const match = new RegExp(`^${value}`, 'gi')
+    const match = new RegExp(`${value}`, 'gi')
     return match.test(matcher)
   }
 
@@ -86,7 +86,7 @@ function searchEL($child, sku, name, type, query, evType) {
     }
 
     const name_check = (filter == "Name" || filter == null) && !pattern(itemName) && filter != itemName
-    const code_check = filter == "SKU" && !pattern(itemCode) && filter != itemCode
+    const code_check = filter == "Item No." && !pattern(itemCode) && filter != itemCode
 
     const select_check = !(scope == "" || scope == "All") && scope != itemType
     const def_sel_check = (scope == "" || scope == "All") && scope != itemType
