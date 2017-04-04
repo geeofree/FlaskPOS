@@ -1,6 +1,6 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
-
+import ajax from "../misc/ajax"
 
 export default function delItem () {
   const $delBtn        = $('.delete')
@@ -11,31 +11,69 @@ export default function delItem () {
 
 
 function modalEvent(content, showModal) {
-  const $selected      = $('.selected')
-  const $confirm       = $('.confirm')
+  const $selected  = $('.selected')
+  const $confirm   = $('.confirm')
   const $contentInputs = content.find('input')
-
+  var canBeDeleted = 0
 
   if($selected.length == 0) {
-    alert('ERROR: No item(s) selected to delete')
+    alert('No item(s) selected to delete')
     return
   }
 
-  // SHOW modal
-  showModal()
+  $selected.each((_, el) => {
+    const $el = $(el)
+    const stock = Number($el.find('.data-stock').text())
+
+    if(stock == 0) {
+      canBeDeleted++
+    }
+    else {
+      $el.removeClass('selected')
+    }
+  })
+
+  if(canBeDeleted) {
+    showModal()
+  }
+  else {
+    alert('All selected items still have stocks, cannot remove.')
+    return
+  }
 
   $confirm.click(function() {
-    $selected.each(function(_, el) {
+    const $sel = $('.selected')
+    const pass  = $('.pw-delete').val()
+    let url, count = 0
+
+    const data = {
+      client_pass: pass,
+      item_id: []
+    }
+
+    $sel.each(function(_, el) {
       const $el = $(el)
-      const $invID = $el.find('.invID').text()
+      const invID = $el.find('.invID').text()
+      const stock = $el.find('.data-stock').text()
 
-      $.ajax({
-        url: `/del_product?id=${$invID}`,
-        data: $('.warning').serialize(),
-        type: 'POST'
-      })
-
+      data.item_id.push(invID)
     })
+
+    function response(resp) {
+      if(resp.status == 'success') {
+        count++
+
+        if(count == $sel.length) {
+          alert(`Successfully removed ${count} item(s).`)
+          window.location.replace(resp.url)
+        }
+      }
+      else {
+        alert(resp.error)
+      }
+    }
+
+    ajax(data, '/del_product', response)
   })
 
   closeModal(function() {

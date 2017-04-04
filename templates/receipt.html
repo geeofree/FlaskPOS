@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/receipt.css') }}">
 </head>
+{# VARIABLES #}
+{% set sale = transaction %}
+
 <body>
   <!-- Floating Input -->
   <div class="floating-buttons">
@@ -23,21 +26,22 @@
 
     <!-- Receipt Body -->
     <div class="receipt-info">
-      {% for sale in transaction %}
       <div class="receipt-info-header">
         <div class="date-invoice-id">
-          <span>{{ sale.date_sold }}</span>
           <span>Inv # {{ sale.transID }}</span>
+          <span>{{ sale.date_sold }}</span>
         </div>
-        <span>Retailer: {{ sale.retailer }}</span>
+        <div class="date-invoice-id">
+          <span>Retailer: {{ sale.retailer }}</span>
+          <span>{{ sale.time_sold }}</span>
+        </div>
       </div>
-      {% endfor %}
 
       <div class="purchases">
         <!-- Purchases HEADER -->
         <div class="item item-desc-header">
           <div class="description">
-            <p>Quantity</p>
+            <p>Qty.</p>
           </div>
 
           <div class="description long-div">
@@ -67,7 +71,6 @@
         {% endfor %}
 
         <!-- PURCHASES FOOTER -->
-        {% for sale in transaction %}
         <div class="item item-desc-footer subtotal">
           <div class="description">
             <p>{{ sale.totalqty }}</p>
@@ -101,9 +104,14 @@
             <p>&#8369;{{ sale.change }}</p>
           </div>
         </div>
-        {% endfor %}
 
       </div>
+    </div>
+
+    <!-- Receipt Footer -->
+    <div class="receipt-footer">
+      <p>THIS IS YOUR OFFICIAL RECEIPT!</p>
+      <p>Thank you for shopping!</p>
     </div>
   </div>
 

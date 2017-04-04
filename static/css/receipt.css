@@ -1,7 +1,9 @@
 @import url('main.css');
+body {
+  background: #efefef;
+}
 
 .receipt {
-  font-family: monospace;
   margin: 50px auto;
   padding: 10px 10px 20px 10px;
   width: 3.8in;
@@ -105,12 +107,18 @@
 }
 
 .receipt-footer {
-  color: #aaa;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   height: 1in;
   font-size: 15px;
+  margin-top: 10px;
+  border-top: 3px double #444;
+}
+
+.receipt-footer p {
+  margin: 3px 0;
 }
 
 .floating-buttons {
@@ -141,6 +149,8 @@
   body {
     position: relative;
     width: 3.5in;
+    padding: 0;
+    margin: 0;
   }
 
   .receipt {

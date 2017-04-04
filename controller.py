@@ -80,6 +80,18 @@ def log_item(item_name, desc, qty):
 
     Item_Log.create(**log_fields)
 
+""" Prepend Zeros """
+def create_item_code(num, max_len):
+    code_val = str(num)
+    while len(code_val) < max_len:
+        code_val = "0" + code_val
+
+    return code_val
+
+""" Format Time """
+def TwelveHourFormat(time_obj):
+    return time_obj.strftime("%I:%M %p")
+
 
 """ Before Request Handler """
 @app.before_request
@@ -258,13 +270,28 @@ def payment():
 def receipt(transID):
     if 'logged_in' in session:
         transaction = (Transactions.select().where(Transactions.transID == transID))
+        trans = None
+
+        for column in transaction:
+            trans = dict(
+                transID = column.transID,
+                date_sold = column.date_sold.strftime("%m/%d/%y"),
+                retailer = column.retailer,
+                time_sold = TwelveHourFormat(column.time_sold),
+                payment = column.payment,
+                totalqty = column.totalqty,
+                subtotal = column.subtotal,
+                change = column.change
+            )
+
 
         items_sold = (Items_Sold.select()
                         .where(Items_Sold.transID == transID)
                         .join(Transactions))
 
+
         if transaction:
-            return render_template('receipt.html', transaction=transaction, items=items_sold)
+            return render_template('receipt.html', transaction=trans, items=items_sold)
         abort(400)
     abort(404)
 
@@ -317,14 +344,6 @@ def transaction_req():
 @app.route("/add_product", methods=["POST"])
 def add_product():
 
-    """ Helper Function """
-    def create_item_code(id):
-        item_id = str(id)
-        while len(item_id) < 11:
-            item_id = "0" + item_id
-
-        return item_id
-
     if 'logged_in' in session:
         req = request.get_json()
         err_msg = None
@@ -340,7 +359,7 @@ def add_product():
                 )
 
                 item = Inventory.create(**fields)
-                item.prod_code = create_item_code(item.invID)
+                item.prod_code = create_item_code(item.invID, 11)
                 item.save()
                 log_item(req['name'], "New Product", 0)
                 return jsonify({'status': 'Add Success!', 'url': url_for('dashboard', subdir='inventory')})
@@ -385,7 +404,7 @@ def restock_product():
         item = Inventory.get(Inventory.invID == itemID)
         item.prod_stock = item.prod_stock + req['stock']
         item.save()
-        log_item(item.prod_name, "Restock", req['stock'])        
+        log_item(item.prod_name, "Restock", req['stock'])
         return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='inventory')})
 
 
@@ -393,15 +412,16 @@ def restock_product():
 @app.route("/del_product", methods=["POST"])
 def del_product():
     if 'logged_in' in session:
+        req = request.get_json()
         username = session['client_name']
-        password = request.form['pw']
+        password = req['client_pass']
 
         if user_auth.valid(username, password):
-            itemID = request.args.get("id")
-            Inventory.delete().where(Inventory.invID == itemID).execute()
-
-    return redirect(url_for("dashboard", subdir="inventory"))
-
+            for item_id in req['item_id']:
+                Inventory.delete().where(Inventory.invID == item_id).execute()
+            return jsonify({'status': 'success', 'url': url_for('dashboard', subdir='inventory')})
+        else:
+            return jsonify({'status': 'fail', 'error': 'Invalid Password'})
 
 """ User Request POST Route """
 @app.route("/user_req", methods=["POST"])
