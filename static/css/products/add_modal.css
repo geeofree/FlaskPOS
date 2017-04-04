@@ -1,10 +1,10 @@
 .add-modal .header-text {
-  background: #1ead52;
+  background: #44a166;
   color: #fff;
 }
 
 .input-container {
-  margin: 5px;
+  margin: 5px 5px 25px 5px;
 }
 
 select {
@@ -52,11 +52,11 @@ button {
 }
 
 .clear {
-  background: tomato;
+  background: #c95069;
 }
 
 .submit {
-  background: #1ead52;
+  background: #44a166;
 }
 
 .category {

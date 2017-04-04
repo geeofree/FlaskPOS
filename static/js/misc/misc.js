@@ -133,8 +133,6 @@ function scrollbar($element) {
         scrollSpeed -= scrollIter
         scrollBarSpeed += scrollBarIter
 
-        console.log(scrollSpeed, maxHeight)
-
         if(Math.abs(scrollSpeed) <= maxHeight) {
           $el.css('top', scrollSpeed + "px")
         }

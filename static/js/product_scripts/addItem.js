@@ -1,6 +1,7 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
-import { numInputValidation, changeHandler } from "../misc/misc"
+import { numInputValidation } from "../misc/misc"
+import ajax from "../misc/ajax"
 import inputLimiter from "../misc/inputTextLimiter"
 export { addItem, formEv }
 
@@ -20,7 +21,6 @@ function modalEvent(content, showModal) {
 
   // INPUTS
   const $itemName  = $('.item-name')
-  const $itemCode  = $('.item-code')
   const $itemType  = $('.item-type')
   const $itemStock = $('.item-max-stock')
   const $itemPrice = $('.item-price')
@@ -36,7 +36,6 @@ function modalEvent(content, showModal) {
   // Clear Event Handler
   $clear.click(function() {
     $itemName.val('')
-    $itemCode.val('')
     $itemType.val('')
     $itemStock.val(1)
     $itemPrice.val(0)
@@ -50,17 +49,26 @@ function modalEvent(content, showModal) {
     $submit.off("click")
   })
 
-  formEv($form, $submit, $itemName, $itemCode, $itemType, $itemStock, $itemPrice, function() {
-    alert('Product Add Success!')
+  formEv($form, $submit, $itemName, $itemType, $itemStock, $itemPrice, (stock, data) => {
+    const stockValid = {min: 1, max: 999}
+
+    if(stock < stockValid.min || stock > stockValid.max) {
+      alert('Invalid stock value. Must be >= 1 and < 1,000')
+      return false;
+    }
+
+    return {data, route: '/add_product'};
   })
 }
 
 
 // FORM EVENT
-function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
+function formEv($form, $btn, $name, $type, $stock, $price, callback) {
   const $sel  = $('select')
-  const $str_inputs = [[$name, 65], [$code, 11], [$type, 25]]
-  const $num_inputs = [[$stock, 1, 999], [$price, 0, 999999]]
+  const $str_inputs = [[$name, 65], [$type, 25]]
+
+  numInputValidation($stock)
+  numInputValidation($price)
 
   // String Key Input Event Handler
   $str_inputs.forEach(input => {
@@ -70,59 +78,54 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
     inputLimiter($input, max)
   })
 
-  // Number Input Validation for price and stock
-  $num_inputs.forEach(input => {
-    const $input = input[0]
-    const min = input[1]
-    const max = input[2]
-
-    changeHandler($input, min, max)
-
-    numInputValidation($input, (self, ev) => {
-      const $val = Number(self.val())
-
-      if($val > max) {
-        self.val(max)
-        return
-      }
-
-      if($val < min) {
-        self.val(min)
-        return
-      }
-    })
-
-  })
-
 
   // Button Click Event Handler
   $btn.on("click", function() {
-    const name = $name.val()
-    const code = $code.val()
-    const type = $type.val()
-    const whiteSpace = /\s{2,}|\n/.test(name)
+    const name  = $name.val()
+    const type  = $type.val()
+    const price = $price.val()
+    const max_stock = $stock.val()
 
-    console.log(whiteSpace, whiteSpace && (name.length < 1 || name.length > 65))
+    const priceValid  = {min: 1, max: 999999}
+    const whiteSpace  = /\s{2,}|\n/.test(name)
+    const priceFormat = /^(\d+\.\d{1,2})$|^\d+$/.test(price)
 
-    if(code.length < 11 || code.length > 11) {
-      alert('Invalid input on item code field')
-    }
-    else if(whiteSpace || name.length < 1 || name.length > 65) {
+    const data = {name, type, max_stock, price}
+
+    if(whiteSpace || name.length < 1 || name.length > 65) {
       alert('Invalid input in name field')
     }
     else if(type.length < 1 || type.length > 25) {
       alert('Invalid input in category field')
     }
+    else if(priceFormat && (price < priceValid.min || price > priceValid.max)) {
+      alert('Invalid price value. Must be >= 1 and < 1,000,000')
+    }
     else {
-      if(callback) { callback() }
-      $form.submit()
+      const valid = callback(max_stock, data)
+      if(valid) { sendData(valid.data, valid.route) }
     }
   })
 
   // Select Element Click Event Handler
-  $sel.change(function() {
+  $sel.click(function() {
     const $self = $(this)
     const $selVal = $self.val()
     $type.val($selVal)
   })
+}
+
+
+function sendData(data, route) {
+  function response(resp) {
+    if(resp.status != 'fail') {
+      alert(resp.status)
+      window.location.replace(resp.url)
+    }
+    else {
+      alert(resp.error)
+    }
+  }
+
+  ajax(data, route, response)
 }
