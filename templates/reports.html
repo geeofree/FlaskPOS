@@ -168,18 +168,20 @@
       <div class="sales-report-body">
         {% if daily.summary['total_sales'] %}
         <div class="sales-report-row report-footer">
-          <span class="long-column">Retailer</span>
+          <span class="short-column">Retailer</span>
           <span class="short-column">Total Qty.</span>
           <span class="short-column">Subtotal</span>
           <span class="short-column">Date Sold</span>
+          <span class="short-column">Time</span>
         </div>
         <div class="sales-content">
           {% for transaction in daily.transactions %}
           <div class="sales-report-row">
-            <span class="long-column">{{ transaction.retailer }}</span>
+            <span class="short-column">{{ transaction.retailer }}</span>
             <span class="short-column">{{ transaction.totalqty }}</span>
             <span class="short-column">&#8369;{{ transaction.subtotal }}</span>
             <span class="short-column">{{ transaction.date_sold }}</span>
+            <span class="short-column">{{ transaction.time_sold }}</span>
           </div>
           {% endfor %}
         </div>

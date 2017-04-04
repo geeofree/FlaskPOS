@@ -49,6 +49,7 @@ function createTransRecord(data) {
   const $totalQty  = createEl('span', {'class': 'trans-data trans-total-qty'}, data.totalqty)
   const $subtotal  = createEl('span', {'class': 'trans-data trans-subtotal'}, "₱" + data.subtotal)
   const $dateSold  = createEl('span', {'class': 'trans-data date-sold'}, formatDate(data.date_sold))
+  const $timeSold  = createEl('span', {'class': 'trans-data time-sold'}, data.time_sold)
 
   $container.append($invNo, $retailer, $totalQty, $subtotal, $dateSold)
   $wrapper.append($container)

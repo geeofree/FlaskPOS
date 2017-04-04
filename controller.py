@@ -18,26 +18,47 @@ app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 """ Fetch Reports """
 def fetch_reports(date_fn):
     trans_query = """
-                     SELECT `retailer`,
-                     DATE(`date_sold`) AS date_sold,
-                     SUM(`subtotal`) AS subtotal,
-                     SUM(`totalqty`) AS totalqty
-                     FROM `transactions`
-                     WHERE {0}(`date_sold`) = {0}(NOW())
-                     GROUP BY `retailer`, DATE(`date_sold`)
-                     ORDER BY DATE(`date_sold`) ASC;
+                     SELECT
+                        `retailer`,
+                        DATE(`date_sold`) AS date_sold,
+                        SUM(`subtotal`) AS subtotal,
+                        SUM(`totalqty`) AS totalqty
+                     FROM
+                        `transactions`
+                     WHERE
+                        {0}(`date_sold`) = {0}(NOW())
+                     GROUP BY
+                        `retailer`, DATE(`date_sold`)
+                     ORDER BY DATE
+                        (`date_sold`) ASC;
                    """.format(date_fn)
+
 
     if date_fn == 'YEARWEEK':
         trans_query = """
-                         SELECT `retailer`,
-                         DATE(`date_sold`) AS date_sold,
-                         SUM(`subtotal`) AS subtotal,
-                         SUM(`totalqty`) AS totalqty
-                         FROM `transactions`
-                         WHERE {0}(`date_sold`,1) = {0}(NOW(),1)
-                         GROUP BY `retailer`, DATE(`date_sold`)
-                         ORDER BY DATE(`date_sold`) ASC;
+                         SELECT
+                            `retailer`,
+                            DATE(`date_sold`) AS date_sold,
+                            SUM(`subtotal`) AS subtotal,
+                            SUM(`totalqty`) AS totalqty
+                         FROM
+                            `transactions`
+                         WHERE
+                            {0}(`date_sold`,1) = {0}(NOW(),1)
+                         GROUP BY
+                            `retailer`, DATE(`date_sold`)
+                         ORDER BY DATE
+                            (`date_sold`) ASC;
+                      """.format(date_fn)
+    elif date_fn == 'DAY':
+        trans_query = """
+                         SELECT
+                            `retailer`, `subtotal`, `totalqty`,
+                            `date_sold`, `time_sold`
+                         FROM
+                            `transactions`
+                         WHERE
+                            {0}(`date_sold`) = {0}(NOW())
                       """.format(date_fn)
 
     """ Helper Function """
@@ -91,6 +112,12 @@ def create_item_code(num, max_len):
 """ Format Time """
 def TwelveHourFormat(time_obj):
     return time_obj.strftime("%I:%M %p")
+
+""" Format Date """
+def FormatDate(date_obj):
+    print(date_obj)
+    return date_obj.strftime("%m/%d/%y")
+
 
 
 """ Before Request Handler """
@@ -275,7 +302,7 @@ def receipt(transID):
         for column in transaction:
             trans = dict(
                 transID = column.transID,
-                date_sold = column.date_sold.strftime("%m/%d/%y"),
+                date_sold = FormatDate(column.date_sold),
                 retailer = column.retailer,
                 time_sold = TwelveHourFormat(column.time_sold),
                 payment = column.payment,
@@ -329,10 +356,11 @@ def transaction_req():
         for invoice in transactions:
             invoice_data = dict(
                 invoice_no = invoice.transID,
-                retailer = invoice.retailer,
-                date_sold = invoice.date_sold,
-                totalqty = invoice.totalqty,
-                subtotal = invoice.subtotal
+                retailer   = invoice.retailer,
+                date_sold  = invoice.date_sold,
+                time_sold  = invoice.time_sold,
+                totalqty   = invoice.totalqty,
+                subtotal   = invoice.subtotal
             )
 
             data.append(invoice_data)
