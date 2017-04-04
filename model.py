@@ -50,11 +50,21 @@ class Items_Sold(BaseModel):
     qty       = IntegerField()
     linetotal = IntegerField()
 
+""" Item Log Table """
+class Item_Log(BaseModel):
+    logID       = PrimaryKeyField()
+    user        = CharField()
+    description = CharField()
+    product     = CharField()
+    qty         = IntegerField()
+    log_date    = DateField(formats="%m-%d-%Y")
+    log_time    = TimeField(formats="%H:%M")
+
 
 """ INIT DB """
 def init_db():
     db.connect()
-    db.create_tables([User, Inventory, Transactions, Items_Sold], True)
+    db.create_tables([User, Inventory, Transactions, Items_Sold, Item_Log], True)
 
 
 

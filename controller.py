@@ -67,7 +67,18 @@ def fetch_reports(date_fn):
     )
     return report
 
+""" Log Item """
+def log_item(item_name, desc, qty):
+    log_fields = dict(
+        user = session['client_name'],
+        description = desc,
+        product = item_name,
+        qty = qty,
+        log_date = datetime.datetime.now().date(),
+        log_time = datetime.datetime.now().time()
+    )
 
+    Item_Log.create(**log_fields)
 
 
 """ Before Request Handler """
@@ -331,6 +342,7 @@ def add_product():
                 item = Inventory.create(**fields)
                 item.prod_code = create_item_code(item.invID)
                 item.save()
+                log_item(req['name'], "New Product", 0)
                 return jsonify({'status': 'Add Success!', 'url': url_for('dashboard', subdir='inventory')})
 
         except IntegrityError:
@@ -373,6 +385,7 @@ def restock_product():
         item = Inventory.get(Inventory.invID == itemID)
         item.prod_stock = item.prod_stock + req['stock']
         item.save()
+        log_item(item.prod_name, "Restock", req['stock'])        
         return jsonify({ 'status': 'success', 'url': url_for('dashboard', subdir='inventory')})
 
 
