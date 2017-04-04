@@ -2,7 +2,7 @@ from flask import Flask, url_for, request, render_template, redirect, session, a
 from flask_bcrypt import Bcrypt
 from peewee import SelectQuery
 from model import *
-import datetime
+from datetime import datetime, timedelta
 
 
 """ Init Stuff """
@@ -16,7 +16,7 @@ user_auth = UserAuth(bcrypt)
 app.secret_key = '\xb7q3#\xda\xa9\xf6\xa3\x82}\xb4AK'
 
 """ Fetch Reports """
-def fetch_reports(date_fn):
+def fetch_report(date_fn):
     trans_query = """
                      SELECT
                         `retailer`,
@@ -95,8 +95,8 @@ def log_item(item_name, desc, qty):
         description = desc,
         product = item_name,
         qty = qty,
-        log_date = datetime.datetime.now().date(),
-        log_time = datetime.datetime.now().time()
+        log_date = datetime.now().date(),
+        log_time = datetime.now().time()
     )
 
     Item_Log.create(**log_fields)
@@ -115,8 +115,20 @@ def TwelveHourFormat(time_obj):
 
 """ Format Date """
 def FormatDate(date_obj):
-    print(date_obj)
     return date_obj.strftime("%m/%d/%y")
+
+""" Get Week Range """
+def WeekRange(date):
+    year, week, dow = date.isocalendar()
+
+    if dow == 1:
+        start_date = date
+    else:
+        start_date = date - timedelta(dow - 1)
+
+    end_date = start_date + timedelta(6)
+
+    return (start_date.strftime("%B %d, %Y"), end_date.strftime("%B %d, %Y"))
 
 
 
@@ -231,9 +243,9 @@ def dashboard(subdir):
             [no_stock_items.append(item) for item in Inventory.raw(no_stock_query)]
 
             reports = dict(
-                daily = fetch_reports('DAY'),
-                weekly = fetch_reports('YEARWEEK'),
-                monthly = fetch_reports('MONTH'),
+                daily = fetch_report('DAY'),
+                weekly = fetch_report('YEARWEEK'),
+                monthly = fetch_report('MONTH'),
                 low_stock = { 'length': len(low_stock_items), 'items': low_stock_items},
                 no_stock = { 'length': len(no_stock_items), 'items': no_stock_items },
                 total_stock = db.execute_sql(stock_sum_query).fetchone()[0],
@@ -264,8 +276,8 @@ def payment():
         subtotal  = subtotal,
         payment   = payment,
         change    = change,
-        date_sold = datetime.datetime.now().date(),
-        time_sold = datetime.datetime.now().time()
+        date_sold = datetime.now().date(),
+        time_sold = datetime.now().time()
     )
 
     transaction = Transactions.create(**transaction_data)
@@ -321,6 +333,58 @@ def receipt(transID):
             return render_template('receipt.html', transaction=trans, items=items_sold)
         abort(400)
     abort(404)
+
+
+""" Report Generator Route """
+@app.route('/sales_report/<timeframe>')
+@app.route('/sales_report/', defaults={'timeframe': ''}, methods=['POST'])
+def reports_summary(timeframe):
+    if 'logged_in' in session:
+
+        if request.method == 'GET':
+            report = dict(summary = None, transactions = [])
+            date_issued = datetime.now().strftime("%B %d, %Y")
+            week_range = WeekRange(datetime.now())
+            current_user = User.get(User.username == session['client_name'])
+
+            if timeframe == 'daily':
+                fetch  = fetch_report('DAY')
+                title  = 'Daily Sales'
+                date_range = date_issued
+            elif timeframe == 'weekly':
+                fetch  = fetch_report('YEARWEEK')
+                title  = 'Weekly Sales'
+                date_range = "{0}-{1}".format(week_range[0], week_range[1])
+            elif timeframe == 'monthly':
+                fetch  = fetch_report('MONTH')
+                title  = 'Monthly Sales'
+                date_range = datetime.now().strftime("%B, %Y")
+
+            report['summary'] = fetch['summary']
+            for transaction in fetch['transactions']:
+                trans_data = dict(
+                    retailer = transaction.retailer,
+                    totalqty = transaction.totalqty,
+                    subtotal = transaction.subtotal,
+                    date     = FormatDate(transaction.date_sold),
+                    time     = TwelveHourFormat(transaction.time_sold) if transaction.time_sold else None
+                )
+                report['transactions'].append(trans_data)
+
+            header_info = dict(
+                title = title,
+                date_issued = date_issued,
+                date_range = date_range,
+                person_name = current_user.firstname + " " + current_user.lastname
+            )
+
+            return render_template('summary.html', report = report, header = header_info)
+
+        if request.method == 'POST':
+            req = request.get_json()
+            timeframe = req['timeframe']
+            return jsonify({'url': url_for('reports_summary', timeframe = timeframe)})
+    abort(400)
 
 
 """ Receipt Request POST Route """

@@ -1,4 +1,5 @@
 @import url('main.css');
+
 body {
   background: #efefef;
 }
@@ -151,9 +152,12 @@ body {
     width: 3.5in;
     padding: 0;
     margin: 0;
+    background: #fff;
   }
 
   .receipt {
+    margin: 0;
+    padding: 10px;
     top: 0;
     left: 0;
     transform: none;

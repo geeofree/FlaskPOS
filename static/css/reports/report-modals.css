@@ -3,6 +3,10 @@
   color: #fff;
 }
 
+.modal-content .header-text {
+  justify-content: space-between;
+}
+
 .ultra-long-column {
   width: 60%;
 }
@@ -43,4 +47,19 @@
 .empty {
   padding: 10px;
   color: #444;
+}
+
+.generate-report-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background: #219e90;
+  color: #fff;
+}
+
+.generate-report-btn:hover {
+  cursor: pointer;
 }

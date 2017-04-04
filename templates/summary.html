@@ -1,0 +1,92 @@
+{# Variables #}
+{% set title        = header['title'] %}
+{% set person_name  = header['person_name'] %}
+{% set date_issued  = header['date_issued'] %}
+{% set date_range   = header['date_range'] %}
+{% set trans_sum    = report['summary'] %}
+{% set transactions = report['transactions']%}
+{% set has_time_column = True if transactions[0]['time'] else False %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{{ title }} Report</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/summary.css') }}">
+</head>
+<body>
+  <div class="floating-buttons">
+    <button onClick="print()">Print</button>
+  </div>
+
+  <div class="report-summary">
+    <div class="summary-header">
+      <div class="company-name">
+        <p class="logo-name">JCC Bikeshop</p>
+        <p class="report-type light-color">{{ title }}</p>
+      </div>
+
+      <div class="date-issued">
+        <p class="issued-date-text light-color">Issued on: {{ date_issued }}</p>
+      </div>
+    </div>
+
+    <div class="summary-body">
+      <div class="sale-range">Sales for {{ date_range }}</div>
+      <div class="sales-summary">
+        <div class="summary-desc">
+          <p>Total Sales:</p>
+          <p>Total Items Sold:</p>
+        </div>
+        <div class="summary-value">
+          <p>&#8369;{{ trans_sum['total_sales'] }}.00</p>
+          <p>{{ trans_sum['total_items_sold'] }}</p>
+        </div>
+      </div>
+
+      <div class="transactions-table">
+        <div class="trans-column trans-tbl-header">
+          {% if has_time_column %}
+          <div class="short-row">Retailer</div>
+          <div class="short-row">Total Qty.</div>
+          <div class="short-row">Subtotal</div>
+          <div class="short-row">Date</div>
+          <div class="short-row">Time</div>
+          {% else %}
+          <div class="long-row">Retailer</div>
+          <div class="short-row">Total Qty.</div>
+          <div class="short-row">Subtotal</div>
+          <div class="short-row">Date</div>
+          {% endif %}
+        </div>
+
+        {% for transaction in transactions %}
+        <div class="trans-column">
+          {% if transaction['time'] %}
+          <div class="short-row">{{ transaction.retailer }}</div>
+          <div class="short-row">{{ transaction.totalqty }}</div>
+          <div class="short-row">&#8369;{{ transaction.subtotal }}</div>
+          <div class="short-row">{{ transaction.date }}</div>
+          <div class="short-row">{{ transaction.time }}</div>
+          {% else %}
+          <div class="long-row">{{ transaction.retailer }}</div>
+          <div class="short-row">{{ transaction.totalqty }}</div>
+          <div class="short-row">&#8369;{{ transaction.subtotal }}</div>
+          <div class="short-row">{{ transaction.date }}</div>
+          {% endif %}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="summary-footer">
+      <div class="client-signature">
+        <div class="person-name">{{ person_name }}</div>
+        <div class="client-desc light-color">Prepared By</div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
