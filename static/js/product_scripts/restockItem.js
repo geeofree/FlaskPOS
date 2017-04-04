@@ -137,7 +137,7 @@ function restock() {
 
     $items.each(item)
     alert('Success!')
-    setTimeout(() => window.location.replace(url) , 800)
+    window.location.replace(url)
   }
 
   $confirm.click(confirmClick)

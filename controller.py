@@ -214,7 +214,8 @@ def payment():
         subtotal  = subtotal,
         payment   = payment,
         change    = change,
-        date_sold = datetime.datetime.now().date()
+        date_sold = datetime.datetime.now().date(),
+        time_sold = datetime.datetime.now().time()
     )
 
     transaction = Transactions.create(**transaction_data)
@@ -304,38 +305,63 @@ def transaction_req():
 """ Add Product POST Route """
 @app.route("/add_product", methods=["POST"])
 def add_product():
-    if 'logged_in' in session:
-        fields = dict(
-            prod_name       = request.form['item_name'],
-            prod_code       = request.form['item_code'],
-            prod_type       = request.form['category'],
-            prod_price      = request.form['price'],
-            prod_max_stock  = request.form['max_stock'],
-            prod_stock      = 0
-        )
 
-        Inventory.create(**fields)
-    return redirect(url_for('dashboard', subdir='inventory'))
+    """ Helper Function """
+    def create_item_code(id):
+        item_id = str(id)
+        while len(item_id) < 11:
+            item_id = "0" + item_id
+
+        return item_id
+
+    if 'logged_in' in session:
+        req = request.get_json()
+        err_msg = None
+
+        try:
+            with db.transaction() as txn:
+                print(txn)
+                fields = dict(
+                    prod_name       = req['name'],
+                    prod_type       = req['type'],
+                    prod_price      = req['price'],
+                    prod_max_stock  = req['max_stock'],
+                    prod_stock      = 0
+                )
+
+                item = Inventory.create(**fields)
+                item.prod_code = create_item_code(item.invID)
+                item.save()
+                return jsonify({'status': 'Add Success!', 'url': url_for('dashboard', subdir='inventory')})
+
+        except IntegrityError:
+            err_msg = 'Product Name "{0}" already taken'.format(req['name'])
+            return jsonify({'status': 'fail', 'error': err_msg})
 
 
 """ Edit Product POST Route """
 @app.route("/edit_product", methods=["POST"])
 def edit_product():
     if 'logged_in' in session:
-        itemID = request.form["itemID"]
+        req = request.get_json()
+        itemID = req["itemID"]
         item = Inventory.get(Inventory.invID == itemID)
 
-        item.prod_name = request.form["item_name"]
-        item.save()
-        item.prod_type = request.form["category"]
-        item.save()
-        item.prod_max_stock = request.form["max_stock"]
-        item.save()
-        item.prod_code = request.form["item_code"]
-        item.save()
-        item.prod_price = request.form["price"]
-        item.save()
-    return redirect(url_for("dashboard", subdir="inventory"))
+        try:
+            with db.transaction():
+                item.prod_name = req["name"]
+                item.save()
+                item.prod_type = req["type"]
+                item.save()
+                item.prod_max_stock = req["max_stock"]
+                item.save()
+                item.prod_price = req["price"]
+                item.save()
+                return jsonify({'status': 'Update Success!', 'url': url_for('dashboard', subdir='inventory')})
+
+        except IntegrityError:
+            err_msg = 'Product Name "{0}" already taken'.format(req['name'])
+            return jsonify({'status': 'fail', 'error': err_msg})
 
 
 """ Restock Product POST Route """

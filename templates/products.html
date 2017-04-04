@@ -65,7 +65,7 @@
       <div class="data-table">
         <div class="data-table-header">
           <div class="short" style="display:none;">ID</div>
-          <div class="short">SKU</div>
+          <div class="short">Item No.</div>
           <div class="long">Item Description</div>
           <div class="short">Category</div>
           <div class="short">Stock</div>
@@ -106,12 +106,7 @@
         <h3>Add Product</h3>
       </div>
 
-      <form action="{{ url_for('add_product') }}" class="add-inputs" method="POST">
-        <div class="input-container">
-          <input type="text" name="item_code" class="input item-code" autocomplete="off" placeholder="11-digit combination">
-          <p>Item Code</p>
-        </div>
-
+      <div class="add-inputs">
         <div class="input-container">
           <textarea name="item_name" class="input item-name" autocomplete="off" placeholder="Name of this product"></textarea>
           <p>Product Name</p>
@@ -129,7 +124,6 @@
             {% endif %}
           </div>
 
-
           <p>Category</p>
         </div>
 
@@ -139,7 +133,7 @@
             <p>Max Stock</p>
           </div>
           <div class="input-container">
-            <input type="number" name="price" class="input item-price" value=0>
+            <input type="number" name="price" class="input item-price" value=1>
             <p>Product Price</p>
           </div>
         </div>
@@ -148,7 +142,7 @@
           <button type="button" class="clear">clear</button>
           <button type="button" class="submit">submit</button>
         </div>
-      </form>
+      </div>
     </div>
 
     <!-- PRODUCT EDIT MODAL -->
@@ -157,16 +151,8 @@
         <h3>Update Product</h3>
       </div>
 
-      <form action="{{ url_for('edit_product') }}" class="update-inputs" method="POST">
+      <div class="update-inputs">
         <input type="hidden" class="item-id" name="itemID" />
-
-        <div class="input-container">
-          <input type="text" name="item_code" class="input-val item-code-val" autocomplete="off" placeholder="11-digit combination" disabled>
-
-          <div class="input-description">
-            <p>Item Code</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
-          </div>
-        </div>
 
         <div class="input-container">
           <textarea name="item_name" class="input-val item-name-val" autocomplete="off" placeholder="Name of this product" disabled></textarea>
@@ -217,7 +203,7 @@
 
           <button type="button" class="submit-update">Update</button>
         </div>
-      </form>
+      </div>
     </div>
 
     <!-- PRODUCT RESTOCK MODAL -->
@@ -272,11 +258,11 @@
         <h3>Remove Product</h3>
       </div>
 
-      <form action="{{ url_for('del_product') }}" class="warning" method="POST">
+      <form action="{{ url_for('del_product') }}" class="warning" method=POST>
         <h2>Are you sure you want to delete?</h2>
 
         <div class="input-container">
-          <input type="password" name="pw">
+          <input type="password" name="pw" class="pw-delete">
           <p>Enter password to verify</p>
         </div>
 

@@ -24,12 +24,12 @@ class User(BaseModel):
 """ Inventory Table """
 class Inventory(BaseModel):
     invID          = PrimaryKeyField()
-    prod_code      = CharField(max_length=11)
-    prod_name      = CharField(max_length=65)
+    prod_code      = CharField(max_length=11, null=True)
+    prod_name      = CharField(max_length=65, unique=True)
     prod_type      = CharField(max_length=20)
     prod_stock     = IntegerField()
     prod_max_stock = IntegerField()
-    prod_price     = IntegerField()
+    prod_price     = DecimalField(decimal_places=2)
 
 """ Transactions Table """
 class Transactions(BaseModel):
@@ -40,6 +40,7 @@ class Transactions(BaseModel):
     change    = IntegerField()
     subtotal  = IntegerField()
     date_sold = DateField(formats="%m-%d-%Y")
+    time_sold = TimeField(formats="%H:%M")
 
 """ Items Sold Table """
 class Items_Sold(BaseModel):
