@@ -35,6 +35,8 @@
               <i class="fa fa-caret-down" aria-hidden="true"></i></div>
             <div class="dropdown-content">
               <span class="dropdown-option selected-query">All</span>
+              <span class="dropdown-option">Low-Inv</span>
+              <span class="dropdown-option">Zero-Inv</span>
               {% for category in categories %}
               <span class="dropdown-option">{{ category }}</span>
               {% endfor %}
@@ -74,17 +76,44 @@
 
         <div class="data-table-body">
           {% for product in products %}
-          <div class="data-info">
-            <div class="short invID" style="display:none;">{{ product.invID }}</div>
-            <div class="short data-sku">{{ product.prod_code }}</div>
-            <div class="long data-name">{{ product.prod_name }}</div>
-            <div class="short data-type">{{ product.prod_type }}</div>
-            <div class="short">
-              <span class="stock data-stock">{{ product.prod_stock }}</span>/
-              <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+            {% set low_value = product.prod_stock / product.prod_max_stock * 100 %}
+            {% if  product.prod_stock == 0 %}
+            <div class="data-info Zero-Inv">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
             </div>
-            <div class="short data-price">&#8369;{{ product.prod_price }}</div>
-          </div>
+            {% elif low_value <= 20 %}
+            <div class="data-info Low-Inv">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
+            </div>
+            {% else %}
+            <div class="data-info">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
+            </div>
+            {% endif %}
           {% endfor %}
         </div>
       </div>

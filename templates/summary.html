@@ -5,7 +5,7 @@
 {% set date_range   = header['date_range'] %}
 {% set trans_sum    = report['summary'] %}
 {% set transactions = report['transactions']%}
-{% set has_time_column = True if transactions[0]['time'] else False %}
+{% set has_time_column = True if transactions else False %}
 
 <!DOCTYPE html>
 <html lang="en">

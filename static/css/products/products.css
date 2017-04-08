@@ -15,11 +15,6 @@
   position: relative;
 }
 
-.selected {
-  background: crimson !important;
-  color: #fff;
-}
-
 .scrollbar {
   background: #2ed860;
   opacity: 0.9;
@@ -35,4 +30,45 @@ select {
 
 .hide {
   display: none;
+}
+
+.stock-info {
+  transition-duration: 0.3s;
+}
+
+.stock-info {
+  position: relative;
+}
+
+.Low-Inv .stock-info:after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  content: 'Low Stock';
+  background: #ffa200;
+  color: #fff;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.Zero-Inv .stock-info:after {
+  position: absolute;
+  top: 50%;
+  right: 0;
+  transform: translateY(-50%);
+  content: 'No Stock';
+  background: tomato;
+  color: #fff;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.selected {
+  background: crimson !important;
+  color: #fff;
+}
+
+.selected .stock-info {
+  color: #fff;
 }

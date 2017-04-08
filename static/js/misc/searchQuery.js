@@ -33,7 +33,7 @@ export default function search($parent, sku, name, type) {
       scope: $scopeVal
     }
 
-    if(latin || button == 8) {
+    if((latin || button == 8) && !($filterVal == "Low Inv." || $filterVal == "Zero Inv.")) {
       searchEL($child, sku, name, type, query, 'keyup')
     }
 
@@ -85,12 +85,14 @@ function searchEL($child, sku, name, type, query, evType) {
       }
     }
 
-    const name_check = (filter == "Name" || filter == null) && !pattern(itemName) && filter != itemName
-    const code_check = filter == "Item No." && !pattern(itemCode) && filter != itemCode
+    const name_check  = (filter == "Name" || filter == null) && !pattern(itemName) && filter != itemName
+    const code_check  = filter == "Item No." && !pattern(itemCode) && filter != itemCode
+    const low_check = scope == "Low-Inv" && $item.hasClass('Low-Inv')
+    const zero_check = scope == "Zero-Inv" && $item.hasClass('Zero-Inv')
 
     const select_check = !(scope == "" || scope == "All") && scope != itemType
     const def_sel_check = (scope == "" || scope == "All") && scope != itemType
-    const input_check = (name_check || code_check)
+    const input_check = (name_check || code_check || low_check || zero_check)
 
     if(evType == 'click') {
       if((!select_check || select_check) && !input_check) {
