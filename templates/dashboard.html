@@ -8,12 +8,12 @@
 {% block BODY %}
   <div class="side-nav">
     <a href="{{ url_for('dashboard', subdir='reports') }}">
-      <i class="fa fa-area-chart icon" id="chart" aria-hidden="true"></i>
+      <i class="fa fa-bar-chart icon" id="summary" aria-hidden="true"></i>
     </a>
-    <a href="{{ url_for('dashboard', subdir='products') }}">
+    <a href="{{ url_for('dashboard', subdir='inventory') }}">
       <i class="fa fa-tag icon" id="tag" aria-hidden="true"></i>
     </a>
-    <a href="{{ url_for('dashboard', subdir='logs') }}">
+    <a href="{{ url_for('dashboard', subdir='transactions') }}">
       <i class="fa fa-table icon" id="tbl" aria-hidden="true"></i>
     </a>
     <a href="{{ url_for('dashboard', subdir='users') }}">

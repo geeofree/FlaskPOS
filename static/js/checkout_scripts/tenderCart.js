@@ -1,5 +1,8 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import { numInputValidation } from "../misc/misc"
+import ajax from "../misc/ajax"
+
 
 export default function tenderItems() {
   const $tenderBtn   = $('.tender')
@@ -12,9 +15,11 @@ function modalEvent(content, showModal) {
   const $purchaseBtn = $('.purchase')
   const $purchased = $('.purchased-item')
   const $subtotal = $('#sub-total')
+  const $qtytotal =  $('#sub-qty')
   const $payment  = $('.payment-value')
-  let   $tendersub = $('.subtotal-value')
   const $totalVal = $subtotal.text()
+
+  let $tendersub = $('.subtotal-value')
 
   if($purchased.length > 0) {
     // SHOW MODAL
@@ -28,39 +33,48 @@ function modalEvent(content, showModal) {
   $tendersub = $tendersub.text()
 
   const totalAmount = Number($tendersub.match(/\d+/)[0])
+  const totalQty    = Number($qtytotal.text())
   const payAmount   = Number($payment.val())
 
-  calculateChange(totalAmount, payAmount)
-  //
-  // $payment.change(function() {
-  //   const $self = $(this)
-  //   let    $val = Number($self.val())
-  //
-  //   if(isNaN($val)) {
-  //     $val = 0
-  //     $self.val(0)
-  //   }
-  //
-  //   calculateChange(totalAmount, $val)
-  // })
+  let change = 0
+  let payment = 0
 
-  $payment.keyup(function(event) {
-    const $self = $(this)
+  change = calculateChange(totalAmount, payAmount)
+
+  numInputValidation($payment, function($input, event) {
+    const $val   = $input.val()
     const button = event.which || event.button
+    const keyVal = String.fromCharCode(button)
 
-    if(button >= 48 || button <= 57 || button == 8) {
-      let $val = Number($self.val())
-      calculateChange(totalAmount, $val)
+    if($val < 0) {
+      $input.val(0)
     }
+
+    if($val > 999999) {
+      $input.val(999999)
+    }
+
+    payment = Number($input.val())
+
+    change = calculateChange(totalAmount, payment)
   })
 
   $purchaseBtn.click(function() {
-    sendData($purchased)
+    const $self = $(this)
+
+    if(change < 0) {
+      alert('Insufficient Pay Amount')
+    }
+    else {
+      $self.off("click")
+      sendData($purchased, totalAmount, totalQty, payment, change)
+    }
   })
 
   // CLOSE MODAL
   closeModal(function() {
-    $payment.off("change")
+    $payment.off("keyup")
+    $payment.off("keydown")
     $purchaseBtn.off("click")
   })
 }
@@ -71,32 +85,42 @@ function calculateChange(totalAmount, payAmount) {
   const change = payAmount - totalAmount
 
   changeEL.text("₱" + change)
+  return change
 }
 
 
-function sendData($purchases) {
-  const ajaxData = {id:0, qty: 0}
+function sendData($purchases, totalAmount, totalQty, payment, change) {
+  const $merchant = $('.merchant').text()
 
-  $purchases.each((_, data) => {
-    const $data = $(data)
-    const $id = Number($data.find('.id').text())
-    const $qty = Number($data.find('.item-qty').text())
+  const data = {
+    merchant: $merchant,
+    subtotal: totalAmount,
+    totalqty: totalQty,
+    payment: payment,
+    change: change,
+    items_sold: []
+  }
 
-    ajaxData.id = $id
-    ajaxData.qty = $qty
+  $purchases.each((_, itemData) => {
+    const $itemData = $(itemData)
+    const $id = Number($itemData.find('.id').text())
+    const $qty = Number($itemData.find('.item-qty').text())
+    let $linetotal = $itemData.find('.item-total').text()
+    $linetotal = Number($linetotal.match(/\d+/)[0])
 
-    ajax(ajaxData)
+    const item_data = {
+      id: $id,
+      qty_sold: $qty,
+      linetotal: $linetotal
+    }
+
+    data['items_sold'].push(item_data)
   })
-}
 
-function ajax(data) {
-  $.ajax({
-     type: 'POST',
-     url: '/payment',
-     data: JSON.stringify(data),
-     contentType: 'application/json',
-     success: function(url) {
-       window.location.replace(url)
-     }
-  });
+  ajax(data, '/payment', function(resp) {
+    if(resp.status == 'success') {
+      alert('success!')
+      window.location.replace(resp.url)
+    }
+  })
 }

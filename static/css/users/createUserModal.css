@@ -1,0 +1,40 @@
+.create-user-modal {
+  width: 420px !important;
+}
+
+.create-user-modal .header-text {
+  background: #38a586;
+  color: #fff;
+}
+
+.create-user-form {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 10px;
+}
+
+.user-form-input {
+  width: 100%;
+}
+
+.user-input {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.input-wrapper {
+  width: 45%;
+  margin: 0 5px;
+}
+
+.confirm-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.confirm-create {
+  background: #38a586;
+  margin: 5px 10px;
+}

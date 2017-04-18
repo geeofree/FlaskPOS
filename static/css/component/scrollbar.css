@@ -1,0 +1,20 @@
+.scroll-wrapper {
+  position: relative;
+  overflow: hidden;
+  background: #fff;
+}
+
+.scrollbar {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  background: orange;
+  transition-duration: 0.3s;
+}
+
+.scroll-content {
+  position: relative;
+  height: initial !important;
+  transition-duration: 0.3s;
+}

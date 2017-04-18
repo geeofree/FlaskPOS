@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+  <title>Invoice</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/receipt.css') }}">
+</head>
+{# VARIABLES #}
+{% set sale = transaction %}
+
+<body>
+  <!-- Floating Input -->
+  <div class="floating-buttons">
+    <a href="{{ url_for('checkout') }}"><button>Go back</button></a>
+    <button onClick="print()">Print</button>
+  </div>
+
+  <div class="receipt">
+    <!-- Receipt Header -->
+    <div class="receipt-header">
+      <h1 class="company-name">JCC Bike Shop</h1>
+      <p>1799 Rizal Avenue, Olongapo City</p>
+      <p>Zambales, Philippines</p>
+    </div>
+
+    <!-- Receipt Body -->
+    <div class="receipt-info">
+      <div class="receipt-info-header">
+        <div class="date-invoice-id">
+          <span>Inv # {{ sale.transID }}</span>
+          <span>{{ sale.date_sold }}</span>
+        </div>
+        <div class="date-invoice-id">
+          <span>Retailer: {{ sale.retailer }}</span>
+          <span>{{ sale.time_sold }}</span>
+        </div>
+      </div>
+
+      <div class="purchases">
+        <!-- Purchases HEADER -->
+        <div class="item item-desc-header">
+          <div class="description">
+            <p>Qty.</p>
+          </div>
+
+          <div class="description long-div">
+            <p>Item Desc.</p>
+          </div>
+
+          <div class="description">
+            <p>Line Total</p>
+          </div>
+        </div>
+
+        <!-- PURCHASES LIST -->
+        {% for sold in items %}
+        <div class="item">
+          <div class="description item-data">
+            <p>{{ sold.qty }}</p>
+          </div>
+
+          <div class="description item-data long-div">
+            <p>{{ sold.item }}</p>
+          </div>
+
+          <div class="description item-data data-end">
+            <p>&#8369;{{ sold.linetotal }}</p>
+          </div>
+        </div>
+        {% endfor %}
+
+        <!-- PURCHASES FOOTER -->
+        <div class="item item-desc-footer subtotal">
+          <div class="description">
+            <p>{{ sale.totalqty }}</p>
+          </div>
+
+          <div class="description subtotal-val long-div">
+            <p>Subtotal</p>
+          </div>
+
+          <div class="description data-end">
+            <p>&#8369;{{ sale.subtotal }}</p>
+          </div>
+        </div>
+
+        <div class="item item-desc-footer payment-desc">
+          <div class="description footer-desc">
+            <p>Payment</p>
+          </div>
+
+          <div class="description footer-data data-end">
+            <p>&#8369;{{ sale.payment }}</p>
+          </div>
+        </div>
+
+        <div class="item item-desc-footer">
+          <div class="description footer-desc">
+            <p>Change</p>
+          </div>
+
+          <div class="description footer-data data-end">
+            <p>&#8369;{{ sale.change }}</p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Receipt Footer -->
+    <div class="receipt-footer">
+      <p>THIS IS YOUR OFFICIAL RECEIPT!</p>
+      <p>Thank you for shopping!</p>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='js/bundle.js') }}"></script>
+</body>
+</html>

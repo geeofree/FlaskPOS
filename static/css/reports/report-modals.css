@@ -1,0 +1,65 @@
+.modal-content .header-text, .modal-content .report-footer{
+  background: crimson !important;
+  color: #fff;
+}
+
+.modal-content .header-text {
+  justify-content: space-between;
+}
+
+.ultra-long-column {
+  width: 60%;
+}
+
+.long-column {
+  width: 40%;
+}
+
+.short-column {
+  width: 20%;
+  text-align: center;
+}
+
+.sales-report-row {
+  width: 100%;
+  display: flex;
+  padding: 10px;
+}
+
+.sales-report-body, .sales-content {
+  width: 100%;
+}
+
+.sales-content {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.reports-summary {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: flex-start;
+}
+
+.empty {
+  padding: 10px;
+  color: #444;
+}
+
+.generate-report-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 10px;
+  padding: 5px;
+  border-radius: 5px;
+  background: #219e90;
+  color: #fff;
+}
+
+.generate-report-btn:hover {
+  cursor: pointer;
+}

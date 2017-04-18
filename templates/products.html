@@ -1,6 +1,6 @@
 {% extends "dashboard.html" %}
 
-{% block TITLE %} Products {% endblock %}
+{% block TITLE %} Inventory {% endblock %}
 
 {% block DASH_STYLE %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/products/products.css') }}">
@@ -12,52 +12,111 @@
 
       <div class="search-nav">
         <div class="search">
+          <!-- Search INPUT -->
           <input type="text" class="search-input" placeholder="search products">
-          <i class="fa fa-search search-icon" aria-hidden="true"></i>
+
+          <!-- Filter Search Query -->
+          <div class="dropdown search-select search-filter">
+            <div class="dropdown-text">
+              <i class="fa fa-search" aria-hidden="true"></i>
+              <span>Search By</span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-content">
+              <span class="dropdown-option selected-query">Name</span>
+              <span class="dropdown-option">Item No.</span>
+            </div>
+          </div>
+
+          <!-- Scope Search With Category -->
+          <div class="dropdown search-select search-scope">
+            <div class="dropdown-text">
+              <i class="fa fa-filter" aria-hidden="true"></i>
+              <span>Filter By</span>
+              <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+            <div class="dropdown-content">
+              <span class="dropdown-option selected-query">All</span>
+              <span class="dropdown-option">Low-Inv</span>
+              <span class="dropdown-option">Zero-Inv</span>
+              {% for category in categories %}
+              <span class="dropdown-option">{{ category }}</span>
+              {% endfor %}
+            </div>
+          </div>
         </div>
 
         <div class="buttons">
-          <div class="button delete">Delete</div>
-          <div class="button edit">Update</div>
-          <div class="button add">Add</div>
+          <div class="button delete">
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <span>Remove Product(s)</span>
+          </div>
+          <div class="button restock">
+            <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+            <span>Restock Product(s)</span>
+          </div>
+          <div class="button edit">
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            <span>Update Product</span>
+          </div>
+          <div class="button add">
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            <span>Add Product</span>
+          </div>
         </div>
       </div>
 
-      <table class="tbl">
-        <tr class="outer-border">
-          <td>
-            <table class="tbl">
-              <tr class="tbl-head">
-                <th class="short" style="display:none;">ID</th>
-                <th class="short">SKU</th>
-                <th class="long">Item Description</th>
-                <th class="short">Category</th>
-                <th class="short">Stock</th>
-                <th class="short">Price</th>
-              </tr>
-            </table>
-          </td>
-        </tr>
+      <div class="data-table">
+        <div class="data-table-header">
+          <div class="short" style="display:none;">ID</div>
+          <div class="short">Item No.</div>
+          <div class="long">Item Description</div>
+          <div class="short">Category</div>
+          <div class="short">Stock</div>
+          <div class="short">Price</div>
+        </div>
 
-        <tr>
-          <td>
-            <div class="table-scroll">
-              <table class="tbl">
-                {% for product in products %}
-                  <tr class="tbl-data">
-                    <td class="short invID" style="display:none;">{{ product.invID }}</td>
-                    <td class="short data-sku">{{ product.prod_code }}</td>
-                    <td class="long data-name">{{ product.prod_name }}</td>
-                    <td class="short data-type">{{ product.prod_type }}</td>
-                    <td class="short data-stock">{{ product.stock }}</td>
-                    <td class="short data-price">&#8369;{{ product.prod_price }}</td>
-                  </tr>
-                {% endfor %}
-              </table>
+        <div class="data-table-body">
+          {% for product in products %}
+            {% set low_value = product.prod_stock / product.prod_max_stock * 100 %}
+            {% if  product.prod_stock == 0 %}
+            <div class="data-info Zero-Inv">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
             </div>
-          </td>
-        </tr>
-      </table>
+            {% elif low_value <= 20 %}
+            <div class="data-info Low-Inv">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
+            </div>
+            {% else %}
+            <div class="data-info">
+              <div class="short invID" style="display:none;">{{ product.invID }}</div>
+              <div class="short data-sku">{{ product.prod_code }}</div>
+              <div class="long data-name">{{ product.prod_name }}</div>
+              <div class="short data-type">{{ product.prod_type }}</div>
+              <div class="short stock-info">
+                <span class="stock data-stock">{{ product.prod_stock }}</span>/
+                <span class="data-max-stock">{{ product.prod_max_stock }}</span>
+              </div>
+              <div class="short data-price">&#8369;{{ product.prod_price }}</div>
+            </div>
+            {% endif %}
+          {% endfor %}
+        </div>
+      </div>
 
     </div>
   {% else %}
@@ -76,12 +135,7 @@
         <h3>Add Product</h3>
       </div>
 
-      <form action="{{ url_for('add_product') }}" class="add-inputs" method="POST">
-        <div class="input-container">
-          <input type="text" name="item_code" class="input item-code" autocomplete="off" placeholder="11-digit combination">
-          <p>Item Code</p>
-        </div>
-
+      <div class="add-inputs">
         <div class="input-container">
           <textarea name="item_name" class="input item-name" autocomplete="off" placeholder="Name of this product"></textarea>
           <p>Product Name</p>
@@ -99,17 +153,16 @@
             {% endif %}
           </div>
 
-
           <p>Category</p>
         </div>
 
         <div class="numbers">
           <div class="input-container">
-            <input type="number" name="stock" min=0 max=999999 class="input item-stock" value=0>
-            <p>Stock</p>
+            <input type="number" name="max_stock" class="input item-max-stock" value=1>
+            <p>Max Stock</p>
           </div>
           <div class="input-container">
-            <input type="number" name="price" min=0 class="input item-price" value=0>
+            <input type="number" name="price" class="input item-price" value=1>
             <p>Product Price</p>
           </div>
         </div>
@@ -118,7 +171,7 @@
           <button type="button" class="clear">clear</button>
           <button type="button" class="submit">submit</button>
         </div>
-      </form>
+      </div>
     </div>
 
     <!-- PRODUCT EDIT MODAL -->
@@ -127,16 +180,8 @@
         <h3>Update Product</h3>
       </div>
 
-      <form action="{{ url_for('edit_product') }}" class="update-inputs" method="POST">
+      <div class="update-inputs">
         <input type="hidden" class="item-id" name="itemID" />
-
-        <div class="input-container">
-          <input type="text" name="item_code" class="input-val item-code-val" autocomplete="off" placeholder="11-digit combination" disabled>
-
-          <div class="input-description">
-            <p>Item Code</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
-          </div>
-        </div>
 
         <div class="input-container">
           <textarea name="item_name" class="input-val item-name-val" autocomplete="off" placeholder="Name of this product" disabled></textarea>
@@ -166,14 +211,14 @@
 
         <div class="numbers">
           <div class="input-container">
-            <input type="number" name="stock" min=0 max=999999 class="input-val item-stock-val"value=0 disabled>
+            <input type="number" name="max_stock" class="input-val item-max-stock-val" disabled>
             <div class="input-description">
-              <p>Stock</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
+              <p>Max Stock</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
             </div>
           </div>
 
           <div class="input-container">
-            <input type="number" name="price" min=0 class="input-val item-price-val" value=0 disabled>
+            <input type="number" name="price" class="input-val item-price-val" disabled>
             <div class="input-description">
               <p>Product Price</p><i class="fa fa-lock desc-icon" aria-hidden="true"></i>
             </div>
@@ -187,7 +232,53 @@
 
           <button type="button" class="submit-update">Update</button>
         </div>
-      </form>
+      </div>
+    </div>
+
+    <!-- PRODUCT RESTOCK MODAL -->
+    <div class="restock-modal modal-content">
+      <div class="header-text">
+        <h3>Product Restock</h3>
+      </div>
+
+      <div class="restock-content">
+        <!-- Main Container -->
+        <div class="restock-items-container">
+          <div class="restock-items-content">
+            <!-- Selected Item Header Descriptions -->
+            <div class="ric sel-table-header">
+              <div class="long-div">
+                <span>Item Description</span>
+              </div>
+              <div class="short-div">
+                <span>Add Stock</span>
+              </div>
+              <div class="short-div">
+                <span>Current Stock</span>
+              </div>
+              <div class="short-div">
+                <span>Max Stock</span>
+              </div>
+            </div>
+
+            <!-- Selected Items Container -->
+            <div class="ric selected-table-items"></div>
+
+            <!-- Bottom -->
+            <div class="restock-items-content restock-items-header">
+              <div class="restock-all">
+                <p>Restock All: </p>
+                <input class="all-stock stock-input" value=0>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="restock-buttons">
+          <div class="button confirm-restock">Add Stock</div>
+        </div>
+      </div>
     </div>
 
     <!-- PRODUCT DELETE MODAL -->
@@ -196,18 +287,18 @@
         <h3>Remove Product</h3>
       </div>
 
-      <form action="{{ url_for('del_product') }}" class="warning" method="POST">
+      <div class="warning">
         <h2>Are you sure you want to delete?</h2>
 
         <div class="input-container">
-          <input type="password" name="pw">
+          <input type="password" name="pw" class="pw-delete">
           <p>Enter password to verify</p>
         </div>
 
         <div class="confirm-wrapper">
           <button class="confirm">DELETE</button>
         </div>
-      </form>
+      </div>
 
     </div>
 

@@ -1,5 +1,6 @@
 import $ from "jquery"
 import { openModal, closeModal } from '../misc/modal'
+import { numInputValidation, changeHandler, scrollbar } from '../misc/misc'
 import createItem from "./createCart"
 
 
@@ -13,7 +14,6 @@ export default function qtyModal($selected) {
     const $qty = $('.qty-input')
     const $qtyBtn  = $('.confirm-qty')
 
-
     // SHOW MODAL
     showModal()
 
@@ -21,20 +21,26 @@ export default function qtyModal($selected) {
     function closeEv() {
       $qtyBtn.off("click")
       $qty.off("change")
+      $qty.off("keydown")
+      $qty.off("keyup")
       $qty.val(1)
     }
 
     // QTY INPUT CHANGE EVENT HANDLER
-    $qty.change(function() {
-      const $self = $(this)
-      const $val = Number($qty.val())
+    changeHandler($qty, 1, largest)
+
+    // QTY INPUT KEYUP/KEYDOWN EVENT HANDLER
+    numInputValidation($qty, function($input) {
+      const $val = Number($input.val())
+
+      console.log($val)
 
       if($val > largest) {
-        $self.val(1)
+        $input.val(largest)
       }
 
       if($val < 1) {
-        $self.val(largest)
+        $input.val(1)
       }
     })
 
@@ -42,6 +48,7 @@ export default function qtyModal($selected) {
     $qtyBtn.click(function() {
       const qty = Number($qty.val())
       createItem($selected, qty)
+      scrollbar($('.items'))
 
       $('.active').removeClass('active')
       closeEv()

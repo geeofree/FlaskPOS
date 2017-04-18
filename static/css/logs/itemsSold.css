@@ -1,0 +1,36 @@
+.items-sold {
+  width: 450px;
+  height: 550px;
+  background: #fff;
+}
+
+.items-sold-wrapper {
+  height: 80%;
+}
+
+.sold-column {
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  padding: 15px 5px;
+}
+
+.sold-column p {
+  margin: 0;
+}
+
+.long-width {
+  width: 60%;
+}
+
+.short-width {
+  width: 20%;
+  text-align: center;
+}
+
+.items-sold-footer {
+  height: 10%;
+  padding: 0 5px;
+  background: #444;
+  color: #fff;
+}

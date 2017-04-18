@@ -12,7 +12,7 @@
 }
 
 .purchases {
-  height: 80%;
+  height: 85%;
 }
 
 .long {
@@ -29,7 +29,7 @@
   justify-content: space-around;
   height: 7%;
   color: #fff;
-  background: #444;
+  background: #3c3c3c;
   font-family: Oxygen;
 }
 
@@ -40,22 +40,30 @@
 }
 
 .items {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 90%;
+  height: 93%;
+  background: #fff;
 }
 
 .purchased-item {
+  position: relative;
   width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   height: 90px;
-  background: #fff;
-  border: 1px solid #BDBAA9;
-  border-radius: 5px;
-  margin: 5px 0;
   font-family: Oxygen;
+}
+
+.purchased-item:after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  border-bottom: 1px dashed #aaa;
+}
+
+.purchased-item:hover {
+  cursor: pointer;
 }
 
 .purchased-item span {
@@ -72,10 +80,9 @@
 }
 
 .purchase-summary {
-  height: 20%;
-  background: #fff;
-  border: 1px solid #aaa;
-  border-radius: 5px;
+  height: 15%;
+  background: #3c3c3c;
+  color: #fff;
 }
 
 .total {
@@ -83,7 +90,7 @@
   flex-wrap: wrap;
   justify-content: flex-end;
   width: 100%;
-  margin: 15px 0;
+  margin: 10px 0;
   padding: 0 5px;
   font-size: 13px;
 }
@@ -91,7 +98,6 @@
 .total span{
   max-width: 100%;
   padding: 5px 0;
-  border-top: 5px double #444;
   overflow: auto;
 }
 
@@ -103,7 +109,8 @@
 }
 
 .action-buttons .button {
-  margin: 0 5px;
+  border-radius: 5px;
+  margin: 0 1px;
 }
 
 .button {
@@ -112,17 +119,31 @@
 }
 
 .tender {
-  background: #2a5e62;
+  background: #2a9085;
 }
 
 .clear-cart {
   background: #c33838;
 }
 
-.tender:hover {
-  background: #214548;
+.option-nav {
+  position: absolute;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  top: 10px;
+  right: 10px;
+  z-index: 2
 }
 
-.clear-cart:hover {
-  background: #932b2b;
+.item-option {
+  visibility: hidden;
+  opacity: 0;
+  margin: 0 3px;
+  transition-duration: 0.25s;
+}
+
+.show-option {
+  opacity: 1;
+  visibility: visible;
 }

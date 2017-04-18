@@ -23,12 +23,14 @@
 
         <!-- MAIN DIRECTORIES -->
         <div class="directories">
+          {% if user.role == "Super Admin" or user.role == "Admin"%}
           <a href="{{ url_for('dashboard') }}" class="dir {% if current_dir == 'dashboard' %}current_dir{% endif %}">
             <span>Dashboard</span>
           </a>
           <a href="{{ url_for('checkout') }}" class="dir {% if current_dir == 'checkout'%}current_dir{% endif %}">
             <span>Checkout</span>
           </a>
+          {% endif %}
         </div>
       </div>
 
@@ -36,14 +38,12 @@
       <div class="right">
         <div class="profile">
           <p id="name">{{ user.firstname + " " + user.lastname }}</p>
-
-          {% if user.role == 1 %}
-            <p id="position">Admin</p>
-          {% elif user.role == 2 %}
-            <p id="position">Staff Member</p>
-          {% endif %}
+          <p id="position">{{ user.role }}</p>
         </div>
 
+
+
+        <i class="fa fa-power-off power-btn" aria-hidden="true"></i>
       </div>
     </div>
 

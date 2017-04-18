@@ -1,11 +1,73 @@
 {% extends "dashboard.html" %}
 
-{% block TITLE %} Activity Logs {% endblock %}
+{% block TITLE %} Transactions {% endblock %}
 
 {% block DASH_STYLE %}
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/logs.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/logs/logs.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='bower_components/jquery-ui/themes/base/jquery-ui.min.css') }}">
 {% endblock %}
 
 {% block DASH %}
-  <h1>LOGS</h1>
+{% if date %}
+<div class="transactions sales-log-content">
+  <!-- Header -->
+  <div class="transactions-header slog-content-header">
+    <div class="left-content">
+      <h3>Transactions</h3>
+    </div>
+
+    <div class="right-content">
+      <input id="datepicker" disabled>
+    </div>
+  </div>
+
+  <div class="transactions-footer">
+    <div class="trans-column trans-footer">
+      <span class="trans-data trans-desc">Retailer</span>
+      <span class="trans-data trans-desc">Total Qty. Sold</span>
+      <span class="trans-data trans-desc">Subtotal</span>
+      <span class="trans-data trans-desc">Date Sold</span>
+      <span class="trans-data trans-desc">Time</span>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="transactions-body">
+    {% for transaction in date.cur %}
+    <div class="trans-column trans-data-wrapper">
+      <span class="transID" style="display:none;">{{ transaction.transID }}</span>
+      <span class="trans-data retailer">{{ transaction.retailer }}</span>
+      <span class="trans-data trans-total-qty">{{ transaction.totalqty }}</span>
+      <span class="trans-data trans-subtotal">&#8369;{{ transaction.subtotal }}</span>
+      <span class="trans-data date-sold">{{ transaction.date_sold }}</span>
+      <span class="trans-data time-sold">{{ transaction.time_sold }}</span>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="items-sold sales-log-content">
+  <!-- Header -->
+  <div class="items-sold-header slog-content-header">
+    <div class="left-content">
+      <h3>Items Sold</h3>
+    </div>
+  </div>
+
+  <!-- Description Footer -->
+  <div class="items-sold-footer sold-column">
+    <p class="long-width">Item Name</p>
+    <p class="short-width">Qty.</p>
+    <p class="short-width">Linetotal</p>
+  </div>
+
+  <!-- Item Sold Wrapper -->
+  <div class="items-sold-wrapper"></div>
+</div>
+
+<div id="minDate" style="display:none;">{{ date.min }}</div>
+<div id="maxDate" style="display:none;">{{ date.max }}</div>
+{% else %}
+<h1>There are no transactions yet</h1>
+{% endif %}
 {% endblock %}

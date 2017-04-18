@@ -1,0 +1,203 @@
+@import url('main.css');
+
+body {
+  background: #efefef;
+}
+
+body * {
+  box-sizing: border-box;
+}
+
+.report-summary {
+  margin: 50px auto;
+  padding: 10px 10px 20px 10px;
+  background: #fff;
+  box-shadow: 3px 5px 10px;
+  overflow: hidden;
+  width: 8.27in;
+  height: 11.67in;
+}
+
+.summary-header, .summary-body, .summary-footer {
+  width: 100%;
+  display: flex;
+}
+
+.summary-header, .summary-footer {
+  height: 12%;
+}
+
+.summary-header {
+  position: relative;
+  padding: 3px 5px;
+  justify-content: space-between;
+}
+
+.summary-header:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  border-bottom: 2px solid #444;
+}
+
+.summary-header:after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  width: 100%;
+  border-bottom: 1px solid #444;
+}
+
+.company-name, .date-issued {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.company-name * {
+  margin: 0;
+}
+
+.logo-name {
+  font-size: 30px;
+  color: #444;
+  margin-bottom: 15px;
+}
+
+.report-type {
+  font-size: 15px;
+}
+
+.issued-date-text {
+  margin-top: 65px;
+}
+
+.light-color {
+  color: #777;
+}
+
+.sale-range {
+  margin-top: 15px;
+  font-size: 18px;
+  text-align: center;
+  width: 100%;
+}
+
+.summary-body {
+  flex-direction: column;
+}
+
+.sales-summary {
+  display: flex;
+  margin-top: 30px;
+}
+
+.summary-desc {
+  margin-right: 10px;
+}
+
+.transactions-table {
+  width: 100%;
+}
+
+.trans-column {
+  display: flex;
+  padding: 7px;
+}
+
+.trans-tbl-header ~ .trans-column:nth-child(odd) {
+  background: #efefef;
+}
+
+.trans-tbl-header {
+  background: crimson;
+  color: #fff;
+}
+
+.long-row {
+  width: 40%;
+}
+
+.short-row {
+  width: 20%;
+  text-align: center;
+}
+
+.summary-footer {
+  justify-content: flex-end;
+  margin-top: 0.5in;
+}
+
+.client-signature {
+  display: flex;
+  width: 2in;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.person-name {
+  font-size: 18px;
+}
+
+.client-desc {
+  margin-top: 7px;
+  padding-top: 10px;
+  border-top: 1px solid #444;
+  width: 100%;
+  text-align: center;
+  font-size: 14px;
+}
+
+
+.floating-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  position: fixed;
+  top: 10px;
+  right: 10px;
+}
+
+.floating-buttons button {
+  margin: 0 5px;
+  background: #444;
+  color: #fff;
+  border: none;
+  padding: 5px;
+}
+
+.floating-buttons button:hover {
+  cursor: pointer;
+}
+
+
+@page {
+  size: A4;
+  margin: 0;
+  padding:0;
+}
+
+@media print{
+
+  html, body {
+    position: relative;
+    width: 8.27in;
+    height: 11.67in;
+    background: #fff;
+  }
+
+  .report-summary {
+    margin: 0;
+    padding: 0 10px;
+    top: 0;
+    left: 0;
+    transform: none;
+    box-shadow: none;
+    visibility: visible;
+  }
+
+  .floating-buttons {
+    visibility: hidden;
+  }
+}

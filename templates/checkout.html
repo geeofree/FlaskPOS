@@ -30,8 +30,14 @@
 
       <!-- ACTION BUTTONS -->
       <div class="action-buttons">
-        <div class="button clear-cart">clear</div>
-        <div class="button tender">tender</div>
+        <div class="button clear-cart">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <span>clear</span>
+        </div>
+        <div class="button tender">
+          <i class="fa fa-cart-plus" aria-hidden="true"></i>
+          <span>tender</span>
+        </div>
       </div>
     </div>
   </div>
@@ -42,8 +48,34 @@
     <!-- SEARCH NAVIGATION -->
     <div class="search-nav">
       <div class="search">
+        <!-- Search INPUT -->
         <input type="text" class="search-input" placeholder="search products">
-        <i class="fa fa-search search-icon" aria-hidden="true"></i>
+
+        <!-- Filter Search Query -->
+        <div class="dropdown search-select search-filter">
+          <div class="dropdown-text">
+            <i class="fa fa-search" aria-hidden="true"></i>
+            <span>Search By</span>
+            <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+          <div class="dropdown-content">
+            <span class="dropdown-option selected-query">Name</span>
+            <span class="dropdown-option">Item No.</span>
+          </div>
+        </div>
+
+        <!-- Scope Search With Category -->
+        <div class="dropdown search-select search-scope">
+          <div class="dropdown-text">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+            <span>Filter By</span>
+            <i class="fa fa-caret-down" aria-hidden="true"></i></div>
+          <div class="dropdown-content">
+            <span class="dropdown-option selected-query">All</span>
+            {% for category in categories %}
+            <span class="dropdown-option">{{ category }}</span>
+            {% endfor %}
+          </div>
+        </div>
       </div>
 
     </div>
@@ -51,7 +83,7 @@
     <!-- PRODUCTS -->
     <div class="products">
       {% for product in products %}
-        {% if product.stock %}
+        {% if product.prod_stock %}
         <div class="product in-stock" id="no{{product.invID}}">
         {% else %}
         <div class="product" id="no{{product.invID}}">
@@ -60,7 +92,7 @@
 
           <div class="item-description">
             <span class="code">{{ product.prod_code }}</span>
-            <p>SKU</p>
+            <p>Item No.</p>
           </div>
 
           <div class="item-description" id="item-name">
@@ -74,7 +106,7 @@
           </div>
 
           <div class="item-description">
-            <span class="stock">{{ product.stock }}</span>
+            <span class="stock">{{ product.prod_stock }}</span>
             <p>Stock</p>
           </div>
 
@@ -86,6 +118,8 @@
       {% endfor %}
     </div>
   </div>
+
+  <div class="merchant" style="display:none;">{{ user.firstname }} {{ user.lastname }}</div>
 {% endblock %}
 
 

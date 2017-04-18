@@ -1,5 +1,6 @@
 @import url('../component/searchnav.css');
 @import url('../component/buttons.css');
+@import url('../component/scrollbar.css');
 @import url('tender.css');
 @import url('inventory.css');
 @import url('tender_modal.css');
@@ -15,9 +16,19 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  height: 550px;
+  height: 600px;
+  border-radius: 7px;
+  overflow: hidden;
 }
 
 .id {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
+
+.hide {
   display: none;
 }

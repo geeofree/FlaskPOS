@@ -1,0 +1,28 @@
+.remove-user-modal .header-text {
+  background: #e7553b;
+  color: #fff;
+}
+
+.remove-user-form {
+  text-align: center;
+  padding: 10px;
+}
+
+.user-remove-pw-input {
+  text-align: center;
+}
+
+.confirm-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.confirm-remove {
+  background: #e7553b;
+  margin: 5px 10px;
+}
+
+.selected-user-fullname {
+  color: #439c8f;
+}

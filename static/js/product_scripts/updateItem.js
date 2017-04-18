@@ -1,5 +1,6 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import { numInputValidation } from "../misc/misc"
 import { formEv } from "./addItem"
 
 
@@ -19,28 +20,26 @@ function modalEvent(content, showModal) {
 
 
   if($selected.length == 0) {
-    alert('ERROR: No item selected to update')
+    alert('No item selected to update')
     return
   }
 
   // Column Data
   const $dataID    = $selData.find('.invID').text()
   const $dataName  = $selData.find('.data-name').text()
-  const $dataCode  = $selData.find('.data-sku').text()
   const $dataType  = $selData.find('.data-type').text()
-  const $dataStock = $selData.find('.data-stock').text()
+  const $dataMaxStock = $selData.find('.data-max-stock').text()
   let   $dataPrice = $selData.find('.data-price').text()
         $dataPrice = $dataPrice.match(/\d+/)[0]
-  const $dataArr   = [$dataID, $dataName, $dataCode, $dataType, $dataStock, $dataPrice]
+  const $dataArr   = [$dataID, $dataName, $dataType, $dataMaxStock, $dataPrice]
 
   // INPUTS
   const $itemID    = $('.item-id')
   const $itemName  = $('.item-name-val')
-  const $itemCode  = $('.item-code-val')
   const $itemType  = $('.item-type-val')
-  const $itemStock = $('.item-stock-val')
+  const $itemStock = $('.item-max-stock-val')
   const $itemPrice = $('.item-price-val')
-  const $inputArr  = [$itemID, $itemName, $itemCode, $itemType, $itemStock, $itemPrice]
+  const $inputArr  = [$itemID, $itemName, $itemType, $itemStock, $itemPrice]
 
   // PUT SELECTED DATA INTO INPUTS
   dataSift($dataArr, $inputArr)
@@ -59,7 +58,6 @@ function modalEvent(content, showModal) {
   // Local/Unlock Element Event Handler
   $descIcon.click(function() {
     const $self = $(this)
-
 
     if($self.hasClass('fa-lock')) {
       $self.removeClass('fa-lock').addClass('fa-unlock-alt')
@@ -109,10 +107,20 @@ function modalEvent(content, showModal) {
     $descIcon.off("click")
   })
 
-  formEv($form, $update, $itemName, $itemCode, $itemType, $itemStock, $itemPrice, function($form) {
-    unlockInput($descIcon)
-    $form.submit()
+  const max_stock = $('.item-max-stock-val')
+  const cur_stock = Number($selData.find('.data-stock').text())
+
+  formEv($form, $update, $itemName, $itemType, $itemStock, $itemPrice, (stock, data) => {
+    if(stock < cur_stock || stock > 999) {
+      alert(`Invalid stock update value. Value must not be less than the current stock(${cur_stock}) or greater than 999`)
+      max_stock.val(cur_stock)
+      return false;
+    }
+    data.itemID = Number($('.item-id').val())
+    return { data, route: '/edit_product'};
   })
+
+  numInputValidation(max_stock)
 }
 
 
@@ -133,11 +141,16 @@ function lockToggle(childEL) {
 function lockInput(childEL) {
   const $parent   = childEL.parents('.input-container')
   const $inputs   = $parent.find('.input-val')
-  const $disabled = $inputs.attr('disabled')
 
-  if($disabled == undefined) {
-    $inputs.prop('disabled', true)
-  }
+  $inputs.each((_, input) => {
+    const $input = $(input)
+    const $disabled = $input.attr('disabled')
+
+    if($disabled == undefined) {
+      $input.prop('disabled', true)
+    }
+  })
+
 }
 
 function unlockInput(childEL) {

@@ -22,11 +22,11 @@
 }
 
 .cancel, .confirm-clear {
-  border: 1px solid #b7b7b7;
+  border: none;
 }
 
 .cancel {
-  background: #1a9591;
+  background: #2a9668;
 }
 
 .confirm-clear {

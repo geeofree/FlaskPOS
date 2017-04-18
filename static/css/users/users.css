@@ -1,5 +1,11 @@
+@import url('../component/scrollbar.css');
 @import url('usertable.css');
 @import url('userprofile.css');
+@import url('createUserModal.css');
+@import url('updateUserModal.css');
+@import url('removeUserModal.css');
+@import url('../component/buttons.css');
+@import url('../component/modal.css');
 
 .dash-content {
   padding: 10px 20px;
@@ -11,8 +17,13 @@
   display: flex;
   flex-wrap: wrap;
   height: 100%;
-  margin: 0 20px;
+  margin: 0 10px;
   flex-direction: column;
+}
+
+.user-table, .user-profile {
+  border-radius: 7px;
+  overflow: hidden;
 }
 
 .user-table-header, .user-main-header {
@@ -27,4 +38,16 @@
 .user-header h3 {
   margin-left: 5px;
   font-family: Oxygen;
+}
+
+.button {
+  border: none;
+}
+
+.user-mc-header {
+  color: #444;
+}
+
+.scroll-wrapper {
+  background: none; 
 }

@@ -1,8 +1,9 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import { scrollbar } from "../misc/misc"
+export { clearCart, removeItem }
 
-
-export default function clearCart() {
+function clearCart() {
   const $clearBtn   = $('.clear-cart')
   const $clearModal = $('.clear-modal')
 
@@ -72,5 +73,6 @@ function removeItem($item) {
 
     $productStock.text($stock + $qty)
     $data.remove()
+    scrollbar($('.items'))
   })
 }

@@ -1,11 +1,13 @@
 import $ from "jquery"
 import createCartItems from './createCart'
+import { scrollbar } from '../misc/misc'
 import qtyModal from "./qtySelect"
 
 
 export default function productSelect() {
-  const $product = $('.product')
-  const $body    = $("body")
+  const $products = $('.products')
+  const $items    = $('.items')
+  const $body     = $("body")
 
   // Body Key Event Helper Function
   function bodyKeyEvent($body) {
@@ -23,6 +25,7 @@ export default function productSelect() {
 
       if(button == 13) {
         createCartItems($selected, 1)
+        scrollbar($items)
       }
 
       if(button == 32) {
@@ -54,9 +57,9 @@ export default function productSelect() {
       if($('.selected-product').length > 0) {
         bodyKeyEvent($body)
       }
-      
+
     }
   }
 
-  $product.click(clickEvent)
+  $products.on("click", ".product", clickEvent)
 }

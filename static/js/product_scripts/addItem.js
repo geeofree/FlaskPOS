@@ -1,5 +1,8 @@
 import $ from "jquery"
 import { btnOpenModal, closeModal } from "../misc/modal"
+import { numInputValidation } from "../misc/misc"
+import ajax from "../misc/ajax"
+import inputLimiter from "../misc/inputTextLimiter"
 export { addItem, formEv }
 
 
@@ -18,9 +21,8 @@ function modalEvent(content, showModal) {
 
   // INPUTS
   const $itemName  = $('.item-name')
-  const $itemCode  = $('.item-code')
   const $itemType  = $('.item-type')
-  const $itemStock = $('.item-stock')
+  const $itemStock = $('.item-max-stock')
   const $itemPrice = $('.item-price')
 
   // BUTTONS
@@ -34,44 +36,74 @@ function modalEvent(content, showModal) {
   // Clear Event Handler
   $clear.click(function() {
     $itemName.val('')
-    $itemCode.val('')
     $itemType.val('')
-    $itemStock.val(0)
+    $itemStock.val(1)
     $itemPrice.val(0)
   })
 
   // Close Modal Event Handler
   closeModal(function() {
     $contentInputs.val('')
-    $itemStock.val(0)
+    $itemStock.val(1)
     $itemPrice.val(0)
+    $submit.off("click")
   })
 
-  formEv($form, $submit, $itemName, $itemCode, $itemType, $itemStock, $itemPrice, function($form) {
-    $form.submit()
+  formEv($form, $submit, $itemName, $itemType, $itemStock, $itemPrice, (stock, data) => {
+    const stockValid = {min: 1, max: 999}
+
+    if(stock < stockValid.min || stock > stockValid.max) {
+      alert('Invalid stock value. Must be >= 1 and < 1,000')
+      return false;
+    }
+
+    return {data, route: '/add_product'};
   })
 }
 
 
 // FORM EVENT
-function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
+function formEv($form, $btn, $name, $type, $stock, $price, callback) {
   const $sel  = $('select')
+  const $str_inputs = [[$name, 65], [$type, 25]]
+
+  numInputValidation($stock)
+  numInputValidation($price)
+
+  // String Key Input Event Handler
+  $str_inputs.forEach(input => {
+    const $input = input[0]
+    const max = input[1]
+
+    inputLimiter($input, max)
+  })
+
 
   // Button Click Event Handler
   $btn.on("click", function() {
-    const $self = $(this)
+    const name  = $name.val()
+    const type  = $type.val()
+    const price = $price.val()
+    const max_stock = $stock.val()
 
-    // INPUT VALUES
-    const $nameVal  = $name.val()
-    const $codeVal  = $code.val()
-    const $typeVal  = $type.val()
-    const $stockVal = $stock.val()
-    const $priceVal = $price.val()
+    const priceValid  = {min: 1, max: 999999}
+    const whiteSpace  = /\s{2,}|\n/.test(name)
+    const priceFormat = /^(\d+\.\d{1,2})$|^\d+$/.test(price)
 
+    const data = {name, type, max_stock, price}
 
-    if(validInputs($nameVal, $codeVal, $typeVal, $stockVal, $priceVal)) {
-      callback($form)
-      $self.off("click")
+    if(whiteSpace || name.length < 1 || name.length > 65) {
+      alert('Invalid input in name field')
+    }
+    else if(type.length < 1 || type.length > 25) {
+      alert('Invalid input in category field')
+    }
+    else if(priceFormat && (price < priceValid.min || price > priceValid.max)) {
+      alert('Invalid price value. Must be >= 1 and < 1,000,000')
+    }
+    else {
+      const valid = callback(max_stock, data)
+      if(valid) { sendData(valid.data, valid.route) }
     }
   })
 
@@ -83,38 +115,17 @@ function formEv($form, $btn, $name, $code, $type, $stock, $price, callback) {
   })
 }
 
-// VALID INPUT FUNCTION
-function validInputs(name, code, type, stock, price) {
-  const maxDigit  = /^\d{11}$/
-  const digitOnly = /^\d+$/
 
-  // Valid Variables
-  const validName = Boolean(name) && name.length <= 140
-  const validCode = Boolean(code) && maxDigit.test(code)
-  const validType = Boolean(type) && type.length <= 25
-  const validStock = Boolean(stock) && stock >= 0 && stock <= 999999 && digitOnly.test(stock)
-  const validPrice = Boolean(price) && price >= 0 && stock <= 999999 && digitOnly.test(price)
-
-  if(!validCode) {
-    alert('Invalid ITEM CODE input')
-    return false
-  }
-  else if(!validName) {
-    alert('Product NAME must be more than 1 and less than 140 characters')
-    return false
-  }
-  else if(!validType) {
-    alert('Product CATEGORY must be more than 1 and less than 25 characters')
-    return false
-  }
-  else if(!validStock) {
-    alert('Invalid input on STOCK, must be 0 or more and less than 1,000,000')
-    return false
-  }
-  else if(!validPrice) {
-    alert('Invalid input on PRICE, must be 0 or more and less than 1,000,000')
-    return false
+function sendData(data, route) {
+  function response(resp) {
+    if(resp.status != 'fail') {
+      alert(resp.status)
+      window.location.replace(resp.url)
+    }
+    else {
+      alert(resp.error)
+    }
   }
 
-  return true
+  ajax(data, route, response)
 }

@@ -14,14 +14,15 @@
   height: 50px;
   line-height: 50px;
   text-align: center;
+  transition-duration: 0.3s;
 }
 
 .icon:hover {
   cursor: pointer;
 }
 
-#chart:hover {
-  background: #CC4949;
+#summary:hover {
+  background: crimson;
 }
 
 #tag:hover {

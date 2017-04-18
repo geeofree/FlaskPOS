@@ -21,23 +21,8 @@
           </div>
 
           <div class="user-desc short">
-            {% if user.role %}
-              <span class="user-role">Admin</span>
-            {% else %}
-              <span class="user-role">Staff Member</span>
-            {% endif %}
+            <span class="user-role">{{ user.role }}</span>
             <p>Role</p>
-          </div>
-
-          <div class="user-desc short">
-            {% if user.online %}
-              <span class="user-ol-status">Online</span>
-              <div class="status online"></div>
-            {% else %}
-              <span class="user-ol-status">Offline</span>
-              <div class="status offline"></div>
-            {% endif %}
-            <p>Status</p>
           </div>
 
         </div>
@@ -53,7 +38,18 @@
         <h3>User Profile</h3>
 
         <div class="user-buttons">
-          <div class="user-button remove-user">Remove</div>
+          <div class="user-button remove-user">
+            <i class="fa fa-user-times" aria-hidden="true"></i>
+            <span>Remove User</span>
+          </div>
+          <div class="user-button update-user">
+            <i class="fa fa-exchange" aria-hidden="true"></i>
+            <span>Update User</span>
+          </div>
+          <div class="user-button create-user">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <span>Create User</span>
+          </div>
         </div>
       </div>
 
@@ -63,95 +59,184 @@
         <div class="user-profile-column">
           <div class="profile-desc user-firstname">
             <p class="profile-tag">Firstname</p>
-            <p class="profile-data">John</p>
+            <p class="profile-data data-firstname"></p>
           </div>
+        </div>
+
+        <div class="user-profile-column">
           <div class="profile-desc user-lastname">
             <p class="profile-tag">Lastname</p>
-            <p class="profile-data">Doe</p>
+            <p class="profile-data data-lastname"></p>
           </div>
         </div>
 
         <!-- Column 2: Username and Last Login -->
         <div class="user-profile-column">
-          <div class="profile-desc user-username">
+          <div class="profile-desc user-username short-desc">
             <p class="profile-tag">Username</p>
-            <p class="profile-data">admin</p>
+            <p class="profile-data data-username"></p>
           </div>
-          <div class="profile-desc user-date-created">
-            <p class="profile-tag">Date Created</p>
-            <p class="profile-data">3/15/2017</p>
+          <div class="profile-desc user-sex short-desc">
+            <p class="profile-tag">Sex</p>
+            <p class="profile-data data-sex"></p>
           </div>
         </div>
 
         <!-- Column 3: Date Created -->
         <div class="user-profile-column">
-          <div class="profile-desc user-last-login">
-            <p class="profile-data">January 15, 2017 5:25PM</p>
-            <p class="profile-tag">Last Login</p>
+          <div class="profile-desc user-date-created">
+            <p class="profile-tag">Date Created</p>
+            <p class="profile-data data-date-join"></p>
           </div>
         </div>
+
       </div>
     </div>
 
-    <!-- CREATE USER -->
-    <div class="new-user">
-      <!-- New User Header -->
-      <div class="user-main-header">
+  </div>
+
+  <div id="client-account" style="display:none">{{ user.username }}</div>
+{% endblock %}
+
+{% block MODAL %}
+  <div class="modal">
+    <!-- CREATE USER MODAL -->
+    <div class="create-user-modal modal-content">
+      <div class="header-text">
         <h3>Create User</h3>
-
-        <div class="user-buttons">
-          <div class="user-button create-user">Create</div>
-        </div>
       </div>
 
-      <!-- New User Body -->
-      <div class="new-user-body">
-        <!-- Column 1: Firstname and Lastname Inputs -->
-        <div class="user-profile-column">
-          <!-- Firstname -->
-          <div class="profile-desc">
-            <p class="profile-tag">Firstname</p>
-            <input type="text" name="input-firstname" class="create-user-input">
+      <div class="create-user-form">
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-firstname-input user-form-input">
+            <p>Firstname</p>
           </div>
 
-          <!-- Lastname -->
-          <div class="profile-desc">
-            <p class="profile-tag">Lastname</p>
-            <input type="text" name="input-lastname" class="create-user-input">
+          <div class="input-wrapper">
+            <input class="user-lastname-input user-form-input">
+            <p>Lastname</p>
           </div>
         </div>
 
-        <!-- Column 2: Username and Password Inputs -->
-        <div class="user-profile-column">
-          <!-- Username -->
-          <div class="profile-desc">
-            <p class="profile-tag">Username</p>
-            <input type="text" name="input-username" class="create-user-input">
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-username-input user-form-input">
+            <p>Username</p>
           </div>
 
-          <!-- Password -->
-          <div class="profile-desc">
-            <p class="profile-tag">Password</p>
-            <input type="password" name="input-password" class="create-user-input">
-          </div>
-        </div>
-
-        <!-- Column 3: Role Type -->
-        <div class="user-profile-column">
-          <div class="profile-desc role-type">
-            <p class="profile-tag">User Role</p>
-
-            <div class="user-role-container">
-              <div class="user-roles">
-                <div class="user-role-type selected-role">Basic</div>
-                <div class="user-role-type">Admin</div>
-              </div>
-            </div>
+          <div class="input-wrapper select-wrapper">
+            <select class="user-gender-input user-form-select">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <p>Sex</p>
           </div>
         </div>
 
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input type="password" class="user-password-input user-form-input">
+            <p>Password</p>
+          </div>
+
+          {% if user.role == "Super Admin" %}
+          <div class="input-wrapper">
+            <select class="user-role-input user-form-select">
+              <option value=2 selected>Basic Member</option>
+              <option value=1>Admin</option>
+            </select>
+            <p>User Role</p>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="confirm-wrapper">
+        <button class="button confirm-create">Create User</button>
       </div>
     </div>
 
+    <!-- UPDATE USER MODAL -->
+    <div class="update-user-modal modal-content">
+      <div class="header-text">
+        <h3>Update User</h3>
+      </div>
+
+      <div class="create-user-form">
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-update-firstname user-form-input">
+            <p>Firstname</p>
+          </div>
+
+          <div class="input-wrapper">
+            <input class="user-update-lastname user-form-input">
+            <p>Lastname</p>
+          </div>
+        </div>
+
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input class="user-update-username user-form-input">
+            <p>Username</p>
+          </div>
+
+          <div class="input-wrapper select-wrapper">
+            <select class="user-update-gender">
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+            <p>Sex</p>
+          </div>
+        </div>
+
+        <div class="user-input">
+          <div class="input-wrapper">
+            <input type="password" class="user-update-password user-form-input">
+            <p>Change Password</p>
+          </div>
+
+          {% if user.role == "Super Admin" %}
+          <div class="input-wrapper">
+            <select class="user-update-role">
+              <option value=2 selected>Basic Member</option>
+              <option value=1>Admin</option>
+            </select>
+            <p>User Role</p>
+          </div>
+          {% endif %}
+        </div>
+
+      </div>
+
+      <div class="confirm-wrapper">
+        <button class="button confirm-update">Update User</button>
+      </div>
+    </div>
+
+    <!-- REMOVE USER MODAL -->
+    <div class="remove-user-modal modal-content">
+      <div class="header-text">
+        <h3>Remove User</h3>
+      </div>
+
+      <div class="remove-user-form">
+        <h4 class="user-mc-header">Are you sure you want to remove <span class="selected-user-fullname"></span>?</h4>
+
+        <div class="input-container">
+          <input type="password" name="urm-pw" class="user-remove-pw-input">
+          <p>Enter password to verify</p>
+        </div>
+
+        <div class="confirm-wrapper">
+          <button class="button confirm-remove">Remove User</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="close">&times;</div>
   </div>
 {% endblock %}

@@ -8,12 +8,11 @@
 }
 
 .user-table {
-  width: 600px;
+  width: 640px;
 }
 
 .user-table-body {
   height: 90%;
-  overflow: auto;
 }
 
 .user {
@@ -23,16 +22,12 @@
   align-items: center;
   background: #fff;
   text-align: center;
-  border: 1px solid #444;
-  margin-bottom: 2px;
   color: #444;
   transition-duration: 0.3s;
 }
 
 .selected-user {
-  border: none;
-  border-left: 6px solid orange;
-  background: #5c5c5c;
+  background: #3c6c87;
   color: #fff;
 }
 
@@ -51,11 +46,11 @@
 }
 
 .long {
-  width: 40%;
+  width: 60%;
 }
 
 .short {
-  width: 30%;
+  width: 40%;
 }
 
 .status {

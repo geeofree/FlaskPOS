@@ -31,7 +31,7 @@ textarea {
 body{
   margin: 0;
   padding: 0;
-  background: #f7f7f7;
+  background: #d6e4e7;
   font-family: Roboto-light;
 }
 
@@ -46,6 +46,7 @@ a {
 .dir {
   height: 100%;
   padding: 5px;
+  transition-duration: 0.3s;
 }
 
 .container {
@@ -74,7 +75,7 @@ a {
   justify-content: space-between;
   width: 100vw;
   height: 7.5%;
-  background: #444;
+  background: #333;
   overflow: hidden;
 }
 
@@ -89,16 +90,19 @@ a {
 
 .brand-name {
   margin: 0;
-  color: #c5972b;
+  color: #14dc80;
 }
 
 .dir:hover {
   cursor: pointer;
-  background: #353535;
+  background: #18a254;
 }
 
 .right {
+  position: relative;
+  left: 40px;
   height: 100%;
+  transition-duration: 0.3s;
 }
 
 .right p {
@@ -115,10 +119,35 @@ a {
 }
 
 .current_dir {
-  background: #353535;
+  background: #18a254;
 }
 
 .content {
   width: 100%;
   height: 92.5%;
+}
+
+.fa-power-off {
+  position: relative;
+  visibility: hidden;
+  opacity: 0;
+  font-size: 35px !important;
+  margin: 0 3px 0 6px;
+  transition-duration: 0.3s;
+}
+
+.right:hover {
+  left: 0;
+  cursor: default;
+}
+
+.right:hover .fa-power-off {
+  opacity: 1;
+  visibility: visible;
+  left: 0;
+}
+
+.fa-power-off:hover {
+  color: #b35a31;
+  cursor: pointer;
 }

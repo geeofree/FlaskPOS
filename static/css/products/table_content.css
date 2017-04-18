@@ -1,22 +1,49 @@
 .info-container {
   width: 100%;
+  height: 100%;
 }
 
-.tbl {
-  width: 100%;
+.data-table {
+  height: 91%;
 }
 
-.long, .medium {
-  text-align: left;
+.data-table-header {
+  display: flex;
+  background: #444;
+  color: #fff;
+  padding: 10px;
+  height: 10%;
+}
+
+.data-table-body {
+  height: 90%;
+  overflow: hidden;
+}
+
+.data-info {
+  display: flex;
+  padding: 30px 10px;
+  background: #fff;
+  transition-duration: 0.3s;
+}
+
+.data-info:hover {
+  cursor: pointer;
+}
+
+.long, .short {
+  display: flex;
+  align-items: center;
 }
 
 .long {
-  width: 35%;
+  justify-content: flex-start;
+  width: 40%;
 }
 
 .short {
-  text-align: center;
-  width: 10%;
+  justify-content: center;
+  width: 25%;
 }
 
 .buttons {
